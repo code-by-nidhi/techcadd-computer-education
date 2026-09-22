@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { categories } from "@/lib/courses";
@@ -14,15 +15,11 @@ export default function Footer() {
       <div className="container footer-grid">
         <div className="footer-about">
           <Link href="/" className="logo logo-light">
-            <span className="logo-mark">tc</span>
-            <span>
-              <strong>{site.name}</strong>
-              <small>Computer Education</small>
-            </span>
+            <Image src="/techcadd-logo.webp" alt={site.fullName} width={952} height={262} />
           </Link>
           <p>
-            {site.tagline}. Training students in {site.city} since {site.since} in Basic Computer, Accounting,
-            CAD/CAM, Digital Marketing and Graphic Design.
+            {site.tagline}. Training students in {site.city} since {site.since} in Basic Computer &amp; Accounting,
+            Punjabi Typing, Civil / Mechanical CAD, Graphic Designing and Digital Marketing.
           </p>
           <p>📍 {site.address}</p>
           <p>
@@ -53,6 +50,7 @@ export default function Footer() {
         <div>
           <h4>Company</h4>
           <Link href="/about">About techcadd</Link>
+          <Link href="/founder">Our Founder</Link>
           <Link href="/faq">FAQs</Link>
           <Link href="/about#placements">Placement Support</Link>
           <Link href="/contact">Enquire Now</Link>

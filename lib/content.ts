@@ -13,10 +13,10 @@ export const programDurations = [
 ];
 
 export const steps = [
-  { tag: "Day 1", title: "Career counselling", text: "Talk to a counsellor and pick the track that fits your goal and qualification." },
-  { tag: "Core Term", title: "Classroom & lab", text: "Small batches, daily practicals on real software and daily doubt sessions." },
-  { tag: "Final Phase", title: "Live projects", text: "Work on real assignments — drawings, accounts, campaigns or designs — and get an internship letter." },
-  { tag: "Completion", title: "Placement drives", text: "Certificate, portfolio review, mock interviews and drives with hiring partners." },
+  { tag: "Day 1", title: "Career counselling", text: "Talk to a counsellor and pick the track that fits your goal and qualification.", points: ["Goal & background check", "Track comparison", "Batch timing"] },
+  { tag: "Core Term", title: "Classroom & lab", text: "Small batches, daily practicals on real software and daily doubt sessions.", points: ["Small batches", "Daily practicals", "Doubt sessions"] },
+  { tag: "Final Phase", title: "Live projects", text: "Work on real assignments — drawings, accounts, campaigns or designs — and get an internship letter.", points: ["Real assignments", "Portfolio", "Internship letter"] },
+  { tag: "Completion", title: "Placement drives", text: "Certificate, portfolio review, mock interviews and drives with hiring partners.", points: ["Certificate", "Mock interviews", "Hiring partners"] },
 ];
 
 export const whyUs = [
@@ -37,9 +37,10 @@ export const included = [
 export const toolGroups = [
   { name: "Basic Computer", tools: ["Windows", "MS Word", "MS Excel", "PowerPoint", "Outlook", "Google Workspace"] },
   { name: "Accounting", tools: ["Tally Prime", "BUSY", "GST Portal", "Income Tax Portal", "Advanced Excel"] },
-  { name: "CAD/CAM", tools: ["AutoCAD", "SolidWorks", "CATIA", "Revit", "3ds Max", "V-Ray", "Mastercam", "Fusion 360"] },
+  { name: "Punjabi Typing", tools: ["Raavi (Unicode)", "Asees", "MS Word", "Typing tutor"] },
+  { name: "Civil / Mechanical", tools:["AutoCAD", "SolidWorks", "CATIA", "Revit", "3ds Max", "V-Ray", "Mastercam", "Fusion 360"] },
   { name: "Digital Marketing", tools: ["Google Ads", "Meta Ads", "Google Analytics", "Search Console", "WordPress", "SEMrush"] },
-  { name: "Graphic Design", tools: ["Photoshop", "Illustrator", "CorelDRAW", "InDesign", "Canva"] },
+  { name: "Graphic Designing", tools: ["Photoshop", "Illustrator", "CorelDRAW", "InDesign", "Canva"] },
 ];
 
 // TODO: replace with real student reviews (e.g. from the Google Business Profile) before going live.
@@ -64,7 +65,8 @@ export const faqs = [
 ];
 
 export const after12th = [
-  { stream: "Commerce", courses: ["tally-prime-gst", "computerised-accounting-diploma", "gst-taxation", "ms-office-advanced-excel"] },
+  { stream: "Commerce Students", courses: ["tally-prime-gst", "computerised-accounting-diploma", "gst-taxation", "ms-office-advanced-excel"] },
   { stream: "Non-Medical / Diploma Engineering", courses: ["autocad", "solidworks", "revit-architecture", "cnc-programming-cam"] },
   { stream: "Arts & Any Stream", courses: ["dca", "adca", "graphic-design", "digital-marketing"] },
+  { stream: "Government Job Aspirants", courses: ["punjabi-typing", "english-punjabi-typing", "basic-computer-course", "ms-office-advanced-excel"] },
 ];

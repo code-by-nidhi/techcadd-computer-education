@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Course, getCategory } from "@/lib/courses";
 import { faqs as allFaqs } from "@/lib/content";
 import { site } from "@/lib/site";
+import DemoButton from "./DemoButton";
+import ArrowIcon from "./ArrowIcon";
 
 export function SectionHeading({ eyebrow, title, text }: { eyebrow?: string; title: string; text?: string }) {
   return (
@@ -22,6 +24,50 @@ export function PageHero({ title, text, crumb }: { title: string; text?: string;
         </nav>
         <h1>{title}</h1>
         {text && <p>{text}</p>}
+      </div>
+    </section>
+  );
+}
+
+// Dark hero for the course listing pages (Courses, Certificate Programs, After 12th).
+// `highlight` is shown in yellow after the title, like the poster's "Advanced IT Skills".
+export function ListingHero({ badge, title, highlight, text }: { badge: string; title: string; highlight?: string; text: string }) {
+  return (
+    <section className="lx-hero">
+      <div className="lx-hero-dots" aria-hidden="true" />
+      <div className="container lx-hero-inner">
+        <span className="lx-badge">{badge}</span>
+        <h1>
+          {title}
+          {highlight && <span className="lx-hl"> {highlight}</span>}
+        </h1>
+        <p>{text}</p>
+        <DemoButton className="lx-demo">
+          Book a free demo class
+          <span aria-hidden="true">
+            <ArrowIcon />
+          </span>
+        </DemoButton>
+      </div>
+    </section>
+  );
+}
+
+// Slim closing call-to-action used under the course listings.
+export function CtaStrip() {
+  return (
+    <section className="lx-cta">
+      <div className="container lx-cta-inner">
+        <div>
+          <h3>Ready to start your career?</h3>
+          <p>Book a free demo class and see the lab before you decide.</p>
+        </div>
+        <div className="lx-cta-actions">
+          <DemoButton className="lx-cta-primary">Book Free Demo</DemoButton>
+          <a href={site.phoneHref} className="lx-cta-phone">
+            📞 {site.phone}
+          </a>
+        </div>
       </div>
     </section>
   );

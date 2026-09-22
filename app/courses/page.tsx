@@ -1,47 +1,29 @@
 import type { Metadata } from "next";
 import { categories, coursesIn } from "@/lib/courses";
-import { CourseCard, CtaBanner, PageHero } from "@/components/Sections";
+import { courseItem } from "@/lib/listing";
+import { site } from "@/lib/site";
+import { CtaStrip, ListingHero } from "@/components/Sections";
+import CourseListing from "@/components/CourseListing";
 
 export const metadata: Metadata = {
   title: "Courses",
-  description: "Basic Computer, Accounting, CAD/CAM, Digital Marketing and Graphic Design courses with certification and placement support.",
+  description:
+    "Basic Computer & Accounting, Punjabi Typing, Civil / Mechanical CAD, Graphic Designing and Digital Marketing courses with certification and placement support.",
 };
 
 export default function CoursesPage() {
+  const groups = categories.map((c) => ({ id: c.id, title: c.name, items: coursesIn(c.id).map(courseItem) }));
+
   return (
     <>
-      <PageHero
-        crumb="Courses"
-        title="All Courses"
-        text="Basic Computer, Accounting, CAD/CAM, Digital Marketing and Graphic Design — practical training with certification."
+      <ListingHero
+        badge="Courses"
+        title="Computer, Accounting, CAD & Design"
+        highlight={`Courses in ${site.city}`}
+        text="From basic computer and Tally to AutoCAD, graphic design and digital marketing, every course is built around real office work: hands-on labs, live projects, certification and placement support."
       />
-
-      <div className="container category-tabs">
-        {categories.map((c) => (
-          <a key={c.id} href={`#${c.id}`} className="tag">
-            {c.icon} {c.name}
-          </a>
-        ))}
-      </div>
-
-      {categories.map((cat, i) => (
-        <section key={cat.id} id={cat.id} className={`section anchor ${i % 2 ? "section-alt" : ""}`}>
-          <div className="container">
-            <div className="section-heading left">
-              <span className="eyebrow">{cat.icon} {cat.name}</span>
-              <h2>{cat.name} Courses</h2>
-              <p>{cat.blurb}</p>
-            </div>
-            <div className="grid grid-3">
-              {coursesIn(cat.id).map((c) => (
-                <CourseCard key={c.slug} course={c} />
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
-
-      <CtaBanner />
+      <CourseListing groups={groups} examples={`"tally", "autocad", "marketing"`} />
+      <CtaStrip />
     </>
   );
 }

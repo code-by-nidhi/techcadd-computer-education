@@ -1,64 +1,51 @@
 import type { Metadata } from "next";
-import { courses } from "@/lib/courses";
-import { included, programDurations } from "@/lib/content";
-import { CourseCard, CtaBanner, PageHero, SectionHeading } from "@/components/Sections";
+import { courses, durationMonths } from "@/lib/courses";
+import { courseItem, ListItem } from "@/lib/listing";
+import { programDurations } from "@/lib/content";
+import { site } from "@/lib/site";
+import { CtaStrip, ListingHero } from "@/components/Sections";
+import CourseListing from "@/components/CourseListing";
 
 export const metadata: Metadata = { title: "Certificate Programs" };
 
-const diplomaSlugs = ["dca", "adca", "computerised-accounting-diploma", "graphic-design", "digital-marketing"];
+// Programs grouped by length, like the reference site's short / mid / long-term sections.
+const terms = [
+  { id: "short-term", title: "Short-term Certificates (up to 2 Months)", min: 0, max: 2 },
+  { id: "mid-term", title: "Mid-term Certificates (3–4 Months)", min: 2.01, max: 4 },
+  { id: "diploma", title: "Diploma Programs (6–12 Months)", min: 4.01, max: Infinity },
+];
+
+// Badge text for each training format card, e.g. "45 Days" → "45D", "12 Months" → "12M".
+const formatBadge = (title: string) => title.replace(/^(\d+)\s*(\w).*$/, "$1$2").toUpperCase();
 
 export default function CertificateProgramsPage() {
-  const diplomas = diplomaSlugs.map((s) => courses.find((c) => c.slug === s)!);
+  const formats: ListItem[] = programDurations.map((d) => ({
+    href: "/contact",
+    title: `${d.title} Training`,
+    meta: d.text,
+    search: `${d.title} ${d.text} training`.toLowerCase(),
+    icon: { text: formatBadge(d.title), color: "#0a32b8" },
+  }));
+
+  const groups = [
+    ...terms.map((t) => ({
+      id: t.id,
+      title: t.title,
+      items: courses.filter((c) => durationMonths(c) >= t.min && durationMonths(c) <= t.max).map(courseItem),
+    })),
+    { id: "durations", title: "Training Formats", items: formats }, // footer links target #durations
+  ];
 
   return (
     <>
-      <PageHero
-        crumb="Certificate Programs"
-        title="Certificate & Diploma Programs"
-        text="Industry-recognised certificates, verifiable online, with internship letters on longer programs."
+      <ListingHero
+        badge="Certificate Programs"
+        title="Certificate & Diploma"
+        highlight={`Programs in ${site.city}`}
+        text="Choose a short-term certificate, a 3–4 month course or a 6–12 month diploma, each with practical projects, a verifiable certificate and placement support."
       />
-
-      <section className="section anchor" id="durations">
-        <div className="container">
-          <SectionHeading eyebrow="Program formats" title="Pick a duration that fits you" />
-          <div className="grid grid-4">
-            {programDurations.map((d) => (
-              <div key={d.title} className="card duration-card">
-                <strong>{d.title}</strong>
-                <span>{d.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-alt">
-        <div className="container">
-          <SectionHeading eyebrow="Diplomas" title="Career diploma programs" />
-          <div className="grid grid-3">
-            {diplomas.map((c) => (
-              <CourseCard key={c.slug} course={c} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <SectionHeading eyebrow="Included" title="Every program includes" />
-          <div className="grid grid-5">
-            {included.map((m, i) => (
-              <div key={m.title} className="card included-card">
-                <span className="step-num">{i + 1}</span>
-                <h3>{m.title}</h3>
-                <p>{m.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <CtaBanner />
+      <CourseListing groups={groups} examples={`"diploma", "tally", "6 months"`} />
+      <CtaStrip />
     </>
   );
 }

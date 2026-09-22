@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { stats, steps, whyUs } from "@/lib/content";
 import { site } from "@/lib/site";
 import { CtaBanner, PageHero, SectionHeading } from "@/components/Sections";
@@ -26,6 +27,9 @@ export default function AboutPage() {
             <p>
               Every course is taught on the actual software used in the industry, in small batches, with daily
               practicals and live projects. Our goal is simple: when you finish, you should be ready to work.
+            </p>
+            <p>
+              <Link href="/founder" className="link-arrow">Meet our founder, Gourav Gupta →</Link>
             </p>
           </div>
           <div className="duration-grid">

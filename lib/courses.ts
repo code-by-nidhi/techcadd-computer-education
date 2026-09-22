@@ -1,4 +1,4 @@
-export type CategoryId = "basic-computer" | "accounting" | "cad-cam" | "digital-marketing" | "graphic-design";
+export type CategoryId = "basic-accounting" | "punjabi-typing" | "civil-mechanical" | "graphic-design" | "digital-marketing";
 
 export type Category = {
   id: CategoryId;
@@ -22,43 +22,43 @@ export type Course = {
 
 export const categories: Category[] = [
   {
-    id: "basic-computer",
-    name: "Basic Computer",
-    blurb: "Computer fundamentals, MS Office and typing for everyday work",
+    id: "basic-accounting",
+    name: "Basic & Accounting",
+    blurb: "Computer fundamentals, MS Office, Tally Prime and GST for office work",
     icon: "💻",
   },
   {
-    id: "accounting",
-    name: "Accounting",
-    blurb: "Tally Prime, GST and computerised accounts that offices run on",
-    icon: "📊",
+    id: "punjabi-typing",
+    name: "Punjabi Typing",
+    blurb: "Gurmukhi and English typing for government exams and office jobs",
+    icon: "⌨️",
   },
   {
-    id: "cad-cam",
-    name: "CAD/CAM",
-    blurb: "2D drafting, 3D modelling and CNC programming for design careers",
+    id: "civil-mechanical",
+    name: "Civil / Mechanical",
+    blurb: "2D drafting, 3D modelling, BIM and CNC programming for engineering careers",
     icon: "📐",
+  },
+  {
+    id: "graphic-design",
+    name: "Graphic Designing",
+    blurb: "Branding, print and social creatives built in industry tools",
+    icon: "🎨",
   },
   {
     id: "digital-marketing",
     name: "Digital Marketing",
-    blurb: "Search, social, paid media and storefronts that convert",
+    blurb: "SEO, social media, Google Ads and analytics with live campaigns",
     icon: "📈",
-  },
-  {
-    id: "graphic-design",
-    name: "Graphic Design",
-    blurb: "Branding, print and social creatives built in industry tools",
-    icon: "🎨",
   },
 ];
 
 export const courses: Course[] = [
-  // Basic Computer
+  // Basic & Accounting
   {
     slug: "basic-computer-course",
     title: "Basic Computer Course",
-    category: "basic-computer",
+    category: "basic-accounting",
     duration: "2 Months",
     level: "Beginner",
     summary:
@@ -79,7 +79,7 @@ export const courses: Course[] = [
   {
     slug: "ms-office-advanced-excel",
     title: "MS Office & Advanced Excel",
-    category: "basic-computer",
+    category: "basic-accounting",
     duration: "2 Months",
     level: "Beginner – Intermediate",
     summary:
@@ -101,7 +101,7 @@ export const courses: Course[] = [
   {
     slug: "dca",
     title: "Diploma in Computer Applications (DCA)",
-    category: "basic-computer",
+    category: "basic-accounting",
     duration: "6 Months",
     level: "Beginner",
     summary:
@@ -122,7 +122,7 @@ export const courses: Course[] = [
   {
     slug: "adca",
     title: "Advanced Diploma in Computer Applications (ADCA)",
-    category: "basic-computer",
+    category: "basic-accounting",
     duration: "12 Months",
     level: "Beginner – Intermediate",
     summary:
@@ -140,11 +140,11 @@ export const courses: Course[] = [
     careers: ["Computer Operator", "Accounts Assistant", "DTP Operator", "Office Executive"],
   },
 
-  // Accounting
+  // Basic & Accounting: accounting courses
   {
     slug: "tally-prime-gst",
     title: "Tally Prime with GST",
-    category: "accounting",
+    category: "basic-accounting",
     duration: "3 Months",
     level: "Beginner – Intermediate",
     summary:
@@ -166,7 +166,7 @@ export const courses: Course[] = [
   {
     slug: "busy-accounting",
     title: "BUSY Accounting Software",
-    category: "accounting",
+    category: "basic-accounting",
     duration: "2 Months",
     level: "Beginner",
     summary:
@@ -186,7 +186,7 @@ export const courses: Course[] = [
   {
     slug: "computerised-accounting-diploma",
     title: "Diploma in Computerised Accounting",
-    category: "accounting",
+    category: "basic-accounting",
     duration: "6 Months",
     level: "Beginner – Advanced",
     summary:
@@ -207,7 +207,7 @@ export const courses: Course[] = [
   {
     slug: "gst-taxation",
     title: "GST & Taxation",
-    category: "accounting",
+    category: "basic-accounting",
     duration: "2 Months",
     level: "Intermediate",
     summary:
@@ -225,11 +225,53 @@ export const courses: Course[] = [
     careers: ["GST Practitioner Assistant", "Tax Assistant", "Accounts Executive"],
   },
 
-  // CAD/CAM
+  // Punjabi Typing
+  {
+    slug: "punjabi-typing",
+    title: "Punjabi Typing (Raavi & Asees)",
+    category: "punjabi-typing",
+    duration: "1 Month",
+    level: "Beginner",
+    summary:
+      "Type fast and accurately in Gurmukhi with the Raavi (Unicode) and Asees fonts used in Punjab government offices and typing tests.",
+    highlights: ["Government typing-test practice", "Speed & accuracy drills", "Unicode (Raavi) and Asees"],
+    modules: [
+      "Gurmukhi keyboard layout & finger placement",
+      "Raavi (Unicode) typing",
+      "Asees & legacy font typing",
+      "Matras, half letters & special characters",
+      "Speed building drills",
+      "Mock typing tests",
+    ],
+    tools: ["Raavi", "Asees", "MS Word", "Typing tutor"],
+    careers: ["Clerk", "Data Entry Operator", "Computer Operator", "Court Typist"],
+  },
+  {
+    slug: "english-punjabi-typing",
+    title: "English & Punjabi Typing",
+    category: "punjabi-typing",
+    duration: "2 Months",
+    level: "Beginner",
+    summary:
+      "Build exam-level speed in both English and Punjabi typing, with daily timed tests for clerk and data-entry recruitment.",
+    highlights: ["English + Gurmukhi", "Daily timed tests", "Clerk & data-entry exam prep"],
+    modules: [
+      "Touch typing fundamentals",
+      "English typing speed building",
+      "Gurmukhi typing in Raavi & Asees",
+      "Punctuation, numbers & symbols",
+      "Accuracy & error correction",
+      "Timed mock tests",
+    ],
+    tools: ["Raavi", "Asees", "MS Word", "Typing tutor"],
+    careers: ["Clerk", "Data Entry Operator", "Steno Typist", "Computer Operator"],
+  },
+
+  // Civil / Mechanical
   {
     slug: "autocad",
     title: "AutoCAD",
-    category: "cad-cam",
+    category: "civil-mechanical",
     duration: "2 Months",
     level: "Beginner – Intermediate",
     summary:
@@ -250,7 +292,7 @@ export const courses: Course[] = [
   {
     slug: "solidworks",
     title: "SolidWorks",
-    category: "cad-cam",
+    category: "civil-mechanical",
     duration: "2 Months",
     level: "Intermediate",
     summary:
@@ -271,7 +313,7 @@ export const courses: Course[] = [
   {
     slug: "catia",
     title: "CATIA",
-    category: "cad-cam",
+    category: "civil-mechanical",
     duration: "2 Months",
     level: "Intermediate",
     summary:
@@ -291,7 +333,7 @@ export const courses: Course[] = [
   {
     slug: "revit-architecture",
     title: "Revit Architecture",
-    category: "cad-cam",
+    category: "civil-mechanical",
     duration: "2 Months",
     level: "Intermediate",
     summary:
@@ -312,7 +354,7 @@ export const courses: Course[] = [
   {
     slug: "3ds-max",
     title: "3ds Max (Interior & Exterior)",
-    category: "cad-cam",
+    category: "civil-mechanical",
     duration: "3 Months",
     level: "Intermediate",
     summary:
@@ -333,7 +375,7 @@ export const courses: Course[] = [
   {
     slug: "cnc-programming-cam",
     title: "CNC Programming & CAM",
-    category: "cad-cam",
+    category: "civil-mechanical",
     duration: "2 Months",
     level: "Intermediate",
     summary:
@@ -534,8 +576,17 @@ export const coursesIn = (id: CategoryId) => courses.filter((c) => c.category ==
 // Flagship course per category, shown in the "Featured Courses" section.
 export const featuredSlugs = [
   "basic-computer-course",
+  "ms-office-advanced-excel",
   "tally-prime-gst",
+  "punjabi-typing",
   "autocad",
-  "digital-marketing",
+  "3ds-max",
   "graphic-design",
+  "digital-marketing",
 ];
+
+// Months as a number ("1.5 Months" → 1.5), for grouping courses by length.
+export const durationMonths = (course: Course) => parseFloat(course.duration);
+
+// Select option for visitors who want a counsellor to suggest a course.
+export const NOT_SURE_COURSE = "Not sure – help me choose";

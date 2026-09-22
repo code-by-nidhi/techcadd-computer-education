@@ -1,36 +1,30 @@
 import type { Metadata } from "next";
 import { getCourse } from "@/lib/courses";
 import { after12th } from "@/lib/content";
-import { CourseCard, CtaBanner, PageHero } from "@/components/Sections";
+import { courseItem } from "@/lib/listing";
+import { site } from "@/lib/site";
+import { CtaStrip, ListingHero } from "@/components/Sections";
+import CourseListing from "@/components/CourseListing";
 
 export const metadata: Metadata = { title: "Courses After 12th" };
 
 export default function After12thPage() {
+  const groups = after12th.map((g) => ({
+    id: g.stream.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    title: g.stream,
+    items: g.courses.map((slug) => courseItem(getCourse(slug)!)),
+  }));
+
   return (
     <>
-      <PageHero
-        crumb="After 12th"
-        title="Best Computer Courses After 12th"
-        text="Not sure what to do after 12th? Choose a job-oriented course based on your stream."
+      <ListingHero
+        badge="After 12th"
+        title="Job-Oriented Computer Courses"
+        highlight={`After 12th in ${site.city}`}
+        text="Commerce, science or arts: pick a practical course matched to your stream and start working in months, not years."
       />
-
-      {after12th.map((group, i) => (
-        <section key={group.stream} className={`section ${i % 2 ? "section-alt" : ""}`}>
-          <div className="container">
-            <div className="section-heading left">
-              <span className="eyebrow">For {group.stream} students</span>
-              <h2>{group.stream}</h2>
-            </div>
-            <div className="grid grid-4">
-              {group.courses.map((slug) => (
-                <CourseCard key={slug} course={getCourse(slug)!} />
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
-
-      <CtaBanner />
+      <CourseListing groups={groups} examples={`"tally", "autocad", "typing"`} />
+      <CtaStrip />
     </>
   );
 }

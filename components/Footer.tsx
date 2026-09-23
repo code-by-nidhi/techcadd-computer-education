@@ -2,16 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { categories } from "@/lib/courses";
+import ScrollTop from "./ScrollTop";
 
 export default function Footer() {
   return (
     <footer className="footer">
-      <div className="footer-banner">
-        <div className="container">
-          Admissions Open · 4.9★ on Google · Free career counselling · <a href={site.phoneHref}>Call {site.phone}</a>
-        </div>
-      </div>
-
       <div className="container footer-grid">
         <div className="footer-about">
           <Link href="/" className="logo logo-light">
@@ -75,9 +70,7 @@ export default function Footer() {
         </span>
       </div>
 
-      <a className="whatsapp-float" href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-        💬
-      </a>
+      <ScrollTop />
     </footer>
   );
 }

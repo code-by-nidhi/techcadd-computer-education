@@ -20,10 +20,26 @@ export const steps = [
 ];
 
 export const whyUs = [
-  { title: "Industry-Built Curriculum", text: "Syllabus built around the software and workflows local offices, firms and agencies actually use." },
-  { title: "Certified Trainers", text: "Learn from working accountants, designers, CAD engineers and marketers — not just instructors." },
-  { title: "Placement Support", text: "500+ hiring partners, resume help, mock interviews and regular placement drives." },
-  { title: "Flexible Batches", text: "Morning, evening and weekend batches, 45-day to 12-month formats, and EMI options." },
+  {
+    title: "Industry-Built Curriculum",
+    text: "Syllabus built around the software and workflows local offices, firms and agencies actually use.",
+    points: ["Real software: Tally, AutoCAD, Adobe and Google Ads", "Practical, job-focused modules", "Updated as job requirements change"],
+  },
+  {
+    title: "Certified Trainers",
+    text: "Learn from working accountants, designers, CAD engineers and marketers — not just instructors.",
+    points: ["Trainers who work in the field", "Small batches, one-on-one attention", "Daily doubt-clearing sessions"],
+  },
+  {
+    title: "Placement Support",
+    text: "500+ hiring partners, resume help, mock interviews and regular placement drives.",
+    points: ["500+ hiring partners", "Resume, portfolio and mock interviews", "Regular placement drives"],
+  },
+  {
+    title: "Flexible Batches",
+    text: "Morning, evening and weekend batches, 45-day to 12-month formats, and EMI options.",
+    points: ["Morning, evening and weekend batches", "45-day to 12-month formats", "EMI options on longer programs"],
+  },
 ];
 
 export const included = [

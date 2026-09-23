@@ -1,7 +1,7 @@
 // Central place for branch details. Update these if this site is for a different branch.
 export const site = {
   name: "techcadd",
-  fullName: "techcadd Computer Education",
+  fullName: "techcadd Computer Institute",
   tagline: "Your Skill & Technology Partner",
   since: 2007,
   city: "Jalandhar",

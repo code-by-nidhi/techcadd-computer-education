@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '/^\\\\.faq-list/,/^\\\\.faq p/p' app/globals.css)",
+      "Bash(sed -n '/^\\\\.footer {/,/^\\\\.footer-social/p' app/globals.css)",
+      "Bash(node shot.js http://127.0.0.1:3125/ blue-footer.png 1280 900 \".footer-grid\")",
+      "Bash(node shot.js http://127.0.0.1:3125/faq faq-page.png 1280 800 \".faq-list\")"
+    ]
+  }
+}

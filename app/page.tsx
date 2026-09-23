@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { included, testimonials, toolGroups, whyUs, faqs } from "@/lib/content";
+import { included, testimonials, faqs } from "@/lib/content";
 import { CtaBanner, FaqList, SectionHeading } from "@/components/Sections";
 import HeroDashboard from "@/components/HeroDashboard";
 import HomeAbout from "@/components/HomeAbout";
 import HomeCategories from "@/components/HomeCategories";
 import HomeFeatured from "@/components/HomeFeatured";
 import HowItWorks from "@/components/HowItWorks";
+import ToolsOrbit from "@/components/ToolsOrbit";
+import WhyUs from "@/components/WhyUs";
 
 export default function Home() {
   return (
@@ -38,20 +40,7 @@ export default function Home() {
 
       <HowItWorks />
 
-      {/* Why us */}
-      <section className="section section-dark">
-        <div className="container">
-          <SectionHeading eyebrow="Why techcadd?" title="Training that gets you hired" />
-          <div className="grid grid-4">
-            {whyUs.map((w) => (
-              <div key={w.title} className="card card-dark">
-                <h3>{w.title}</h3>
-                <p>{w.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WhyUs />
 
       {/* Testimonials */}
       <section className="section">
@@ -62,8 +51,8 @@ export default function Home() {
             text="Thousands of alumni now working as accountants, designers, CAD engineers and marketers."
           />
           <div className="grid grid-3">
-            {testimonials.map((t) => (
-              <figure key={t.name} className="card testimonial">
+            {testimonials.map((t, i) => (
+              <figure key={t.name} className="card testimonial" data-aos="fade-up" data-aos-delay={(i % 3) * 100}>
                 <div className="stars">★★★★★</div>
                 <blockquote>“{t.quote}”</blockquote>
                 <figcaption>
@@ -79,12 +68,13 @@ export default function Home() {
       </section>
 
       {/* Included */}
-      <section className="section section-alt">
+      <section className="section section-blue included">
         <div className="container">
           <SectionHeading eyebrow="Included in every course" title="Everything you need — no upsell" />
-          <div className="grid grid-5">
+          <div className="grid grid-5 included-grid">
             {included.map((m, i) => (
-              <div key={m.title} className="card included-card">
+              // Each card rises from below as the section scrolls in, one after the next
+              <div key={m.title} className="included-card" data-aos="fade-up" data-aos-delay={i * 150}>
                 <span className="step-num">{i + 1}</span>
                 <h3>{m.title}</h3>
                 <p>{m.text}</p>
@@ -98,28 +88,17 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <SectionHeading eyebrow="Software you'll learn" title="Industry tools across every track" />
-          <div className="tool-groups">
-            {toolGroups.map((g) => (
-              <div key={g.name} className="tool-group">
-                <h3>{g.name}</h3>
-                <div className="tags">
-                  {g.tools.map((t) => (
-                    <span key={t} className="tag">{t}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          <ToolsOrbit />
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="section section-alt">
+      <section className="section section-blue">
         <div className="container narrow">
           <SectionHeading eyebrow="FAQs" title="Frequently asked questions" />
           <FaqList items={faqs.slice(0, 5)} />
           <div className="center">
-            <Link href="/faq" className="btn btn-outline">See all questions</Link>
+            <Link href="/faq" className="btn btn-outline-light">See all questions</Link>
           </div>
         </div>
       </section>

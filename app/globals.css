@@ -49,8 +49,20 @@ p { margin: 0 0 1em; color: var(--muted); }
 .section { padding: 72px 0; }
 .section-alt { background: var(--bg-alt); }
 .section-dark { background: var(--navy); color: #fff; }
+/* The site's blue panel — the same gradient as "Why techcadd" and the orbit stage. */
+.section-blue {
+  position: relative; color: #fff;
+  background:
+    radial-gradient(60% 50% at 85% 10%, rgba(91, 127, 255, 0.35), transparent 60%),
+    radial-gradient(50% 45% at 5% 95%, rgba(var(--brand-rgb), 0.45), transparent 60%),
+    linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-2) 100%);
+}
+.section-blue .section-heading h2 { color: #fff; }
+.section-blue .section-heading p, .section-blue > .container > p { color: rgba(214, 224, 255, 0.8); }
+.section-blue .eyebrow { color: var(--accent); }
 .section-dark p { color: #c3cbe0; }
 .anchor { scroll-margin-top: 90px; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* Buttons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.75rem 1.4rem; border-radius: 999px; font-weight: 600; font-size: 0.95rem; border: 2px solid transparent; cursor: pointer; transition: 0.2s; font-family: inherit; }
@@ -132,7 +144,7 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
 .btn-white:hover { background: #fff; color: var(--navy); }
 
 /* Mega-menu */
-.dropdown { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); display: none; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.2rem; width: min(calc(var(--container) - 2 * var(--gutter)), calc(100vw - 2 * var(--gutter))); background: #fff; color: var(--ink); padding: 1.4rem; border-radius: var(--radius); box-shadow: 0 18px 40px rgba(0, 8, 30, 0.35); border: 1px solid var(--line); white-space: normal; }
+.dropdown { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); display: none; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.2rem; width: min(calc(var(--container) - 2 * var(--gutter)), calc(100dvw - 2 * var(--gutter))); background: #fff; color: var(--ink); padding: 1.4rem; border-radius: var(--radius); box-shadow: 0 18px 40px rgba(0, 8, 30, 0.35); border: 1px solid var(--line); white-space: normal; }
 .has-dropdown:hover .dropdown, .has-dropdown:focus-within .dropdown { display: grid; }
 .dropdown::before { content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 12px; } /* hover bridge across the gap */
 .dropdown-col { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.86rem; font-weight: 400; }
@@ -162,7 +174,9 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
   min-height: 100vh; min-height: 100svh; display: flex; align-items: center;
 }
 .hero-inner { display: grid; grid-template-columns: 1fr 1.05fr; gap: 3rem; align-items: center; }
-.hero h1 { font-size: clamp(2.2rem, 4.4vw, 4rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; color: var(--ink); margin-bottom: 24px; max-width: 12ch; }
+/* The 12ch measure is a desktop nicety; on a phone it would squeeze the headline into a narrow column. */
+.hero h1 { font-size: clamp(2.2rem, 4.4vw, 4rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; color: var(--ink); margin-bottom: 24px; }
+@media (min-width: 961px) { .hero h1 { max-width: 12ch; } }
 .hero-hl { background: linear-gradient(transparent 62%, var(--accent) 62%, var(--accent) 92%, transparent 92%); padding: 0 0.08em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .hero-sub { font-size: 17px; line-height: 28px; color: var(--ink); max-width: 30rem; margin-bottom: 32px; }
 .hero-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
@@ -376,6 +390,7 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
   .cat-more p { display: none; }
   .cat-tiles { top: auto; bottom: 16px; right: 16px; transform: none; }
   .cat-tile { width: 44px; margin-left: -12px; }
+  .cat-explore { display: none; } /* the logo fan sits here on a square card; the whole card is the link */
 }
 @media (prefers-reduced-motion: reduce) { .cat-card, .cat-more, .cat-tile { transition: none; } }
 
@@ -443,7 +458,9 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
 .fc-all > span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--navy); color: var(--accent); transition: transform 0.3s; }
 .fc-all:hover > span { transform: translateX(3px); }
 
-@media (max-width: 860px), (prefers-reduced-motion: reduce) {
+/* Also below 1024px and on short viewports: the scroll-jacked version sizes cards off the screen
+   height, which leaves them a clipped sliver in landscape. */
+@media (max-width: 1023px), (max-height: 700px), (prefers-reduced-motion: reduce) {
   .fc-scroll, .fc-stage { height: auto; }
   .fc-stage { position: static; display: block; padding: 64px 0; }
   .fc-viewport { width: 100%; max-width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding: 32px var(--gutter) 8px; scrollbar-width: none; }
@@ -460,28 +477,28 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
    near the middle of the screen, 16px lower than the previous one, so they pile up like a deck.
    The section itself must not clip overflow, or position: sticky stops working. */
 .hiw {
-  position: relative; color: #fff;
+  position: relative; color: var(--ink);
   background:
-    radial-gradient(60% 50% at 85% 10%, rgba(91, 127, 255, 0.35), transparent 60%),
-    radial-gradient(50% 45% at 5% 95%, rgba(var(--brand-rgb), 0.45), transparent 60%),
-    linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-2) 100%);
+    radial-gradient(60% 50% at 85% 10%, rgba(91, 127, 255, 0.12), transparent 60%),
+    radial-gradient(50% 45% at 5% 95%, rgba(var(--brand-rgb), 0.1), transparent 60%),
+    linear-gradient(160deg, #ffffff 0%, var(--bg-alt) 55%, var(--brand-soft) 100%);
 }
 .hiw-backdrop { position: sticky; top: 0; z-index: 0; display: flex; align-items: center; height: 100vh; height: 100svh; overflow: hidden; }
 .hiw-backdrop > .container { width: 100%; }
 .hiw-blur { will-change: filter, transform, opacity; } /* ScrollBlur sets these on scroll */
-.hiw-eyebrow { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); }
-.hiw-big { margin: 20px 0 0; font-size: clamp(2.75rem, 8vw, 8rem); line-height: 0.85; white-space: nowrap; /* each phrase stays on one line */ font-weight: 800; letter-spacing: -0.05em; text-transform: uppercase; color: #fff; }
+.hiw-eyebrow { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--brand); }
+.hiw-big { margin: 20px 0 0; font-size: clamp(2rem, 8vw, 8rem); line-height: 0.85; white-space: nowrap; /* each phrase stays on one line */ font-weight: 800; letter-spacing: -0.05em; text-transform: uppercase; color: var(--navy); }
 .hiw-big-end { margin: 0; }
 .hiw-row { display: flex; flex-direction: column; gap: 32px; margin-top: 8px; }
 .hiw-intro { max-width: 24rem; }
-.hiw-intro p { margin: 0; line-height: 1.65; color: rgba(214, 224, 255, 0.8); }
-.hiw-btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; margin-top: 24px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--accent); color: var(--navy); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.4); transition: background 0.2s; }
-.hiw-btn:hover { background: #fff; }
+.hiw-intro p { margin: 0; line-height: 1.65; color: var(--muted); }
+.hiw-btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; margin-top: 24px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--accent); color: var(--navy); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 20px -8px rgba(252, 208, 0, 0.6); transition: background 0.2s; }
+.hiw-btn:hover { background: var(--accent-dark); }
 
 .hiw-cards { position: relative; z-index: 10; padding-bottom: 30vh; }
 .hiw-cards ol { max-width: 48rem; margin: 0 auto; padding: 0; list-style: none; }
 .hiw-cards ol > li { position: sticky; top: calc(50vh - 11rem + var(--i) * 16px); margin-bottom: 24px; }
-.hiw-cards article { display: flex; flex-direction: column; justify-content: space-between; min-height: 19rem; padding: 28px; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 24px; background: #fff; color: var(--navy-deep); box-shadow: 0 30px 70px -30px rgba(0, 8, 30, 0.85); }
+.hiw-cards article { display: flex; flex-direction: column; justify-content: space-between; min-height: 19rem; padding: 28px; border: 1px solid var(--line); border-radius: 24px; background: #fff; color: var(--navy-deep); box-shadow: 0 24px 50px -24px rgba(0, 20, 80, 0.35); }
 .hiw-tag { display: inline-block; margin-bottom: 12px; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: var(--navy); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .hiw-cards h3 { margin: 0; font-size: 24px; line-height: 1.15; font-weight: 800; letter-spacing: -0.025em; text-transform: uppercase; }
 .hiw-cards article p { max-width: 28rem; margin: 16px 0 0; line-height: 1.65; color: rgba(0, 12, 44, 0.65); }
@@ -497,6 +514,44 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
   .hiw-cards h3 { font-size: 30px; }
   .hiw-num { font-size: 48px; }
 }
+
+/* Home "Why techcadd": numbered accordion on the site's blue. Each row's number cell has a fixed height
+   that clips the huge thin numeral (closed rows show only its top); the open row grows to show it all,
+   and its description panel opens with the 0fr → 1fr grid-row trick so the height animates. */
+.why {
+  --num: clamp(5.5rem, 13vw, 12rem); --closed: clamp(64px, 7vw, 96px); padding: 96px 0; color: #fff;
+  background:
+    radial-gradient(60% 50% at 85% 10%, rgba(91, 127, 255, 0.35), transparent 60%),
+    radial-gradient(50% 45% at 5% 95%, rgba(var(--brand-rgb), 0.45), transparent 60%),
+    linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-2) 100%);
+}
+.why-head { display: flex; flex-direction: column; gap: 14px; margin-bottom: 48px; }
+.why-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.why-head h2 { max-width: 16ch; margin: 0; font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: 1.05; font-weight: 700; letter-spacing: -0.03em; color: #fff; }
+.why-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, 0.22); }
+.why-row { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); gap: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.22); cursor: pointer; }
+.why-num { display: block; overflow: hidden; height: var(--closed); padding-top: 14px; font-size: var(--num); line-height: 0.8; font-weight: 200; letter-spacing: -0.05em; color: rgba(255, 255, 255, 0.92); transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s; }
+.why-row.is-open .why-num { height: calc(var(--num) * 0.8 + 44px); color: #fff; }
+.why-row:not(.is-open):hover .why-num { color: var(--accent); }
+.why-body { display: flex; flex-direction: column; justify-content: flex-end; padding: 16px 0; }
+.why-row.is-open .why-body { justify-content: flex-start; padding-top: 28px; }
+.why-body h3 { margin: 0; }
+.why-body button { padding: 0; border: 0; background: none; color: inherit; font: inherit; font-size: clamp(15px, 1.6vw, 20px); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-align: left; cursor: pointer; }
+.why-body button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.why-row.is-open .why-body button { color: var(--accent); }
+.why-panel { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s; }
+.why-panel > div { overflow: hidden; }
+.why-row.is-open .why-panel { grid-template-rows: 1fr; opacity: 1; }
+.why-panel p { max-width: 32rem; margin: 16px 0 0; font-size: 14px; line-height: 1.7; color: rgba(214, 224, 255, 0.75); }
+.why-panel ul { display: grid; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 13px; color: rgba(255, 255, 255, 0.85); }
+.why-panel li { position: relative; padding-left: 18px; }
+.why-panel li::before { content: ""; position: absolute; top: 0.6em; left: 0; width: 8px; height: 1px; background: var(--accent); }
+@media (max-width: 640px) {
+  .why { padding: 64px 0; --num: clamp(3rem, 15vw, 12rem); --closed: 46px; }
+  /* the numeral takes only what it needs, so the text isn't squeezed into a ragged column */
+  .why-row { grid-template-columns: auto minmax(0, 1fr); gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .why-num, .why-panel { transition: none; } }
 
 /* Course listing pages (Courses, Certificate Programs, After 12th), sized after techcaddjalandhar.com */
 .lx-hero {
@@ -535,7 +590,10 @@ main > .lx-hero:first-child { padding-top: calc(var(--header-h) + 48px); }
 .lx-icon-glyph { font-size: 20px; }
 .lx-icon img { width: 28px; height: 28px; object-fit: contain; }
 .lx-text { flex: 1; min-width: 0; }
-.lx-name, .lx-meta { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+/* On phones a course title wraps to two lines instead of being cut to "Tally Prime with GST…" */
+.lx-name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.lx-meta { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+@media (min-width: 640px) { .lx-name { display: block; white-space: nowrap; text-overflow: ellipsis; } }
 .lx-name { font-size: 16px; line-height: 1.5; font-weight: 600; letter-spacing: -0.025em; color: var(--ink); }
 .lx-meta { margin-top: 4px; font-size: 12px; line-height: 1.33; color: var(--muted); }
 .lx-arrow { display: grid; place-items: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; background: rgba(var(--brand-rgb), 0.1); color: var(--brand); transition: background 0.3s, color 0.3s; }
@@ -592,6 +650,35 @@ a.card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(0, 20, 
 .card-dark h3 { color: var(--accent); }
 .section-dark .eyebrow { color: var(--glow); }
 
+/* "Included in every course": frosted cards on a tinted, blurred backdrop. The grid gives them a
+   shared perspective so each card can lift and tilt in 3D on hover; they arrive from below on scroll
+   via data-aos="fade-up" and stay put once in place. */
+.included { overflow: hidden; } /* the blue comes from .section-blue; these orbs give the glass something to catch */
+.included::before, .included::after { content: ""; position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; }
+.included::before { top: -80px; right: -60px; width: 320px; height: 320px; background: rgba(91, 127, 255, 0.45); }
+.included::after { bottom: -120px; left: -80px; width: 380px; height: 380px; background: rgba(252, 208, 0, 0.16); }
+.included > .container { position: relative; z-index: 1; }
+.included-grid { perspective: 1200px; }
+.included-card {
+  padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 18px; color: #fff;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%);
+  /* stacked shadows + an inner highlight read as a raised pane of glass */
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 24px 40px -26px rgba(0, 4, 20, 0.9), 0 8px 14px -10px rgba(0, 4, 20, 0.6);
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s, border-color 0.35s;
+}
+.included-card:hover {
+  transform: translateY(-8px) rotateX(5deg) rotateY(-4deg) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 40px 60px -30px rgba(0, 4, 20, 0.95), 0 14px 22px -14px rgba(0, 4, 20, 0.7);
+}
+.included-card h3 { color: #fff; }
+.included-card p { margin-bottom: 0; font-size: 0.92rem; color: rgba(214, 224, 255, 0.82); }
+.included-card .step-num { background: var(--accent); color: var(--navy); box-shadow: 0 8px 16px -8px rgba(0, 4, 20, 0.9); }
+@media (hover: none) { .included-card:hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .included-card { transition: none; } }
+
 .chip { display: inline-block; font-size: 0.75rem; font-weight: 600; background: var(--brand-soft); color: var(--brand); padding: 0.2rem 0.7rem; border-radius: 999px; margin-bottom: 0.8rem; }
 
 
@@ -614,14 +701,72 @@ a.card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(0, 20, 
 .testimonial figcaption span { font-size: 0.82rem; color: var(--muted); }
 .stars { color: var(--accent-dark); letter-spacing: 2px; margin-bottom: 0.6rem; }
 
-.tool-groups { display: grid; gap: 1.2rem; }
-.tool-group { display: grid; grid-template-columns: 200px 1fr; gap: 1rem; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 1.2rem; }
-.tool-group h3 { margin: 0; }
 .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .center-tags { justify-content: center; }
 .tag { display: inline-block; background: var(--bg-alt); border: 1px solid var(--line); padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.85rem; }
 .section-alt .tag { background: #fff; }
 .tag-accent { background: #fff8d6; border-color: #fce37a; color: var(--navy); }
+
+/* "Software you'll learn": a track nav over one orbit of software, after the right side of
+   techcaddludhiana.com's hero. Each ring spins (--dur, --dir); the chip riding it spins back
+   (--counter-dir) so it stays upright, and the node arm (width 0, height = the ring's radius) rotated
+   by --angle is what puts the chip on the circle. Picking a track swaps the chips; the rings and the
+   counter-spin are pure CSS. */
+.swo { display: grid; gap: 28px; justify-items: center; }
+.swo-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.swo-tab { padding: 0.5rem 1.1rem; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--muted); font: inherit; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+.swo-tab:hover { border-color: var(--brand); color: var(--brand); }
+.swo-tab.is-active { border-color: transparent; background: var(--navy); color: #fff; }
+.swo-tab:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.swo-visual {
+  /* clip-margin lets a tooltip sit over the panel's edge without letting one push the page sideways.
+     container-type keeps the logo tiles sized against the panel, not the viewport. */
+  position: relative; aspect-ratio: 1; width: 100%; max-width: 560px; border-radius: 32px;
+  overflow: clip; overflow-clip-margin: 44px; container-type: inline-size;
+  background:
+    radial-gradient(60% 50% at 80% 12%, rgba(91, 127, 255, 0.4), transparent 60%),
+    radial-gradient(50% 45% at 10% 92%, rgba(var(--brand-rgb), 0.5), transparent 60%),
+    linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-2) 100%);
+}
+.swo-orbit { position: absolute; inset: 0; display: grid; place-items: center; }
+.swo-ring { position: absolute; top: 50%; left: 50%; width: var(--size); aspect-ratio: 1; margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2); border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.13); animation: swo-spin var(--dur) linear infinite; animation-direction: var(--dir); }
+.swo-ring-1 { border-color: rgba(255, 255, 255, 0.18); }
+.swo-node { position: absolute; top: 0; left: 50%; width: 0; height: 50%; transform-origin: 50% 100%; transform: rotate(var(--angle)); }
+.swo-upright { position: absolute; top: 0; left: 0; animation: swo-spin var(--dur) linear infinite; animation-direction: var(--counter-dir); }
+.swo-chip {
+  position: relative; display: grid; place-items: center; width: clamp(34px, 10cqw, 56px); aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle)));
+  border-radius: 30%; background: #fff; color: var(--brand);
+  box-shadow: 0 10px 26px -8px rgba(0, 8, 30, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 26px -6px rgba(91, 127, 255, 0.7);
+  animation: swo-pop 0.5s backwards; /* replays when the track changes */
+}
+.swo-chip img { width: 56%; height: 56%; object-fit: contain; }
+.swo-chip b { font-size: clamp(9px, 2.4cqw, 12px); font-weight: 800; letter-spacing: 0.02em; }
+.swo-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Tooltip with the tool's name. It also carries the name for screen readers, so it is faded out
+   rather than hidden. Hovering a logo pauses the orbit (:has) so the label doesn't drift away. */
+.swo-tip {
+  position: absolute; bottom: calc(100% + 9px); left: 50%; z-index: 4; padding: 5px 10px; border-radius: 8px;
+  background: var(--navy-deep); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;
+  box-shadow: 0 10px 24px -10px rgba(0, 8, 30, 0.9);
+  opacity: 0; transform: translate(-50%, 4px); pointer-events: none; transition: opacity 0.18s, transform 0.18s;
+}
+.swo-tip::after { content: ""; position: absolute; top: 100%; left: 50%; width: 8px; height: 8px; margin-left: -4px; margin-top: -4px; background: inherit; transform: rotate(45deg); }
+.swo-chip:hover .swo-tip, .swo-chip:focus-visible .swo-tip { opacity: 1; transform: translate(-50%, 0); }
+.swo-node:has(.swo-chip:hover), .swo-node:has(.swo-chip:focus-visible) { z-index: 4; }
+.swo-orbit:has(.swo-chip:hover) .swo-ring, .swo-orbit:has(.swo-chip:hover) .swo-upright,
+.swo-orbit:has(.swo-chip:focus-visible) .swo-ring, .swo-orbit:has(.swo-chip:focus-visible) .swo-upright { animation-play-state: paused; }
+/* Sits inside the smallest ring, so it is kept narrower than that ring's clear middle; the soft disc
+   behind it keeps the words readable when a logo passes close by. */
+.swo-core { position: relative; z-index: 2; display: grid; place-items: center; gap: 6px; max-width: 32%; text-align: center; text-wrap: balance; color: #fff; }
+.swo-core::before { content: ""; position: absolute; z-index: -1; inset: -28% -34%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 12, 44, 0.92), rgba(0, 12, 44, 0.7) 65%, transparent); }
+.swo-core b { font-size: clamp(0.85rem, 4.2cqw, 1.3rem); line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; text-shadow: 0 6px 30px rgba(91, 127, 255, 0.6); }
+.swo-core span { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(214, 224, 255, 0.8); }
+@keyframes swo-spin { to { transform: rotate(1turn); } }
+@keyframes swo-pop { from { opacity: 0; transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle))) scale(0.6); } }
+@media (prefers-reduced-motion: reduce) { .swo-ring, .swo-upright, .swo-chip { animation: none !important; } }
 
 /* FAQ */
 .faq-list { display: grid; gap: 0.8rem; }
@@ -630,6 +775,11 @@ a.card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(0, 20, 
 .faq summary::after { content: "+"; color: var(--brand); font-size: 1.2rem; }
 .faq[open] summary::after { content: "−"; }
 .faq p { margin: 0.8rem 0 0; }
+/* Frosted version for the FAQ block on the blue panel (the /faq page keeps the white cards) */
+.section-blue .faq { border-color: rgba(255, 255, 255, 0.18); background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.section-blue .faq summary { color: #fff; }
+.section-blue .faq summary::after { color: var(--accent); }
+.section-blue .faq p { color: rgba(214, 224, 255, 0.82); }
 
 /* CTA */
 .cta-banner { background: radial-gradient(circle at 90% 10%, rgba(91, 127, 255, 0.3), transparent 45%), linear-gradient(135deg, var(--navy), var(--brand)); color: #fff; border-radius: 22px; padding: 3rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
@@ -678,7 +828,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 
 .demo-form-panel { position: relative; padding: 36px; background: radial-gradient(circle at 90% 0%, rgba(91, 127, 255, 0.45), transparent 50%), linear-gradient(145deg, var(--navy-2) 0%, var(--brand) 100%); }
 .demo-form-panel h3 { font-size: 18px; line-height: 28px; margin: 0 40px 24px 0; }
-.demo-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.45); background: transparent; color: #fff; font-size: 13px; cursor: pointer; }
+.demo-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.45); background: transparent; color: #fff; font-size: 13px; cursor: pointer; }
 .demo-close:hover { background: rgba(255, 255, 255, 0.12); }
 .demo-form { display: grid; gap: 12px; }
 .demo-form input, .demo-form select { width: 100%; height: 54px; font: inherit; font-size: 14px; color: #fff; padding: 0 20px; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; background-color: rgba(255, 255, 255, 0.1); }
@@ -688,7 +838,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 .demo-form select option { color: var(--ink); }
 .demo-captcha { display: flex; align-items: center; gap: 12px; margin: 8px 0 -4px; font-size: 14px; font-weight: 500; }
 .demo-captcha output { min-width: 91px; height: 30px; display: grid; place-items: center; padding: 0 12px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 12px; font-weight: 700; letter-spacing: 0.08em; }
-.demo-captcha button { width: 32px; height: 32px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 14px; cursor: pointer; }
+.demo-captcha button { width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 14px; cursor: pointer; }
 .demo-promise { display: flex; align-items: center; gap: 10px; height: 44px; margin-top: 8px; padding: 0 16px; border-radius: 12px; background: rgba(252, 208, 0, 0.16); border: 1px solid rgba(252, 208, 0, 0.55); color: var(--accent); font-size: 14px; font-weight: 600; }
 .demo-error { padding: 10px 14px; border: 1px solid rgba(254, 202, 202, 0.5); border-radius: 10px; background: rgba(127, 29, 29, 0.55); color: #fee2e2; font-size: 13px; }
 .demo-submit { justify-self: start; min-width: 136px; height: 52px; margin-top: 12px; padding: 0 32px; border: 0; border-radius: 999px; background: var(--accent); color: var(--navy); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
@@ -717,9 +867,13 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 .contact-cards a:not(.link-arrow) { color: var(--brand); font-weight: 600; }
 
 /* Footer */
-.footer { background: var(--navy-deep); color: #a7b3d9; font-size: 0.9rem; }
-.footer-banner { background: var(--accent); color: var(--navy); font-weight: 600; text-align: center; padding: 0.7rem 0; font-size: 0.88rem; font-weight: 500; }
-.footer-banner a { text-decoration: underline; }
+.footer {
+  color: #a7b3d9; font-size: 0.9rem;
+  background:
+    radial-gradient(55% 60% at 88% 0%, rgba(91, 127, 255, 0.28), transparent 62%),
+    radial-gradient(45% 55% at 4% 100%, rgba(var(--brand-rgb), 0.38), transparent 62%),
+    linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 60%, var(--navy-2) 100%);
+}
 .footer-grid { display: grid; grid-template-columns: 1.8fr repeat(4, 1fr); gap: 2rem; padding-top: 3.5rem; padding-bottom: 2.5rem; }
 .footer-grid > div { display: flex; flex-direction: column; gap: 0.45rem; }
 .footer-grid h4 { color: var(--accent); margin: 0 0 0.5rem; font-size: 1rem; }
@@ -727,7 +881,34 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 .footer-about p { color: #a7b3d9; font-size: 0.87rem; margin: 0.4rem 0; }
 .footer-bottom { border-top: 1px solid #10245f; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 1.2rem; padding-bottom: 1.6rem; font-size: 0.82rem; }
 .footer-social { display: flex; gap: 1rem; flex-wrap: wrap; }
-.whatsapp-float { position: fixed; right: 18px; bottom: 18px; width: 54px; height: 54px; border-radius: 50%; background: #25d366; display: grid; place-items: center; font-size: 1.6rem; box-shadow: 0 8px 20px rgba(0,0,0,0.25); z-index: 60; }
+/* "Back to top", bottom-right. Faded out and not clickable until ScrollTop adds .is-shown. */
+.to-top {
+  position: fixed; right: 18px; bottom: 18px; z-index: 60; display: grid; place-items: center;
+  width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%; background: var(--navy); color: #fff; cursor: pointer;
+  box-shadow: 0 10px 24px -8px rgba(0, 20, 80, 0.55);
+  opacity: 0; transform: translateY(12px); pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s, background 0.2s;
+}
+.to-top.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { background: var(--brand); }
+.to-top:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.to-top svg { width: 22px; height: 22px; }
+@media (prefers-reduced-motion: reduce) { .to-top { transition: opacity 0.25s; transform: none; } }
+
+/* Scroll animations come from the AOS library (see components/Aos.tsx and its data-aos attributes). */
+
+/* Skeletons shown while a page loads or a slow network stalls (the loading.tsx route files). */
+.skeleton { position: relative; overflow: hidden; border-radius: 10px; background: #e7ecf9; }
+.skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent); animation: skeleton-sweep 1.4s infinite; }
+@keyframes skeleton-sweep { to { transform: translateX(100%); } }
+.sk-page { padding: 96px 0 72px; }
+.sk-head { display: grid; gap: 14px; justify-items: center; margin-bottom: 40px; text-align: center; }
+.sk-line { height: 14px; width: 100%; }
+.sk-title { height: 30px; max-width: 420px; }
+.sk-eyebrow { height: 12px; max-width: 150px; }
+.sk-card { display: grid; gap: 12px; padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+.sk-thumb { height: 150px; border-radius: 12px; }
+@media (prefers-reduced-motion: reduce) { .skeleton::after { animation: none; } }
 
 /* Responsive */
 @media (max-width: 1100px) {
@@ -750,13 +931,31 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   .sticky { position: static; }
 }
 
+@media (max-width: 900px) {
+  .grid-5 { grid-template-columns: repeat(2, 1fr); }
+  .cta-banner { padding: 2.5rem 2rem; }
+}
+
 @media (max-width: 640px) {
+  :root { --header-h: 64px; } /* the bar itself is shorter here, so pages don't start with dead space */
   .section { padding: 52px 0; }
-  .grid-3, .grid-4, .grid-5, .contact-cards { grid-template-columns: 1fr; }
+  .grid-3, .grid-4, .grid-5, .contact-cards, .duration-grid { grid-template-columns: 1fr; }
   .hero-actions { margin-bottom: 2.2rem; }
+  .dash { max-width: 320px; }
   .dash-card { border-radius: 10px; }
+  .dash-card strong { font-size: 0.8rem; }
+  .dash-punjabi-word { font-size: 1.1rem; }
+  .dash-legend { font-size: 0.5rem; }
   .orbit-icon { width: 38px; height: 38px; margin: -19px 0 0 -19px; font-size: 0.62rem; }
-  .tool-group { grid-template-columns: 1fr; gap: 0.6rem; }
+  .swo-tab { padding: 0.6rem 0.9rem; } /* keeps the tap target near 44px */
+  /* the panel nearly fills the screen here, so its bleed has to stay inside the gutter */
+  .swo-visual { overflow-clip-margin: 12px; }
+  .swo-tip { white-space: normal; max-width: 38vw; text-align: center; }
+  .swo-core { max-width: 26%; }
+  .demo-captcha { flex-wrap: wrap; }
+  /* inline footer links are only as tall as their text; give each one a real tap target */
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid > div { gap: 0; }
+  .footer-grid a, .footer-social a { display: inline-flex; align-items: center; min-height: 44px; }
   .cta-banner { padding: 2rem 1.4rem; }
 }

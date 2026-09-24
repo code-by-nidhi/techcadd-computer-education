@@ -718,127 +718,77 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
   .story-awards2-card { transition: none; }
 }
 
-/* 13. Our Journey — fixed dark per the design brief, own cyan accent. */
-.story-journey2 { position: relative; overflow: hidden; padding-top: 140px; padding-bottom: 140px; }
-.story-journey2 .container { max-width: 1400px; }
-.story-journey2-grid-bg {
+/* 13. Our Journey — premium "Growth Journey" card story, fixed dark per the design brief. No timeline,
+   stepper or connectors: a staggered 2-column grid of glassmorphism cards, see
+   components/StoryPage.tsx GrowthJourney for which years render as the larger featured cards. */
+.story-growth { position: relative; overflow: hidden; padding-top: 140px; padding-bottom: 140px; }
+.story-growth .container { max-width: 1100px; }
+.story-growth-grid-bg {
   position: absolute; inset: 0; opacity: 0.05; pointer-events: none;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
   background-size: 48px 48px;
 }
-.story-journey2-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; background: rgba(0, 212, 255, 0.2); }
-.story-journey2-orb-1 { top: -100px; right: 10%; width: 380px; height: 380px; }
-.story-journey2-orb-2 { bottom: -80px; left: 6%; width: 300px; height: 300px; background: rgba(255, 210, 0, 0.12); }
-.theme-dark .story-journey2-eyebrow { color: #00d4ff; }
-
-.story-journey2-stats { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: 48px; margin-top: 2.5rem; }
-.story-journey2-stat { text-align: center; }
-.story-journey2-stat strong { display: block; font-size: 1.8rem; font-weight: 800; color: #00d4ff; }
-.story-journey2-stat span { font-size: 12.5px; color: rgba(255, 255, 255, 0.6); }
+.story-growth-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; background: rgba(0, 212, 255, 0.2); }
+.story-growth-orb-1 { top: -100px; right: 10%; width: 380px; height: 380px; }
+.story-growth-orb-2 { bottom: -80px; left: 6%; width: 300px; height: 300px; background: rgba(255, 210, 0, 0.12); }
+.theme-dark .story-growth-eyebrow { color: #00d4ff; }
+.story-growth-subheading { position: relative; z-index: 1; max-width: 62ch; margin: 1rem auto 0; text-align: center; color: rgba(255, 255, 255, 0.68); }
 
 /* Floating particles (subtle, CSS-only) */
-.story-journey2-particle { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #00d4ff; filter: blur(1px); opacity: 0.5; animation: story-journey2-float 7s ease-in-out infinite; pointer-events: none; }
-@keyframes story-journey2-float {
+.story-growth-particle { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #00d4ff; filter: blur(1px); opacity: 0.5; animation: story-growth-float 7s ease-in-out infinite; pointer-events: none; }
+@keyframes story-growth-float {
   0%, 100% { transform: translateY(0); opacity: 0.5; }
   50% { transform: translateY(-18px); opacity: 0.9; }
 }
 
-/* Horizontal "one story at a time" timeline — a single large stage card driven by the active year;
-   the line below it holds every year 2016-2026 as a node, but only years with a real milestone (see
-   lib/storyData.ts `journey`) are interactive (components/JourneyTimeline.tsx). Hover/click/focus a
-   node on desktop; swipe the row on touch — the nearest node while scrolling becomes active. */
-.story-tl2 { position: relative; z-index: 1; margin-top: 4rem; }
-
-.story-tl2-stage {
-  position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 48px 54px; border-radius: 28px;
-  text-align: center; overflow: hidden;
-  background: linear-gradient(160deg, rgba(22, 44, 96, 0.62), rgba(10, 20, 50, 0.42));
-  border: 1px solid rgba(0, 212, 255, 0.22);
+/* Staggered 2-column grid — every other card (the right column) sits lower, a deliberate offset
+   rather than a strict row-aligned grid, for visual rhythm instead of a timeline/stepper feel. */
+.story-growth-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 32px; margin-top: 3.5rem; }
+.story-growth-card {
+  position: relative; padding: 32px 30px; border-radius: 24px; overflow: hidden;
+  background: linear-gradient(160deg, rgba(22, 44, 96, 0.55), rgba(10, 20, 50, 0.4));
+  border: 1px solid rgba(0, 212, 255, 0.18);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  animation: story-tl2-stage-in 0.5s ease;
+  box-shadow: 0 20px 50px -32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
-.story-tl2-stage > * { position: relative; z-index: 1; }
-.story-tl2-stage-glow { position: absolute; inset: -40% -10%; z-index: 0; pointer-events: none; background: radial-gradient(circle at 50% 30%, rgba(0, 212, 255, 0.18), transparent 65%); }
-.story-tl2-stage-today {
-  border-color: rgba(0, 212, 255, 0.55);
-  box-shadow: 0 34px 80px -26px rgba(0, 212, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  animation: story-tl2-stage-in 0.5s ease, story-tl2-float 3.6s ease-in-out 0.5s infinite;
+.story-growth-card:nth-child(even) { margin-top: 64px; }
+/* Mouse-follow spotlight (SpotlightCard sets --mx/--my in px) — desktop only. */
+.story-growth-card::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 212, 255, 0.12), transparent 70%);
 }
-.story-tl2-stage-icon { display: grid; place-items: center; width: 52px; height: 52px; margin: 0 auto 18px; border-radius: 14px; background: rgba(0, 212, 255, 0.16); color: #00d4ff; }
-.story-tl2-stage-icon svg { width: 26px; height: 26px; }
-.story-tl2-stage-year { display: block; margin-bottom: 8px; font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #00d4ff, #ffd200); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.story-tl2-stage h3 { margin: 0 0 14px; font-size: 1.35rem; color: #fff; }
-.story-tl2-stage p { margin: 0 auto; max-width: 52ch; font-size: 0.95rem; line-height: 1.7; color: rgba(255, 255, 255, 0.68); }
-.story-tl2-today {
-  position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 2; padding: 5px 16px; border-radius: 999px;
-  background: linear-gradient(135deg, #00d4ff, #ffd200); color: #04101f; font-size: 10.5px; font-weight: 800;
-  letter-spacing: 0.09em; text-transform: uppercase; box-shadow: 0 8px 20px -6px rgba(0, 212, 255, 0.75);
+@media (hover: hover) and (pointer: fine) {
+  .story-growth-card:hover::before { opacity: 1; }
 }
+.story-growth-card:hover { transform: translateY(-10px); border-color: rgba(0, 212, 255, 0.55); box-shadow: 0 30px 60px -26px rgba(0, 212, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+.story-growth-card > * { position: relative; z-index: 1; }
+.story-growth-year { display: inline-block; margin-bottom: 14px; padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.25); font-size: 11.5px; font-weight: 700; color: rgba(255, 255, 255, 0.75); }
+.story-growth-card h3 { margin: 0 0 10px; font-size: 1.08rem; color: #fff; }
+.story-growth-card p { margin: 0; font-size: 0.85rem; line-height: 1.65; color: rgba(255, 255, 255, 0.62); }
+.story-growth-icon { display: grid; place-items: center; width: 38px; height: 38px; margin-top: 18px; border-radius: 11px; background: rgba(0, 212, 255, 0.16); color: #00d4ff; transition: transform 0.35s ease, box-shadow 0.35s ease; }
+.story-growth-icon svg { width: 19px; height: 19px; }
+.story-growth-card:hover .story-growth-icon { transform: rotate(8deg) scale(1.12); box-shadow: 0 0 22px rgba(0, 212, 255, 0.45); }
 
-.story-tl2-row { position: relative; margin-top: 3.5rem; padding-top: 40px; overflow-x: auto; overflow-y: visible; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.story-tl2-row::-webkit-scrollbar { display: none; }
-.story-tl2-track { position: relative; z-index: 1; display: flex; align-items: flex-start; gap: 56px; width: max-content; padding: 0 28px; margin: 0 auto; }
+/* Featured cards — the 3 real cumulative stats, larger and highlighted, with an animated CountUp. */
+.story-growth-card-featured { padding: 40px 38px; background: linear-gradient(160deg, rgba(0, 212, 255, 0.14), rgba(20, 40, 90, 0.62)); border-color: rgba(0, 212, 255, 0.4); }
+.story-growth-card-glow { position: absolute; top: -35%; left: 50%; width: 80%; height: 170%; transform: translateX(-50%); z-index: 0; pointer-events: none; filter: blur(34px); background: radial-gradient(circle, rgba(0, 212, 255, 0.3), transparent 70%); }
+.story-growth-card-featured .story-growth-icon { width: 46px; height: 46px; }
+.story-growth-card-featured .story-growth-icon svg { width: 23px; height: 23px; }
+.story-growth-count { display: block; font-size: clamp(2.4rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #00d4ff, #ffd200); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.story-growth-count-label { display: block; margin-top: 6px; margin-bottom: 12px; font-size: 1rem; font-weight: 700; color: #fff; }
+.story-growth-card-featured p { font-size: 0.9rem; max-width: 42ch; }
 
-.story-tl2-spotlight { position: absolute; top: -50px; width: 170px; height: 170px; margin-left: -85px; border-radius: 50%; z-index: 0; pointer-events: none; filter: blur(6px); background: radial-gradient(circle, rgba(0, 212, 255, 0.25), transparent 70%); transition: left 0.5s ease; }
-.story-tl2-line { position: absolute; top: 9px; left: 28px; right: 28px; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, 0.12); overflow: hidden; }
-.story-tl2-line-fill { display: block; height: 100%; background: linear-gradient(90deg, #00d4ff, #ffd200); box-shadow: 0 0 12px rgba(0, 212, 255, 0.8); transition: width 0.5s ease; }
-
-.story-tl2-node-wrap { position: relative; z-index: 2; flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; background: none; border: 0; padding: 0; scroll-snap-align: center; }
-button.story-tl2-node-wrap { cursor: pointer; }
-.story-tl2-node { position: relative; width: 20px; height: 20px; }
-.story-tl2-node::before {
-  content: ""; position: absolute; top: 50%; left: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(0, 212, 255, 0.3); box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
-  transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-button.story-tl2-node-wrap .story-tl2-node::before { animation: story-tl2-node-idle-pulse 2.6s ease-in-out infinite; }
-.story-tl2-node-year { font-size: 11px; font-weight: 700; color: rgba(255, 255, 255, 0.35); transition: color 0.3s ease; white-space: nowrap; }
-
-.story-tl2-node-wrap.is-passed .story-tl2-node::before { background: #00d4ff; border-color: #00d4ff; box-shadow: 0 0 14px rgba(0, 212, 255, 0.6); }
-.story-tl2-node-wrap.is-passed .story-tl2-node-year { color: rgba(255, 255, 255, 0.55); }
-.story-tl2-node-wrap.is-active .story-tl2-node::before { width: 20px; height: 20px; margin: -10px 0 0 -10px; background: #00d4ff; box-shadow: 0 0 0 6px rgba(0, 212, 255, 0.2), 0 0 24px rgba(0, 212, 255, 0.9); animation: none; }
-.story-tl2-node-wrap.is-active .story-tl2-node-year { color: #ffd200; }
-.story-tl2-node-wrap:hover .story-tl2-node::before, .story-tl2-node-wrap:focus-visible .story-tl2-node::before { width: 22px; height: 22px; margin: -11px 0 0 -11px; box-shadow: 0 0 0 7px rgba(0, 212, 255, 0.22), 0 0 28px rgba(0, 212, 255, 1); }
-.story-tl2-node-wrap:hover .story-tl2-node-year, .story-tl2-node-wrap:focus-visible .story-tl2-node-year { color: #00d4ff; }
-.story-tl2-node-wrap:focus-visible { outline: none; }
-.story-tl2-node-wrap:focus-visible .story-tl2-node::before { outline: 2px solid #00d4ff; outline-offset: 4px; }
-
-.story-tl2-node-plain .story-tl2-node::before { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: rgba(255, 255, 255, 0.22); border-color: transparent; box-shadow: none; animation: none; }
-.story-tl2-node-plain.is-passed .story-tl2-node::before { background: rgba(0, 212, 255, 0.45); }
-.story-tl2-node-plain .story-tl2-node-year { color: rgba(255, 255, 255, 0.25); font-weight: 600; }
-
-.story-tl2-node-current .story-tl2-node::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1.5px dashed rgba(255, 210, 0, 0.55); }
-
-@keyframes story-tl2-stage-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes story-tl2-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-@keyframes story-tl2-node-idle-pulse {
-  0%, 100% { box-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
-  50% { box-shadow: 0 0 16px rgba(0, 212, 255, 0.55); }
-}
-
-@media (max-width: 960px) {
-  .story-tl2-stage { max-width: 560px; padding: 40px 40px; }
-  .story-tl2-track { gap: 40px; }
-}
 @media (max-width: 640px) {
-  .story-journey2 { padding-top: 80px; padding-bottom: 80px; }
-  .story-journey2-stats { gap: 28px; }
-  .story-tl2-stage { padding: 34px 26px; border-radius: 24px; }
-  .story-tl2-stage p { max-width: none; }
-  .story-tl2-track { gap: 30px; padding: 0 20px; }
+  .story-growth { padding-top: 80px; padding-bottom: 80px; }
+  .story-growth-grid { grid-template-columns: 1fr; gap: 22px; }
+  .story-growth-card:nth-child(even) { margin-top: 0; }
+  .story-growth-card-featured { padding: 32px 26px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .story-journey2-particle, .story-tl2-stage, .story-tl2-stage-today, .story-tl2-line-fill,
-  .story-tl2-spotlight, .story-tl2-node::before { transition: none; animation: none; }
+  .story-growth-particle, .story-growth-card, .story-growth-icon, .story-growth-card::before { transition: none; animation: none; }
 }
 
 /* 14. Our Belief */

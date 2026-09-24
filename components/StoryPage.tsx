@@ -11,7 +11,6 @@ import {
   industryEngagement,
   industryPartners,
   journey,
-  journeyYears,
   learningEcosystem,
   learningFlow,
   ourApproach,
@@ -23,7 +22,6 @@ import {
 import SpotlightCard from "./SpotlightCard";
 import DemoButton from "./DemoButton";
 import CountUp from "./CountUp";
-import JourneyTimeline from "./JourneyTimeline";
 import { LeadCta, CtaStrip } from "./Sections";
 
 // The redesigned /about page (app/about/page.tsx). Fourteen sections, each a small local component —
@@ -43,7 +41,7 @@ export default function StoryPage() {
       <OurApproach />
       <IndustryEngagement />
       <AwardsRecognition />
-      <OurJourney />
+      <GrowthJourney />
       <OurBelief />
       <LeadCta />
       <CtaStrip />
@@ -519,38 +517,79 @@ function AwardIcon({ icon }: { icon: string }) {
   );
 }
 
-// 13. Our Journey — a horizontal "one story at a time" timeline of real, dated milestones
-// (components/JourneyTimeline.tsx): a single large card driven by the active year, not a card per year.
-function OurJourney() {
+// 13. Our Journey — a premium "Growth Journey" card story: every year 2016-2026 as a glassmorphism
+// card in a staggered 2-column layout (no timeline/line/stepper/connectors at all, per the redesign
+// brief). The three real cumulative stats (2024/2025/2026) render larger, with an animated CountUp
+// on their number, everything else is a standard card.
+const MILESTONE_FEATURED_YEARS = new Set(["2024", "2025", "2026"]);
+
+function GrowthJourney() {
   return (
-    <section className="section theme-dark story-journey2">
-      <span className="story-journey2-orb story-journey2-orb-1" aria-hidden="true" />
-      <span className="story-journey2-orb story-journey2-orb-2" aria-hidden="true" />
-      <div className="story-journey2-grid-bg" aria-hidden="true" />
-      <span className="story-journey2-particle" style={{ top: "18%", left: "12%" }} aria-hidden="true" />
-      <span className="story-journey2-particle" style={{ top: "70%", left: "22%", animationDelay: "1.4s" }} aria-hidden="true" />
-      <span className="story-journey2-particle" style={{ top: "30%", left: "78%", animationDelay: "2.8s" }} aria-hidden="true" />
-      <span className="story-journey2-particle" style={{ top: "80%", left: "85%", animationDelay: "0.6s" }} aria-hidden="true" />
+    <section className="section theme-dark story-growth">
+      <span className="story-growth-orb story-growth-orb-1" aria-hidden="true" />
+      <span className="story-growth-orb story-growth-orb-2" aria-hidden="true" />
+      <div className="story-growth-grid-bg" aria-hidden="true" />
+      <span className="story-growth-particle" style={{ top: "18%", left: "12%" }} aria-hidden="true" />
+      <span className="story-growth-particle" style={{ top: "70%", left: "22%", animationDelay: "1.4s" }} aria-hidden="true" />
+      <span className="story-growth-particle" style={{ top: "30%", left: "78%", animationDelay: "2.8s" }} aria-hidden="true" />
+      <span className="story-growth-particle" style={{ top: "80%", left: "85%", animationDelay: "0.6s" }} aria-hidden="true" />
       <div className="container">
         <div className="section-heading" data-aos="fade-up">
-          <span className="eyebrow story-journey2-eyebrow">{ourJourneyHeader.eyebrow}</span>
+          <span className="eyebrow story-growth-eyebrow">{ourJourneyHeader.eyebrow}</span>
           <h2>{ourJourneyHeader.heading}</h2>
+          <p className="story-growth-subheading">{ourJourneyHeader.text}</p>
         </div>
 
-        <div className="story-journey2-stats" data-aos="fade-up">
-          {ourJourneyHeader.statsStrip.map((s) => (
-            <div key={s.label} className="story-journey2-stat">
-              <strong>
-                <CountUp value={s.value} />
-              </strong>
-              <span>{s.label}</span>
-            </div>
-          ))}
-        </div>
+        <div className="story-growth-grid">
+          {journey.map((m, i) => {
+            const isFeatured = MILESTONE_FEATURED_YEARS.has(m.year);
+            const stat = isFeatured ? m.title.match(/^([\d,]+\+?)\s+(.*)$/) : null;
 
-        <JourneyTimeline years={journeyYears} milestones={journey} />
+            return (
+              <SpotlightCard
+                key={m.year}
+                className={`story-growth-card ${isFeatured ? "story-growth-card-featured" : ""}`}
+                data-aos="fade-up"
+                data-aos-delay={(i % 2) * 100}
+              >
+                {isFeatured && <span className="story-growth-card-glow" aria-hidden="true" />}
+                <span className="story-growth-year">{m.year}</span>
+                {stat ? (
+                  <>
+                    <strong className="story-growth-count">
+                      <CountUp value={stat[1]} />
+                    </strong>
+                    <span className="story-growth-count-label">{stat[2]}</span>
+                  </>
+                ) : (
+                  <h3>{m.title}</h3>
+                )}
+                <p>{m.text}</p>
+                <span className="story-growth-icon">
+                  <MilestoneIcon icon={m.icon} />
+                </span>
+              </SpotlightCard>
+            );
+          })}
+        </div>
       </div>
     </section>
+  );
+}
+
+function MilestoneIcon({ icon }: { icon: string }) {
+  const paths: Record<string, string> = {
+    foundation: "M4 21V9l8-6 8 6v12M9 21v-6h6v6M4 12h16",
+    growth: "M12 3 4 6.5V12c0 4.8 3.4 8.6 8 9.9 4.6-1.3 8-5.1 8-9.9V6.5L12 3ZM8.5 12l2.5 2.5L16 9",
+    innovation: "M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z",
+    training: "M9 15 15 9M10 6l1.5-1.5a3.5 3.5 0 0 1 5 5L15 11M14 18l-1.5 1.5a3.5 3.5 0 0 1-5-5L9 13",
+    expansion: "M12 3v6M6 21v-5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5M4 21h4v-3H4zM10 21h4v-3h-4zM16 21h4v-3h-4zM9 9h6l3 3M6 12l3-3",
+    certificate: "M12 3 5 6v5c0 5 3 8.5 7 10 4-1.5 7-5 7-10V6l-7-3Z M9 12l2 2 4-4",
+  };
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d={paths[icon] ?? paths.growth} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 

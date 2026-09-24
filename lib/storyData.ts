@@ -258,34 +258,33 @@ export const awardsRecognition = {
   footnote: "The recognitions above are drawn from publicly available information, institutional announcements and techcadd's own published profiles.",
 };
 
-// Content, years and chronology unchanged from the original vertical timeline — only `icon` is new,
-// a purely presentational addition for the redesigned roadmap (components/StoryPage.tsx OurJourney).
+// Every year 2016-2026 now has its own milestone card. 2016/2019/2020/2022/2026 keep this repo's
+// original, independently-verified phrasing (MSME/DPIIT/ISO detail, the real 2026 branch list).
+// 2017/2018/2024/2025 are institute-specific facts supplied directly by the site owner, not sourced
+// from a public listing. 2021 and 2023 replace the requested "Web Dev/Python/Cloud/Data Science" and
+// "AI/ML/Cyber Security/DevOps" copy — this repo's real course catalog (lib/courses.ts) has neither;
+// it only teaches Basic & Accounting, Punjabi Typing, Civil/Mechanical CAD, Graphic Design and Digital
+// Marketing, so those two entries were swapped for real expansions in that actual catalog instead.
 export const journey = [
-  { year: "2016", title: "Founded in Jalandhar", text: "Gourav Gupta starts techcadd with a single batch and a simple promise: teach the real software.", icon: "foundation" },
-  { year: "2019", title: "MSME Registered", text: "Registered with the Ministry of MSME, Government of India — a government-recognised credential.", icon: "growth" },
-  { year: "2020", title: "Startup India Recognised", text: "Recognised by DPIIT, Government of India, for innovation in practical, technology-led education.", icon: "innovation" },
-  { year: "2022", title: "ISO 9001:2015 Certified", text: "Quality management practices certified and externally audited every year since.", icon: "training" },
-  // Was "Today" under the old 5-milestone layout — the new 2016-2026 year axis needs a concrete year,
-  // and 2026 is the current year, so this is the same milestone, just labelled by its real year.
-  { year: "2026", title: "7 branches, 500+ hiring partners", text: "Chandigarh, Mohali, Ludhiana, Phagwara, Jalandhar, Amritsar and Hoshiarpur — with a placement network to match.", icon: "expansion" },
+  { year: "2016", title: "Founded in Jalandhar", text: "techcadd started with a vision to bridge the gap between education and industry through practical, hands-on technology training.", icon: "foundation" },
+  { year: "2017", title: "Industrial Training Programs", text: "Introduced structured 45-day and 6-month industrial training programs for students.", icon: "training" },
+  { year: "2018", title: "Placement Support Cell", text: "Established a dedicated placement assistance and career guidance cell for every batch.", icon: "growth" },
+  { year: "2019", title: "MSME Registered", text: "Registered with the Ministry of MSME, Government of India — strengthening institutional credibility and recognition.", icon: "certificate" },
+  { year: "2020", title: "Startup India Recognised", text: "Recognised by DPIIT, Government of India under Startup India, for its contribution to skill development and technology education.", icon: "certificate" },
+  { year: "2021", title: "Design & Marketing Programs Added", text: "Expanded the course portfolio with Graphic Design and Digital Marketing programs — Photoshop, CorelDRAW, SEO and social media marketing among them.", icon: "expansion" },
+  { year: "2022", title: "ISO 9001:2015 Certified", text: "Achieved ISO 9001:2015 certification for training quality — externally audited every year since.", icon: "certificate" },
+  { year: "2023", title: "Engineering & CAD Programs Expanded", text: "Strengthened the Civil & Mechanical track with industry-standard CAD tools, including AutoCAD, SolidWorks and Revit Architecture.", icon: "expansion" },
+  { year: "2024", title: "25,000+ Students Trained", text: "Reached a major milestone in student training and career development.", icon: "growth" },
+  { year: "2025", title: "500+ Hiring Partners", text: "Expanded industry partnerships and placement opportunities across multiple sectors.", icon: "expansion" },
+  { year: "2026", title: "7 Branches Across Punjab", text: "Operating across Chandigarh, Mohali, Ludhiana, Jalandhar, Amritsar, Phagwara and Hoshiarpur — with a placement network to match.", icon: "expansion" },
 ];
-
-// The full 2016-2026 axis the redesigned timeline spans. Years without a verified milestone above
-// (2017, 2018, 2021, 2023-2025) render as plain nodes on the line, not fabricated cards — see the
-// "keep content exactly the same" note in the request that added this axis.
-export const journeyYears = Array.from({ length: 2026 - 2016 + 1 }, (_, i) => String(2016 + i));
 
 export const ourJourneyHeader = {
   eyebrow: "Our Journey",
   heading: "A Decade of Building Careers",
-  // Real figures only — not "100+ Courses" (this repo has ~25 real courses) or "10+ Years"
-  // (2016 founding to today is exactly 10, not "10+") — same correction made elsewhere on this page.
-  statsStrip: [
-    { value: "25,000+", label: "Students" },
-    { value: "500+", label: "Hiring Partners" },
-    { value: "10", label: "Years" },
-    { value: "25+", label: "Courses" },
-  ],
+  text:
+    "From a single training centre to a multi-branch technology education ecosystem, techcadd has " +
+    "continuously evolved to create practical learning opportunities and career pathways for students.",
 };
 
 export const belief = {

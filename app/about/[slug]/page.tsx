@@ -6,10 +6,11 @@ import { CtaBanner, CtaStrip, LeadCta } from "@/components/Sections";
 
 type Props = { params: Promise<{ slug: string }> };
 
-// "story" lives at the bare /about (see app/about/page.tsx) — every other entry gets /about/[slug].
+// "story" lives at the bare /about (see app/about/page.tsx) and "mission-vision" has its own dedicated
+// route (see app/about/mission-vision/page.tsx) — every other entry gets this generic /about/[slug].
 export function generateStaticParams() {
   return Object.values(aboutData)
-    .filter((item) => item.slug !== "story")
+    .filter((item) => item.slug !== "story" && item.slug !== "mission-vision")
     .map((item) => ({ slug: item.slug }));
 }
 
@@ -22,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function AboutSlugPage({ params }: Props) {
   const { slug } = await params;
   if (slug === "story") redirect("/about");
+  if (slug === "mission-vision") redirect("/about/mission-vision");
 
   const entry = getAboutEntry(slug);
   if (!entry) notFound();

@@ -40,8 +40,16 @@ export default function Header() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    // The home hero is light, so the bar uses dark text there until it turns into the dark scrolled pill.
-    <header className={`header ${scrolled ? "is-scrolled" : pathname === "/" || pathname === "/about" ? "header-light" : ""}`}>
+    // These heroes are light, so the bar uses dark text there until it turns into the dark scrolled pill.
+    <header
+      className={`header ${
+        scrolled
+          ? "is-scrolled"
+          : pathname === "/" || pathname === "/about" || pathname === "/about/mission-vision"
+            ? "header-light"
+            : ""
+      }`}
+    >
       <div className="header-bar">
         <div className="header-inner">
           <Link href="/" className="brand" aria-label={`${site.fullName} home`}>

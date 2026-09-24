@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { navLinks, site } from "@/lib/site";
+import { aboutMenu, navLinks, site } from "@/lib/site";
 import { categories, coursesIn } from "@/lib/courses";
 import DemoModal from "./DemoModal";
 
@@ -67,6 +67,70 @@ export default function Header() {
                       </div>
                     ))}
                   </div>
+                </div>
+              ) : link.aboutMega ? (
+                <div className="nav-item has-dropdown" key={link.href}>
+                  <Link href={link.href} className={`nav-link ${isActive(link.href) ? "active" : ""}`}>
+                    <span>
+                      {link.label}
+                      <Chevron />
+                    </span>
+                  </Link>
+                  <div className="dropdown about-dropdown">
+                    <div className="about-nav">
+                      <div className="about-nav-list">
+                        {aboutMenu.map((item) => (
+                          <Link
+                            key={item.id}
+                            href={item.href}
+                            className={`about-nav-item ${isActive(item.href) ? "is-active" : ""}`}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        className="about-nav-cta"
+                        onClick={() => {
+                          setOpen(false);
+                          setDemoOpen(true);
+                        }}
+                      >
+                        Talk to a counsellor →
+                      </button>
+                    </div>
+                    <div className="about-cards">
+                      {aboutMenu
+                        .filter((item) => item.card)
+                        .map((item) => (
+                          <Link key={item.id} href={item.href} className="about-card">
+                            <span className="about-card-media">
+                              <span
+                                className="about-card-img"
+                                style={{ backgroundImage: `url(${item.image})` }}
+                              />
+                            </span>
+                            <strong className="about-card-title">{item.label}</strong>
+                            <span className="about-card-meta">
+                              <span className="about-card-badge">{item.tag}</span>
+                              {item.meta}
+                            </span>
+                          </Link>
+                        ))}
+                    </div>
+                  </div>
+                  <details className="about-accordion">
+                    <summary>{link.label}</summary>
+                    <div className="about-accordion-body">
+                      {aboutMenu.map((item) => (
+                        <Link key={item.id} href={item.href} className="about-accordion-link">
+                          <strong>{item.label}</strong>
+                          <span>{item.text}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </details>
                 </div>
               ) : (
                 <Link

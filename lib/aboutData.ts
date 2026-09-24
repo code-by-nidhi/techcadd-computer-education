@@ -119,7 +119,7 @@ export const aboutData: Record<string, AboutPageData> = {
     ],
     stats: [
       { value: "25,000+", label: "Students trained" },
-      { value: "2 Decades", label: "Of training experience" },
+      { value: "10 Years", label: "Of training experience" },
       { value: "500+", label: "Hiring partners" },
       { value: "4.9★", label: "Google rating" },
     ],

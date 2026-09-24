@@ -41,7 +41,7 @@ export default function Header() {
 
   return (
     // The home hero is light, so the bar uses dark text there until it turns into the dark scrolled pill.
-    <header className={`header ${scrolled ? "is-scrolled" : pathname === "/" ? "header-light" : ""}`}>
+    <header className={`header ${scrolled ? "is-scrolled" : pathname === "/" || pathname === "/about" ? "header-light" : ""}`}>
       <div className="header-bar">
         <div className="header-inner">
           <Link href="/" className="brand" aria-label={`${site.fullName} home`}>

@@ -3,7 +3,7 @@ export const site = {
   name: "techcadd",
   fullName: "techcadd Computer Institute",
   tagline: "Your Skill & Technology Partner",
-  since: 2007,
+  since: 2016,
   city: "Jalandhar",
   phone: "+91 98881 22254",
   phoneHref: "tel:+919888122254",

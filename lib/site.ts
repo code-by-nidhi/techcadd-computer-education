@@ -30,46 +30,5 @@ export const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-// Content for the "About" mega menu — left nav list; the first three also get a photo card on the right.
-// Drop the real photos in public/about-menu/ using these exact filenames and they'll show up immediately.
-export const aboutMenu = [
-  {
-    id: "about",
-    label: "About techcadd",
-    tag: "Story",
-    meta: `Since ${site.since}`,
-    text: `${site.tagline} — practical, job-focused computer education trusted across Punjab since ${site.since}.`,
-    image: "/about-menu/about-techcadd.jpg",
-    href: "/about",
-    card: true,
-  },
-  {
-    id: "mission",
-    label: "Mission and Vision",
-    tag: "Purpose",
-    meta: "Our direction",
-    text: "Industry-built curriculum, certified trainers and real projects — so every student leaves job-ready, not just certified.",
-    image: "/about-menu/mission-vision.jpg",
-    href: "/about",
-    card: true,
-  },
-  {
-    id: "accreditations",
-    label: "Accreditations & Awards",
-    tag: "Trust",
-    meta: "Recognised",
-    text: "Industry-recognised certification, a 4.9★ Google rating and 500+ hiring partners backing every batch we train.",
-    href: "/about",
-    card: false,
-  },
-  {
-    id: "team",
-    label: "Our Team",
-    tag: "People",
-    meta: "Trainers & mentors",
-    text: "Learn from working accountants, designers, CAD engineers and marketers — practitioners first, instructors second.",
-    image: "/about-menu/our-team.jpg",
-    href: "/founder",
-    card: true,
-  },
-];
+// The About mega menu (components/Header.tsx) and every /about/[slug] page are generated from
+// lib/aboutData.ts — see aboutMenuItems there.

@@ -4,6 +4,7 @@ import { faqs as allFaqs } from "@/lib/content";
 import { site } from "@/lib/site";
 import DemoButton from "./DemoButton";
 import ArrowIcon from "./ArrowIcon";
+import LeadForm from "./LeadForm";
 
 export function SectionHeading({ eyebrow, title, text }: { eyebrow?: string; title: string; text?: string }) {
   return (
@@ -60,7 +61,7 @@ export function CtaStrip() {
     <section className="lx-cta">
       <div className="container lx-cta-inner">
         <div>
-          <h3>Ready to start your career?</h3>
+          <h3>Ready to start your career in tech?</h3>
           <p>Book a free demo class and see the lab before you decide.</p>
         </div>
         <div className="lx-cta-actions">
@@ -102,6 +103,39 @@ export function FaqList({ items = allFaqs }: { items?: { q: string; a: string }[
         </details>
       ))}
     </div>
+  );
+}
+
+// Bigger conversion section for pages that want the phone-capture form + call pill instead of CtaBanner
+// (see finalCta on lib/aboutData.ts entries). Follow it with <CtaStrip /> for the closing bar underneath.
+export function LeadCta() {
+  return (
+    <section className="section lead-cta">
+      <div className="container lead-cta-inner" data-aos="fade-up">
+        <span className="eyebrow">Ready to get started?</span>
+        <h2>Start building your career today.</h2>
+        <p>
+          Talk to a counsellor today. One conversation is usually enough to identify the right learning path,
+          career direction, and training roadmap.
+        </p>
+        <div className="lead-form-row">
+          <span className="lead-avatar" aria-hidden="true" />
+          <LeadForm />
+        </div>
+        <a href={site.phoneHref} className="lead-call-btn">
+          <span className="lead-call-icon" aria-hidden="true">📞</span>
+          <span>
+            <small>Call now</small>
+            <strong>{site.phone}</strong>
+          </span>
+        </a>
+        <ul className="lead-ticks">
+          <li>Free career counselling</li>
+          <li>No registration fee</li>
+          <li>Placement support included</li>
+        </ul>
+      </div>
+    </section>
   );
 }
 

@@ -88,7 +88,7 @@ export default function HomeAbout() {
           </div>
 
           {/* Founder */}
-          <Link href="/founder" className="ab-card ab-founder">
+          <Link href="/about/founder" className="ab-card ab-founder">
             <small>Founder</small>
             <strong>Gourav Gupta</strong>
             <p>From driving an auto to fund his engineering degree to building an academy.</p>

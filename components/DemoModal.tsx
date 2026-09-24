@@ -11,7 +11,15 @@ const quote = testimonials[0];
 const initials = quote.name.split(" ").map((w) => w[0]).join("");
 
 // "Book Demo" pop-up opened from the header. Enquiries are saved to MySQL through /api/demo.
-export default function DemoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function DemoModal({
+  open,
+  onClose,
+  defaultPhone = "",
+}: {
+  open: boolean;
+  onClose: () => void;
+  defaultPhone?: string;
+}) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [captcha, setCaptcha] = useState<Captcha | null>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
@@ -36,10 +44,12 @@ export default function DemoModal({ open, onClose }: { open: boolean; onClose: (
       setError("");
       loadCaptcha();
       dialog.showModal();
+      const phoneInput = dialog.querySelector<HTMLInputElement>('input[name="phone"]');
+      if (phoneInput) phoneInput.value = defaultPhone;
     } else if (!open && dialog.open) {
       dialog.close();
     }
-  }, [open, loadCaptcha]);
+  }, [open, loadCaptcha, defaultPhone]);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

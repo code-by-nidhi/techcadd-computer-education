@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { aboutMenu, navLinks, site } from "@/lib/site";
+import { navLinks, site } from "@/lib/site";
+import { aboutMenuItems } from "@/lib/aboutData";
 import { categories, coursesIn } from "@/lib/courses";
 import DemoModal from "./DemoModal";
 
@@ -12,6 +13,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
+  const [demoPhone, setDemoPhone] = useState("");
   const pathname = usePathname();
 
   useEffect(() => setOpen(false), [pathname]);
@@ -24,9 +26,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Page buttons (DemoButton) open the same Book Demo pop-up by dispatching "open-demo".
+  // Page buttons (DemoButton) open the same Book Demo pop-up by dispatching "open-demo". LeadForm
+  // dispatches it with a { phone } detail so the modal opens with that number pre-filled.
   useEffect(() => {
-    const openDemo = () => setDemoOpen(true);
+    const openDemo = (e: Event) => {
+      setDemoPhone((e as CustomEvent<{ phone?: string }>).detail?.phone ?? "");
+      setDemoOpen(true);
+    };
     window.addEventListener("open-demo", openDemo);
     return () => window.removeEventListener("open-demo", openDemo);
   }, []);
@@ -79,13 +85,13 @@ export default function Header() {
                   <div className="dropdown about-dropdown">
                     <div className="about-nav">
                       <div className="about-nav-list">
-                        {aboutMenu.map((item) => (
+                        {aboutMenuItems.map((item) => (
                           <Link
-                            key={item.id}
+                            key={item.slug}
                             href={item.href}
                             className={`about-nav-item ${isActive(item.href) ? "is-active" : ""}`}
                           >
-                            {item.label}
+                            {item.navLabel}
                           </Link>
                         ))}
                       </div>
@@ -94,6 +100,7 @@ export default function Header() {
                         className="about-nav-cta"
                         onClick={() => {
                           setOpen(false);
+                          setDemoPhone("");
                           setDemoOpen(true);
                         }}
                       >
@@ -101,32 +108,27 @@ export default function Header() {
                       </button>
                     </div>
                     <div className="about-cards">
-                      {aboutMenu
-                        .filter((item) => item.card)
-                        .map((item) => (
-                          <Link key={item.id} href={item.href} className="about-card">
-                            <span className="about-card-media">
-                              <span
-                                className="about-card-img"
-                                style={{ backgroundImage: `url(${item.image})` }}
-                              />
-                            </span>
-                            <strong className="about-card-title">{item.label}</strong>
-                            <span className="about-card-meta">
-                              <span className="about-card-badge">{item.tag}</span>
-                              {item.meta}
-                            </span>
-                          </Link>
-                        ))}
+                      {aboutMenuItems.map((item) => (
+                        <Link key={item.slug} href={item.href} className="about-card">
+                          <span className="about-card-media">
+                            <span className="about-card-img" style={{ backgroundImage: `url(${item.navImage})` }} />
+                          </span>
+                          <strong className="about-card-title">{item.navLabel}</strong>
+                          <span className="about-card-meta">
+                            <span className="about-card-badge">{item.navBadge}</span>
+                            {item.navMeta}
+                          </span>
+                        </Link>
+                      ))}
                     </div>
                   </div>
                   <details className="about-accordion">
                     <summary>{link.label}</summary>
                     <div className="about-accordion-body">
-                      {aboutMenu.map((item) => (
-                        <Link key={item.id} href={item.href} className="about-accordion-link">
-                          <strong>{item.label}</strong>
-                          <span>{item.text}</span>
+                      {aboutMenuItems.map((item) => (
+                        <Link key={item.slug} href={item.href} className="about-accordion-link">
+                          <strong>{item.navLabel}</strong>
+                          <span>{item.subtitle}</span>
                         </Link>
                       ))}
                     </div>
@@ -147,6 +149,7 @@ export default function Header() {
               className="btn btn-white nav-cta"
               onClick={() => {
                 setOpen(false);
+                setDemoPhone("");
                 setDemoOpen(true);
               }}
             >
@@ -164,7 +167,7 @@ export default function Header() {
           </button>
         </div>
       </div>
-      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
+      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} defaultPhone={demoPhone} />
     </header>
   );
 }

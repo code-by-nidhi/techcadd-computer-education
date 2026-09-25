@@ -5,6 +5,14 @@ import SpotlightCard from "./SpotlightCard";
 // Reusable building blocks every /about/[slug] page is assembled from — see app/about/[slug]/page.tsx
 // and app/about/page.tsx. Keeping these generic is what lets a new lib/aboutData.ts entry become a
 // full page without writing any new markup.
+//
+// Strict light/dark alternation, with the hero itself counted as slot 0 (light — see
+// .about-hero.page-hero in globals.css): AboutSections' first item is slot 1 (dark) by default, so
+// it alternates dark/light/dark/... — the opposite of what you'd guess from "starts light".
+// `startIndex` shifts that starting slot — used on /about/our-team, where components/TeamIntro.tsx
+// occupies slot 1 (it's always dark, by its own design brief), pushing AboutSections to start at
+// slot 2 instead. Everything after AboutSections (AboutStats/AboutGallery/LeadCta+CtaStrip or
+// CtaBanner) continues the same running count from app/about/[slug]/page.tsx.
 
 export function Breadcrumbs({ items }: { items: { label: string; href?: string }[] }) {
   return (
@@ -46,15 +54,26 @@ export function AboutHero({
   );
 }
 
-export function AboutSections({ sections }: { sections: AboutSection[] }) {
+export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSection[]; startIndex?: number }) {
   return (
     <>
       {sections.map((s, i) => (
         <section
           key={s.heading}
           id={s.id}
-          className={`section ${s.id ? "anchor" : ""} ${i % 2 === 1 ? "section-alt" : ""}`}
+          className={`section ${s.id ? "anchor" : ""} ${(startIndex + i) % 2 === 0 ? "theme-dark" : "theme-light"} ${s.trustCard ? "story-trust-section" : ""}`}
         >
+          {s.trustCard && (
+            <>
+              <div className="story-trust-grid-bg" aria-hidden="true" />
+              <span className="story-trust-glow story-trust-glow-1" aria-hidden="true" />
+              <span className="story-trust-glow story-trust-glow-2" aria-hidden="true" />
+              <span className="story-trust-particle" style={{ top: "18%", left: "10%" }} aria-hidden="true" />
+              <span className="story-trust-particle" style={{ top: "70%", left: "16%", animationDelay: "1.4s" }} aria-hidden="true" />
+              <span className="story-trust-particle" style={{ top: "26%", left: "90%", animationDelay: "2.8s" }} aria-hidden="true" />
+              <span className="story-trust-particle" style={{ top: "78%", left: "86%", animationDelay: "0.6s" }} aria-hidden="true" />
+            </>
+          )}
           <div className="container">
             <div className="section-heading" data-aos="fade-up">
               {s.eyebrow && <span className="eyebrow">{s.eyebrow}</span>}
@@ -143,25 +162,58 @@ function CertIcon({ icon }: { icon?: AboutCard["icon"] }) {
 }
 
 function TrustCard({ data }: { data: AboutTrustCard }) {
+  const [centerStat, ...sideStats] = data.stats;
   return (
-    <SpotlightCard className="trust-card" data-aos="zoom-in">
-      <GoogleLogo />
-      <strong className="trust-rating">
-        {data.ratingValue}
-        <span className="stars" role="img" aria-label={`Rated ${data.ratingValue} out of 5`}>
-          ★★★★★
-        </span>
-      </strong>
-      <p>{data.text}</p>
-      <div className="trust-actions">
-        <a href={data.primaryCta.href} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-          {data.primaryCta.label}
-        </a>
-        <a href={data.secondaryCta.href} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-          {data.secondaryCta.label}
-        </a>
-      </div>
-    </SpotlightCard>
+    <div className="trust-card-stage">
+      <span className="trust-bubble trust-bubble-1" aria-hidden="true">
+        ★ Verified
+      </span>
+      <span className="trust-bubble trust-bubble-2" aria-hidden="true">
+        Google Rated
+      </span>
+      <SpotlightCard className="trust-card" data-aos="zoom-in">
+        <div className="trust-card-grid">
+          <div className="trust-card-col trust-card-google">
+            <span className="trust-rating-glow" aria-hidden="true" />
+            <GoogleLogo />
+            <strong className="trust-rating">
+              {data.ratingValue}
+              <span className="stars" role="img" aria-label={`Rated ${data.ratingValue} out of 5`}>
+                ★★★★★
+              </span>
+            </strong>
+            <p>{data.text}</p>
+          </div>
+
+          <div className="trust-card-divider" aria-hidden="true" />
+
+          <div className="trust-card-col trust-card-center">
+            <strong className="trust-stat-big">{centerStat.value}</strong>
+            <span className="trust-stat-label">{centerStat.label}</span>
+          </div>
+
+          <div className="trust-card-divider" aria-hidden="true" />
+
+          <div className="trust-card-col trust-card-side">
+            {sideStats.map((s) => (
+              <div key={s.label} className="trust-stat-small">
+                <strong>{s.value}</strong>
+                <span>{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="trust-actions">
+          <a href={data.primaryCta.href} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+            {data.primaryCta.label}
+          </a>
+          <a href={data.secondaryCta.href} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+            {data.secondaryCta.label}
+          </a>
+        </div>
+      </SpotlightCard>
+    </div>
   );
 }
 
@@ -176,10 +228,10 @@ function GoogleLogo() {
   );
 }
 
-export function AboutStats({ stats }: { stats: AboutStat[] }) {
+export function AboutStats({ stats, dark }: { stats: AboutStat[]; dark?: boolean }) {
   if (!stats.length) return null;
   return (
-    <section className="section">
+    <section className={`section ${dark ? "theme-dark" : "theme-light"}`}>
       <div className="container">
         <div className="duration-grid" data-aos="fade-up">
           {stats.map((s) => (
@@ -194,10 +246,10 @@ export function AboutStats({ stats }: { stats: AboutStat[] }) {
   );
 }
 
-export function AboutGallery({ gallery }: { gallery: AboutGalleryItem[] }) {
+export function AboutGallery({ gallery, dark }: { gallery: AboutGalleryItem[]; dark?: boolean }) {
   if (!gallery.length) return null;
   return (
-    <section className="section section-alt">
+    <section className={`section ${dark ? "theme-dark" : "theme-light"}`}>
       <div className="container">
         <div className="about-gallery">
           {gallery.map((item, i) => (

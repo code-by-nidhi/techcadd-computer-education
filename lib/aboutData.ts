@@ -13,6 +13,7 @@ export type AboutTrustCard = {
   ratingValue: string;
   ratingCount: string;
   text: string;
+  stats: { value: string; label: string }[];
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
 };
@@ -288,16 +289,21 @@ export const aboutData: Record<string, AboutPageData> = {
       },
       {
         eyebrow: "Trust & Reviews",
-        heading: "Trusted by hundreds of students across Punjab",
+        heading: "Trusted by thousands of students across Punjab",
         body: [
-          "Our reviews are publicly available and verifiable on Google. We do not collect or curate reviews on " +
-            "our own platform.",
+          "Verified Google reviews and placement-focused training back techcadd's credibility — publicly " +
+            "checkable, nothing curated or collected on our own platform.",
         ],
         trustCard: {
           ratingValue: "4.9",
           ratingCount: "750+",
-          text: "From 750+ verified reviews on Google — publicly visible and checkable directly on our Google Business Profile.",
-          primaryCta: { label: "Read the Reviews", href: site.mapUrl },
+          text: "Based on 750+ verified Google reviews",
+          stats: [
+            { value: "25,000+", label: "Students Trained" },
+            { value: "500+", label: "Hiring Partners" },
+            { value: "10", label: "Years of Excellence" },
+          ],
+          primaryCta: { label: "Read Google Reviews", href: site.mapUrl },
           secondaryCta: { label: "View Google Profile", href: site.mapUrl },
         },
       },
@@ -332,6 +338,7 @@ export const aboutData: Record<string, AboutPageData> = {
     heroImage: "/about-menu/our-team.jpg",
     sections: [
       {
+        id: "trainers",
         eyebrow: "Certified trainers",
         heading: "Practitioners first, instructors second",
         body: [

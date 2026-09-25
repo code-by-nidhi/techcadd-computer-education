@@ -56,9 +56,9 @@ export function ListingHero({ badge, title, highlight, text }: { badge: string; 
 }
 
 // Slim closing call-to-action used under the course listings.
-export function CtaStrip() {
+export function CtaStrip({ dark }: { dark?: boolean } = {}) {
   return (
-    <section className="lx-cta">
+    <section className={`lx-cta ${dark ? "theme-dark" : ""}`}>
       <div className="container lx-cta-inner">
         <div>
           <h3>Ready to start your career in tech?</h3>
@@ -108,9 +108,9 @@ export function FaqList({ items = allFaqs }: { items?: { q: string; a: string }[
 
 // Bigger conversion section for pages that want the phone-capture form + call pill instead of CtaBanner
 // (see finalCta on lib/aboutData.ts entries). Follow it with <CtaStrip /> for the closing bar underneath.
-export function LeadCta() {
+export function LeadCta({ dark }: { dark?: boolean } = {}) {
   return (
-    <section className="section lead-cta">
+    <section className={`section lead-cta ${dark ? "theme-dark" : ""}`}>
       <div className="container lead-cta-inner" data-aos="fade-up">
         <span className="eyebrow">Ready to get started?</span>
         <h2>Start building your career today.</h2>
@@ -139,9 +139,9 @@ export function LeadCta() {
   );
 }
 
-export function CtaBanner() {
+export function CtaBanner({ dark }: { dark?: boolean } = {}) {
   return (
-    <section className="section">
+    <section className={`section ${dark ? "theme-dark" : ""}`}>
       <div className="container">
         <div className="cta-banner" data-aos="zoom-in">
           <div>

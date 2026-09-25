@@ -14,16 +14,19 @@ export async function POST(request: Request) {
   const course = String(body.course ?? "");
   const name = String(body.name ?? "").trim().replace(/\s+/g, " ");
   const phone = String(body.phone ?? "").replace(/\D/g, "").replace(/^91(?=\d{10}$)/, "");
+  const email = String(body.email ?? "").trim().slice(0, 190);
+  const message = String(body.message ?? "").trim().slice(0, 1000);
 
   if (!allowedCourses.has(course)) return fail("Please select a course.");
   if (name.length < 2 || name.length > 100) return fail("Please enter your full name.");
   if (!/^[6-9]\d{9}$/.test(phone)) return fail("Please enter a valid 10-digit mobile number.");
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail("Please enter a valid email address.");
   if (!checkCaptcha(String(body.captchaToken ?? ""), String(body.captchaAnswer ?? ""))) {
     return fail("That answer doesn't match. Please try the new question.", "captcha");
   }
 
   try {
-    await saveDemoRequest({ course, name, phone, page: String(body.page ?? "").slice(0, 255) });
+    await saveDemoRequest({ course, name, phone, email, message, page: String(body.page ?? "").slice(0, 255) });
   } catch (err) {
     console.error("Saving demo request failed:", err);
     return NextResponse.json(

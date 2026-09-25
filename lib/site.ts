@@ -10,8 +10,8 @@ export const site = {
   whatsapp: "919888122254",
   email: "info@techcadd.com",
   hours: "Mon–Sat, 9 AM – 7 PM",
-  address: "2nd Floor, Crystal Plaza, SCS 78, Opposite PIMS Hospital, Jalandhar, Punjab 144001",
-  mapUrl: "https://www.google.com/maps/search/?api=1&query=techcadd+Crystal+Plaza+Jalandhar",
+  address: "Opp. All India Radio Station, Near Bus Stand, New Jawahar Nagar, Jawahar Nagar, Jalandhar, Punjab 144001",
+  mapUrl: "https://www.google.com/maps/search/?api=1&query=techcadd+New+Jawahar+Nagar+Jalandhar",
   social: {
     instagram: "https://www.instagram.com/",
     youtube: "https://www.youtube.com/",

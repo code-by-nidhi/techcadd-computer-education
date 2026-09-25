@@ -2444,7 +2444,10 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 
 /* "Meet the Team" intro — components/TeamIntro.tsx, /about/our-team only. Always dark (own design
    brief), padding matches the 120px top/bottom the request specified explicitly. */
-.team-intro { position: relative; overflow: hidden; padding-top: 120px; padding-bottom: 120px; }
+.team-intro {
+  position: relative; overflow: hidden; padding-top: 120px; padding-bottom: 120px;
+  background: linear-gradient(135deg, #050b1d, #081b3a, #0f2e6d);
+}
 .team-intro-grid-bg {
   position: absolute; inset: 0; opacity: 0.05; pointer-events: none;
   background-image: linear-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
@@ -2481,11 +2484,16 @@ html:has(.demo-modal[open]) { overflow: hidden; }
    this section leads into, just with a generic silhouette + huge faded role text in place of a real
    photo (see lib/teamIntroData.ts for why: this repo has no staff photos anywhere).
    Infinite carousel: .team-preview-track renders the card list twice back to back and slides from
-   0 to -50% of its own width — since the second half is an exact copy of the first, the loop point
-   is invisible. Hovering the row (not just a single card) pauses the whole track so a card can
-   actually be read/clicked without it sliding away mid-hover. */
+   0 to -50% of its own width via a plain CSS transform keyframe (no JS interval/rAF loop) — since
+   the second half is an exact copy of the first and the flex `gap` is identical in both halves, 50%
+   of the track's width is exactly one full set, so the loop point is invisible. Hovering the row
+   (not just a single card) pauses the whole track so a card can actually be read without it sliding
+   away mid-hover. */
 .team-preview-row { position: relative; z-index: 1; overflow: hidden; padding: 24px 0; }
-.team-preview-track { display: flex; width: max-content; animation: team-preview-scroll 32s linear infinite; }
+.team-preview-track {
+  display: flex; align-items: center; gap: 32px; width: max-content;
+  animation: team-preview-scroll 26s linear infinite;
+}
 .team-preview-row:hover .team-preview-track { animation-play-state: paused; }
 @keyframes team-preview-scroll {
   from { transform: translateX(0); }
@@ -2493,14 +2501,13 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 }
 .team-preview-card {
   position: relative; flex: 0 0 auto; overflow: hidden;
-  width: 168px; height: 560px; margin-left: -28px; border-radius: 120px 120px 20px 20px;
+  width: 180px; height: 600px; border-radius: 130px 130px 20px 20px;
   background: linear-gradient(165deg, rgba(0, 212, 255, 0.22) 0%, rgba(10, 30, 90, 0.9) 45%, rgba(5, 11, 29, 0.95) 100%);
   border: 1px solid rgba(0, 212, 255, 0.25);
   box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.7);
   animation: team-preview-float 6s ease-in-out infinite;
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, z-index 0.35s ease;
 }
-.team-preview-track > .team-preview-card:first-child { margin-left: 0; }
 @keyframes team-preview-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
@@ -2512,19 +2519,28 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   0%, 100% { transform: translateY(10px); }
   50% { transform: translateY(-4px); }
 }
+/* Hover: lift, cyan border glow, and a brighter fill — a layered ::before (rather than transitioning
+   the gradient itself, which browsers can't interpolate smoothly) fades in a higher-opacity version
+   of the same gradient so the card reads as "lit up" without changing its base colors. */
+.team-preview-card::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; opacity: 0;
+  background: linear-gradient(165deg, rgba(0, 212, 255, 0.42) 0%, rgba(10, 30, 90, 0.96) 45%, rgba(5, 11, 29, 0.96) 100%);
+  transition: opacity 0.35s ease;
+}
 .team-preview-card:hover {
   transform: translateY(-10px) scale(1.04);
   border-color: rgba(0, 212, 255, 0.7);
   box-shadow: 0 20px 50px -16px rgba(0, 212, 255, 0.5), 0 30px 60px -28px rgba(0, 0, 0, 0.7);
   z-index: 5; animation-play-state: paused;
 }
+.team-preview-card:hover::before { opacity: 1; }
 .team-preview-bg-text {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -46%) rotate(-90deg); transform-origin: center;
   font-size: 2.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
-  color: rgba(255, 255, 255, 0.07); pointer-events: none;
+  color: rgba(255, 255, 255, 0.07); pointer-events: none; z-index: 1;
 }
 .team-preview-photo {
-  position: absolute; left: 50%; bottom: 54px; width: 92px; height: 116px; transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: 54px; width: 92px; height: 116px; transform: translateX(-50%); z-index: 1;
   color: rgba(0, 212, 255, 0.5);
   transition: transform 0.35s ease, color 0.35s ease;
 }
@@ -2535,18 +2551,412 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   background: linear-gradient(0deg, rgba(0, 8, 30, 0.85), transparent); font-size: 12.5px; font-weight: 700; color: #fff;
 }
 
+/* Card + gap sizes step down per breakpoint so the row keeps roughly 5-6 cards visible on desktop,
+   3-4 on tablet and a 1.2-1.5-card "peek" on mobile, with no horizontal overflow (.team-preview-row
+   clips it) at any width. */
 @media (max-width: 960px) {
   .team-intro-inner { grid-template-columns: 1fr; text-align: center; }
   .team-intro-copy p { margin-inline: auto; }
   .team-intro-stats, .team-intro-actions { justify-content: center; }
   .team-preview-row { margin-top: 3rem; }
+  .team-preview-track { gap: 24px; animation-duration: 22s; }
+  .team-preview-card { width: 150px; height: 460px; border-radius: 100px 100px 18px 18px; }
+  .team-preview-bg-text { font-size: 2.1rem; }
+  .team-preview-photo { width: 78px; height: 98px; bottom: 44px; }
 }
 @media (max-width: 640px) {
   .team-intro { padding-top: 72px; padding-bottom: 72px; }
-  .team-preview-card { width: 140px; height: 440px; border-radius: 90px 90px 16px 16px; }
+  .team-preview-track { gap: 18px; animation-duration: 18s; }
+  .team-preview-card { width: 210px; height: 440px; border-radius: 95px 95px 16px 16px; }
   .team-preview-bg-text { font-size: 2rem; }
   .team-preview-photo { width: 74px; height: 92px; bottom: 42px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .team-intro-particle, .team-preview-track, .team-preview-card, .team-preview-photo, .team-intro-btn-glass { transition: none; animation: none; }
+  .team-intro-particle, .team-preview-track, .team-preview-card, .team-preview-card::before, .team-preview-photo, .team-intro-btn-glass { transition: none; animation: none; }
+}
+
+/* "Support & Assistance" — components/ContactSupport.tsx, /contact only, right after the (dark)
+   PageHero. Uses its own scoped accent pair (#1e88ff/#00d4ff, the same cyan already used on the
+   About dark sections) rather than touching the sitewide --brand/--ink tokens. */
+.support-section { background: #f8faff; padding: 120px 0 64px; }
+.support-section .container { max-width: 1400px; }
+.support-section h2 { color: #050b1d; }
+
+.support-panel {
+  position: relative; margin-top: 3rem; display: grid; grid-template-columns: 30% 1fr;
+  border-radius: 24px; overflow: hidden; background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 30px 70px -40px rgba(10, 50, 184, 0.25);
+}
+
+.support-tabs {
+  display: flex; flex-direction: column; gap: 14px; padding: 32px 24px;
+  background: linear-gradient(165deg, #0a32b8 0%, #001450 100%);
+}
+.support-tab {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14); background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.75); font-weight: 600; font-size: 0.95rem; font-family: inherit;
+  text-align: left; cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.support-tab:hover { transform: translateX(4px); background: rgba(255, 255, 255, 0.1); color: #fff; }
+.support-tab.is-active {
+  background: linear-gradient(135deg, #1e88ff, #00d4ff); border-color: transparent; color: #001450;
+  box-shadow: 0 14px 30px -12px rgba(0, 212, 255, 0.55);
+}
+.support-tab-icon { display: inline-flex; width: 22px; height: 22px; flex: none; }
+.support-tab-icon svg { width: 100%; height: 100%; }
+
+/* Re-mounting on tab change (via the `key={tab.id}` in ContactSupport.tsx) re-triggers this fade +
+   slide-up each time, giving a smooth tab-switch transition with plain CSS (no animation library). */
+.support-content { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: start; padding: 44px 40px; animation: support-fade 0.45s ease; }
+@keyframes support-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.support-content-avatar {
+  width: 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1e88ff, #00d4ff); color: #fff;
+  box-shadow: 0 14px 30px -12px rgba(30, 136, 255, 0.5); flex: none;
+}
+.support-content-avatar svg { width: 40px; height: 40px; }
+.support-content-subtitle { display: block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #1e88ff; margin-bottom: 0.4rem; }
+.support-content-body h3 { margin: 0 0 0.6rem; color: #050b1d; }
+.support-content-body > p { color: var(--muted); max-width: 56ch; }
+
+.support-contact-list { list-style: none; margin: 1.4rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.support-contact-list li { display: flex; gap: 0.6rem; align-items: baseline; font-size: 0.92rem; }
+.support-contact-label { min-width: 74px; flex: none; font-weight: 700; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.support-contact-list a { color: #050b1d; font-weight: 600; }
+.support-contact-list a:hover { color: #1e88ff; }
+
+.support-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 1.8rem; }
+.support-action {
+  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; border-radius: 999px;
+  font-weight: 700; font-size: 0.9rem; color: #fff; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.support-action svg { width: 18px; height: 18px; }
+.support-action:hover { transform: translateY(-3px) scale(1.03); }
+.support-action-call { background: linear-gradient(135deg, #1e88ff, #0a32b8); }
+.support-action-whatsapp { background: linear-gradient(135deg, #25d366, #128c4a); }
+.support-action-email { background: linear-gradient(135deg, #fcd000, #f0c000); color: #001450; }
+
+@media (max-width: 860px) {
+  .support-panel { grid-template-columns: 1fr; }
+  .support-tabs { flex-direction: row; overflow-x: auto; padding: 18px; gap: 10px; -webkit-overflow-scrolling: touch; }
+  .support-tab { flex: none; white-space: nowrap; }
+  .support-content { grid-template-columns: 1fr; text-align: center; padding: 32px 24px; }
+  .support-content-avatar { margin: 0 auto; }
+  .support-contact-list { align-items: center; }
+  .support-contact-list li { flex-direction: column; gap: 0.2rem; }
+  .support-actions { justify-content: center; }
+}
+@media (max-width: 640px) {
+  .support-section { padding: 72px 0 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .support-content, .support-tab, .support-action { transition: none; animation: none; }
+}
+
+/* "Schedule Virtual Counselling" banner — components/ContactSchedule.tsx, right after the
+   Support & Assistance section on /contact. Same scoped blue/cyan accent pair as .support-section. */
+.schedule-standalone { padding: 0 0 64px; background: #fff; }
+.schedule-banner {
+  position: relative; display: flex; align-items: center; gap: 24px;
+  padding: 28px 32px; border-radius: 20px; background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 20px 50px -30px rgba(10, 50, 184, 0.3); overflow: hidden;
+}
+.schedule-banner::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #1e88ff, #00d4ff);
+}
+.schedule-icon {
+  display: flex; align-items: center; justify-content: center; flex: none; width: 52px; height: 52px;
+  border-radius: 14px; background: #e8f1ff; color: #1e88ff;
+}
+.schedule-icon svg { width: 26px; height: 26px; }
+.schedule-body { flex: 1; }
+.schedule-body h3 { margin: 0 0 0.3rem; font-size: 1.15rem; color: #050b1d; }
+.schedule-body p { margin: 0; color: var(--muted); font-size: 0.92rem; max-width: 56ch; }
+.schedule-cta {
+  display: inline-flex; align-items: center; gap: 0.5rem; flex: none; padding: 0.85rem 1.6rem;
+  border-radius: 999px; background: linear-gradient(135deg, #1e88ff, #0a32b8); color: #fff;
+  font-weight: 700; font-size: 0.92rem; white-space: nowrap;
+  box-shadow: 0 14px 30px -14px rgba(30, 136, 255, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.schedule-cta svg { width: 16px; height: 16px; }
+.schedule-cta:hover { transform: translateY(-3px) scale(1.03); }
+
+@media (max-width: 720px) {
+  .schedule-banner { flex-direction: column; text-align: center; padding: 28px 24px; }
+  .schedule-body p { max-width: 44ch; margin-inline: auto; }
+  .schedule-cta { width: 100%; justify-content: center; }
+}
+@media (max-width: 640px) {
+  .schedule-standalone { padding: 0 0 40px; }
+}
+
+/* Final CTA form section — components/ContactCtaForm.tsx, right after the schedule banner on
+   /contact. Always dark (own design brief), same scoped #1e88ff/#00d4ff accent pair as the other
+   new /contact sections above. Posts to the real /api/demo backend — see that component's comment. */
+.contact-cta { padding: 100px 0; }
+.contact-cta-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: start; }
+
+.contact-cta-highlight { color: #00d4ff; }
+
+.contact-cta-subhead { margin: 2rem 0 0; font-size: 1rem; font-weight: 700; color: rgba(255, 255, 255, 0.92); }
+.contact-cta-steps { list-style: none; display: flex; flex-direction: column; gap: 14px; margin: 1rem 0 0; padding: 0; }
+.contact-cta-steps li { display: flex; align-items: flex-start; gap: 14px; font-size: 0.95rem; line-height: 1.55; color: rgba(255, 255, 255, 0.78); }
+.contact-cta-step-num {
+  flex: none; display: flex; align-items: center; justify-content: center; width: 26px; height: 26px;
+  border-radius: 8px; background: linear-gradient(135deg, #1e88ff, #00d4ff); color: #001450;
+  font-weight: 800; font-size: 0.8rem;
+}
+
+.contact-cta-fallback {
+  margin: 1.8rem 0 0; padding-top: 1.4rem; border-top: 1px solid rgba(255, 255, 255, 0.14);
+  max-width: 52ch; font-size: 0.9rem; color: rgba(255, 255, 255, 0.65);
+}
+.contact-cta-fallback a { color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+
+.contact-cta-trust { margin-top: 2.2rem; }
+.contact-cta-trust-label {
+  position: relative; display: block; margin-bottom: 0.8rem; padding-left: 14px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.55);
+}
+.contact-cta-trust-label::before {
+  content: ""; position: absolute; left: 0; top: 1px; bottom: 1px; width: 3px; border-radius: 2px; background: #00d4ff;
+}
+.contact-cta-trust-stats { display: flex; flex-wrap: wrap; gap: 8px 0; font-size: 0.9rem; font-weight: 700; color: #fff; }
+.contact-cta-trust-stats span { position: relative; padding-right: 24px; }
+.contact-cta-trust-stats span:not(:last-child)::after {
+  content: ""; position: absolute; right: 10px; top: 50%; width: 4px; height: 4px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35); transform: translateY(-50%);
+}
+
+.contact-cta-panel {
+  position: relative; padding: 44px 40px; border-radius: 24px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+.contact-cta-panel h3 { margin: 0 0 1.6rem; font-size: 1.15rem; line-height: 1.4; }
+
+.contact-cta-form { display: grid; gap: 26px; }
+.contact-cta-field { position: relative; display: block; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.22); transition: border-color 0.25s ease; }
+.contact-cta-field:focus-within { border-color: #00d4ff; }
+.contact-cta-field input, .contact-cta-field select, .contact-cta-field textarea {
+  width: 100%; background: transparent; border: 0; outline: 0; resize: none;
+  color: #fff; font: inherit; font-size: 0.95rem; padding: 6px 0;
+}
+.contact-cta-field textarea { line-height: 1.5; }
+.contact-cta-field input::placeholder, .contact-cta-field textarea::placeholder { color: rgba(255, 255, 255, 0.55); font-weight: 600; }
+.contact-cta-field select {
+  appearance: none; cursor: pointer; padding-right: 22px; color: rgba(255, 255, 255, 0.55); font-weight: 600;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5 6 7.5 9 4.5' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 2px center; background-size: 12px;
+}
+.contact-cta-field select:valid { color: #fff; }
+.contact-cta-field select option { color: var(--ink); }
+.contact-cta-field-phone { display: flex; align-items: center; gap: 10px; }
+.contact-cta-phone-prefix { flex: none; padding-right: 10px; border-right: 1px solid rgba(255, 255, 255, 0.22); font-size: 0.9rem; font-weight: 700; color: rgba(255, 255, 255, 0.75); }
+.contact-cta-field-phone input { flex: 1; }
+
+.contact-cta-captcha { display: flex; flex-direction: column; gap: 10px; }
+.contact-cta-captcha > span { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); }
+.contact-cta-captcha-row { display: flex; align-items: center; gap: 12px; }
+.contact-cta-captcha-row output {
+  min-width: 96px; height: 36px; display: grid; place-items: center; padding: 0 14px; border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.06); font-weight: 700; letter-spacing: 0.06em;
+}
+.contact-cta-captcha-row button {
+  width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 14px; cursor: pointer;
+  transition: transform 0.25s ease, background 0.2s ease;
+}
+.contact-cta-captcha-row button:hover { background: rgba(255, 255, 255, 0.16); transform: rotate(90deg); }
+.contact-cta-captcha input {
+  width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  outline: 0; color: #fff; font: inherit; font-size: 0.95rem; padding: 6px 0; transition: border-color 0.25s ease;
+}
+.contact-cta-captcha input::placeholder { color: rgba(255, 255, 255, 0.55); font-weight: 600; }
+.contact-cta-captcha input:focus { border-color: #00d4ff; }
+
+.contact-cta-error { padding: 10px 14px; border-radius: 10px; background: rgba(255, 90, 90, 0.12); border: 1px solid rgba(255, 90, 90, 0.4); color: #ffb3b3; font-size: 0.85rem; }
+
+.contact-cta-submit {
+  justify-self: start; display: inline-flex; align-items: center; gap: 0.5rem; height: 52px; padding: 0 32px;
+  border: 0; border-radius: 999px; background: linear-gradient(135deg, #1e88ff, #0a32b8); color: #fff;
+  font: inherit; font-weight: 700; font-size: 0.95rem; cursor: pointer;
+  box-shadow: 0 14px 30px -14px rgba(30, 136, 255, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.contact-cta-submit svg { width: 16px; height: 16px; }
+.contact-cta-submit:hover { transform: translateY(-3px) scale(1.02); }
+.contact-cta-submit:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
+.contact-cta-note { margin: 4px 0 0; font-size: 0.82rem; color: rgba(255, 255, 255, 0.55); }
+
+.contact-cta-done { padding: 40px 0; text-align: center; }
+.contact-cta-done h3 { margin: 0 0 0.6rem; }
+.contact-cta-done p { margin: 0 0 1.4rem; color: rgba(255, 255, 255, 0.7); }
+
+@media (max-width: 900px) {
+  .contact-cta-grid { grid-template-columns: 1fr; gap: 48px; }
+  .contact-cta-panel { padding: 32px 24px; }
+}
+@media (max-width: 640px) {
+  .contact-cta { padding: 64px 0; }
+  .contact-cta-submit { width: 100%; justify-content: center; }
+  .contact-cta-trust-stats { flex-direction: column; gap: 8px; }
+  .contact-cta-trust-stats span:not(:last-child)::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-cta-field, .contact-cta-captcha input, .contact-cta-captcha-row button, .contact-cta-submit { transition: none; }
+}
+
+/* "Why TechCadd Works" — components/WhyTechcadd.tsx, /contact only, right after the
+   ContactCtaForm "Take the first step..." section. White/light section (unlike the other new
+   /contact sections above, which are dark) — top padding is intentionally lighter than the spec's
+   literal 120px since .contact-cta right above it already carries 100px of its own bottom padding;
+   stacking two full paddings was exactly the "too much space" issue already fixed once on this page. */
+.why-tc { padding: 40px 0 100px; background: #fff; }
+.why-tc .container { max-width: 1400px; }
+
+.why-tc-grid { margin-top: 3.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; align-items: stretch; }
+.why-tc-card {
+  position: relative; display: flex; flex-direction: column; height: 100%;
+  border-radius: 28px; padding: 36px 32px;
+  box-shadow: 0 24px 60px -36px rgba(10, 50, 184, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.why-tc-card:hover { transform: translateY(-8px); }
+.why-tc-card h3 { margin: 0 0 0.7rem; font-size: 1.3rem; }
+.why-tc-card > p { margin: 0; font-size: 0.95rem; line-height: 1.6; }
+
+/* Card 1 — Real Results: white, blue border-glow on hover, counters pinned to the bottom so all
+   three cards read as equal height regardless of copy length. */
+.why-tc-card-outcomes { background: #fff; border: 1px solid var(--line); color: #050b1d; }
+.why-tc-card-outcomes:hover { border-color: #1e88ff; box-shadow: 0 24px 60px -30px rgba(30, 136, 255, 0.45); }
+.why-tc-card-outcomes > p { color: var(--muted); }
+.why-tc-stats { display: flex; gap: 28px; margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); }
+.why-tc-stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.why-tc-stat strong {
+  font-size: 1.9rem; font-weight: 800; background: linear-gradient(135deg, #1e88ff, #00d4ff);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.why-tc-stat span { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+
+/* Card 2 — Learn by Building: the accent gradient the spec asked for, with the site's own real
+   course-category icons (lib/courses.ts) floating above the copy instead of invented illustrations. */
+.why-tc-card-build { background: linear-gradient(150deg, #1e88ff 0%, #00d4ff 100%); color: #fff; overflow: hidden; }
+.why-tc-card-build > p { color: rgba(255, 255, 255, 0.9); }
+.why-tc-build-icons { position: relative; height: 56px; margin-bottom: 1.1rem; }
+.why-tc-float-icon {
+  position: absolute; top: 6px; font-size: 1.6rem; line-height: 1;
+  filter: drop-shadow(0 8px 14px rgba(5, 11, 29, 0.28));
+  animation: why-tc-float 5s ease-in-out infinite;
+}
+.why-tc-float-icon-0 { left: 0%; animation-delay: 0s; }
+.why-tc-float-icon-1 { left: 20%; top: 18px; animation-delay: 0.6s; }
+.why-tc-float-icon-2 { left: 40%; animation-delay: 1.1s; }
+.why-tc-float-icon-3 { left: 60%; top: 22px; animation-delay: 1.6s; }
+.why-tc-float-icon-4 { left: 80%; animation-delay: 2.1s; }
+@keyframes why-tc-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Card 3 — Career Growth Support: light blue glass card, checklist + a real "call the counsellor"
+   CTA (tel:, same real phone as the rest of the site). */
+.why-tc-card-career { background: linear-gradient(160deg, rgba(30, 136, 255, 0.08), rgba(0, 212, 255, 0.05)); border: 1px solid rgba(30, 136, 255, 0.18); color: #050b1d; }
+.why-tc-card-career > p { color: var(--muted); }
+.why-tc-checklist { list-style: none; margin: 1.2rem 0 auto; padding: 0; display: flex; flex-direction: column; gap: 0.65rem; }
+.why-tc-checklist li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.92rem; font-weight: 600; color: #050b1d; }
+.why-tc-checklist li::before {
+  content: "✓"; flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%; background: #1e88ff; color: #fff; font-size: 0.7rem; font-weight: 800;
+}
+.why-tc-cta {
+  margin-top: 1.6rem; align-self: flex-start; display: inline-flex; align-items: center; justify-content: center;
+  height: 48px; padding: 0 28px; border-radius: 999px; background: #ffd200; color: #050b1d;
+  font-weight: 700; font-size: 0.92rem; box-shadow: 0 14px 30px -16px rgba(255, 210, 0, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.why-tc-cta:hover { transform: translateY(-3px) scale(1.02); }
+
+@media (max-width: 960px) {
+  .why-tc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .why-tc { padding: 40px 0 64px; }
+  .why-tc-grid { grid-template-columns: 1fr; gap: 24px; }
+  .why-tc-card { padding: 28px 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .why-tc-card, .why-tc-cta { transition: none; }
+  .why-tc-float-icon { animation: none; }
+}
+
+/* "Find Us" — components/ContactMap.tsx, /contact only, right before the footer. A real live
+   Google Maps embed (no API key required for the q=...&output=embed form) + the same real contact
+   details used throughout this page. Slightly tinted background (not pure white) so it doesn't read
+   as one continuous block with .why-tc directly above it, which is also light. */
+.find-us { padding: 40px 0 100px; background: var(--bg-alt); }
+.find-us-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: stretch; }
+
+.find-us-map {
+  position: relative; min-height: 420px; border-radius: 24px; overflow: hidden;
+  border: 1px solid var(--line); box-shadow: 0 24px 60px -36px rgba(10, 50, 184, 0.25); background: #fff;
+}
+.find-us-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+
+.find-us-panel { display: flex; flex-direction: column; gap: 20px; }
+.find-us-info { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; }
+.find-us-card {
+  display: flex; gap: 14px; align-items: flex-start; padding: 22px 20px; border-radius: 20px;
+  background: #fff; border: 1px solid var(--line);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.find-us-card:hover { transform: translateY(-4px); border-color: #1e88ff; box-shadow: 0 20px 40px -28px rgba(30, 136, 255, 0.4); }
+.find-us-icon {
+  flex: none; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px;
+  border-radius: 12px; background: #e8f1ff; color: #1e88ff;
+}
+.find-us-icon svg { width: 18px; height: 18px; }
+.find-us-label { display: block; margin-bottom: 0.3rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.find-us-card p { margin: 0 0 0.4rem; font-size: 0.9rem; line-height: 1.5; color: #050b1d; }
+.find-us-card p a { color: #050b1d; font-weight: 600; }
+.find-us-card .link-arrow { font-size: 0.85rem; }
+
+.find-us-whatsapp {
+  display: flex; align-items: center; gap: 16px; padding: 20px 24px; border-radius: 20px;
+  background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.find-us-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -24px rgba(37, 211, 102, 0.5); }
+.find-us-whatsapp-icon {
+  flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+  border-radius: 12px; background: linear-gradient(135deg, #25d366, #128c4a); color: #fff;
+}
+.find-us-whatsapp-icon svg { width: 22px; height: 22px; }
+.find-us-whatsapp-text { flex: 1; display: flex; flex-direction: column; gap: 0.15rem; }
+.find-us-whatsapp-text strong { font-size: 1rem; color: #128c4a; }
+.find-us-whatsapp-text span { font-size: 0.85rem; color: var(--muted); }
+.find-us-whatsapp svg:last-child { flex: none; width: 16px; height: 16px; color: #128c4a; }
+
+@media (max-width: 960px) {
+  .find-us-grid { grid-template-columns: 1fr; }
+  .find-us-map { min-height: 320px; }
+}
+@media (max-width: 640px) {
+  .find-us { padding: 32px 0 64px; }
+  .find-us-info { grid-template-columns: 1fr; }
+  .find-us-map { min-height: 260px; }
+  .find-us-whatsapp { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .find-us-card, .find-us-whatsapp { transition: none; }
 }

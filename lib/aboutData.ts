@@ -336,45 +336,13 @@ export const aboutData: Record<string, AboutPageData> = {
       "Every trainer at techcadd still works in the field they teach, so what you learn in the lab is what " +
       "they're doing in their own jobs this week.",
     heroImage: "/about-menu/our-team.jpg",
-    sections: [
-      {
-        id: "trainers",
-        eyebrow: "Certified trainers",
-        heading: "Practitioners first, instructors second",
-        body: [
-          "Small batches and daily doubt-clearing sessions mean you get one-on-one time with trainers who are " +
-            "actively working accountants, CAD engineers, designers and digital marketers — not people reading " +
-            "off a slide deck.",
-        ],
-      },
-      {
-        eyebrow: "Coverage",
-        heading: "Trainers across every track we teach",
-        points: [
-          "Accounting — Tally Prime, BUSY, GST returns and Advanced Excel",
-          "Civil / Mechanical CAD — AutoCAD, SolidWorks, CATIA, Revit, 3ds Max, Fusion 360",
-          "Digital Marketing — Google Ads, Meta Ads, Analytics, SEO",
-          "Graphic Design — Photoshop, Illustrator, CorelDRAW, InDesign",
-        ],
-      },
-      {
-        eyebrow: "Support",
-        heading: "Placement cell",
-        body: [
-          "Our placement cell works alongside the training team with 500+ hiring partners — CA firms, " +
-            "architects, manufacturers, agencies and print houses — running resume reviews, mock interviews " +
-            "and regular placement drives.",
-        ],
-      },
-    ],
-    stats: [
-      { value: "500+", label: "Hiring partners" },
-      { value: "25,000+", label: "Students trained" },
-    ],
-    gallery: [
-      { image: "/about-menu/our-team.jpg", caption: "Our trainers" },
-      { image: "/about-menu/about-techcadd.jpg", caption: "Daily practicals" },
-    ],
+    // The generic sections/stats/gallery/closing CtaBanner that used to fill out the rest of this
+    // page were removed (in three separate requests) once components/TeamIntro.tsx + a mid-page
+    // LeadCta/CtaStrip pair (see app/about/[slug]/page.tsx, hasTeamIntro) took over as the page's
+    // real content and closing CTA — nothing left over to show here.
+    sections: [],
+    stats: [],
+    gallery: [],
     seo: {
       title: "Our Team",
       description: "Meet techcadd's trainers — working accountants, CAD engineers, designers and marketers.",

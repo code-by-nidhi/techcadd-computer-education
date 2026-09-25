@@ -20,7 +20,10 @@ export const teamIntro = {
   badge: "Our People",
   heading: "Meet the experts behind techcadd",
   text: "The trainers, mentors, counsellors and industry professionals who guide students from learning to employment.",
-  primaryCta: { label: "Meet Our Trainers", href: "#trainers" },
+  // Was an in-page anchor (#trainers) to the "Certified trainers" section, which was removed from
+  // this page — repointed to the real courses listing (what these trainers actually teach) instead
+  // of leaving a dead link.
+  primaryCta: { label: "Meet Our Trainers", href: "/courses" },
   secondaryCta: { label: "Talk to a Counsellor", href: site.phoneHref },
   stats: [
     { value: "25,000+", label: "Students Trained" },

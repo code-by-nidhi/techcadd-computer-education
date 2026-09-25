@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/lib/site";
 import { PageHero } from "@/components/Sections";
 import EnquiryForm from "@/components/EnquiryForm";
+import ContactSupport from "@/components/ContactSupport";
 
 export const metadata: Metadata = { title: "Contact Us" };
 
@@ -9,6 +10,8 @@ export default function ContactPage() {
   return (
     <>
       <PageHero crumb="Contact" title="Contact Us" text="Talk to a counsellor today — free career counselling, no registration fee." />
+
+      <ContactSupport />
 
       <section className="section">
         <div className="container detail-grid">

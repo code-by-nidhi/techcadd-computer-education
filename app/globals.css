@@ -2104,7 +2104,10 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 
 /* "Meet the Team" intro — components/TeamIntro.tsx, /about/our-team only. Always dark (own design
    brief), padding matches the 120px top/bottom the request specified explicitly. */
-.team-intro { position: relative; overflow: hidden; padding-top: 120px; padding-bottom: 120px; }
+.team-intro {
+  position: relative; overflow: hidden; padding-top: 120px; padding-bottom: 120px;
+  background: linear-gradient(135deg, #050b1d, #081b3a, #0f2e6d);
+}
 .team-intro-grid-bg {
   position: absolute; inset: 0; opacity: 0.05; pointer-events: none;
   background-image: linear-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
@@ -2141,11 +2144,16 @@ html:has(.demo-modal[open]) { overflow: hidden; }
    this section leads into, just with a generic silhouette + huge faded role text in place of a real
    photo (see lib/teamIntroData.ts for why: this repo has no staff photos anywhere).
    Infinite carousel: .team-preview-track renders the card list twice back to back and slides from
-   0 to -50% of its own width — since the second half is an exact copy of the first, the loop point
-   is invisible. Hovering the row (not just a single card) pauses the whole track so a card can
-   actually be read/clicked without it sliding away mid-hover. */
+   0 to -50% of its own width via a plain CSS transform keyframe (no JS interval/rAF loop) — since
+   the second half is an exact copy of the first and the flex `gap` is identical in both halves, 50%
+   of the track's width is exactly one full set, so the loop point is invisible. Hovering the row
+   (not just a single card) pauses the whole track so a card can actually be read without it sliding
+   away mid-hover. */
 .team-preview-row { position: relative; z-index: 1; overflow: hidden; padding: 24px 0; }
-.team-preview-track { display: flex; width: max-content; animation: team-preview-scroll 32s linear infinite; }
+.team-preview-track {
+  display: flex; align-items: center; gap: 32px; width: max-content;
+  animation: team-preview-scroll 26s linear infinite;
+}
 .team-preview-row:hover .team-preview-track { animation-play-state: paused; }
 @keyframes team-preview-scroll {
   from { transform: translateX(0); }
@@ -2153,14 +2161,13 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 }
 .team-preview-card {
   position: relative; flex: 0 0 auto; overflow: hidden;
-  width: 168px; height: 560px; margin-left: -28px; border-radius: 120px 120px 20px 20px;
+  width: 180px; height: 600px; border-radius: 130px 130px 20px 20px;
   background: linear-gradient(165deg, rgba(0, 212, 255, 0.22) 0%, rgba(10, 30, 90, 0.9) 45%, rgba(5, 11, 29, 0.95) 100%);
   border: 1px solid rgba(0, 212, 255, 0.25);
   box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.7);
   animation: team-preview-float 6s ease-in-out infinite;
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, z-index 0.35s ease;
 }
-.team-preview-track > .team-preview-card:first-child { margin-left: 0; }
 @keyframes team-preview-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
@@ -2172,19 +2179,28 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   0%, 100% { transform: translateY(10px); }
   50% { transform: translateY(-4px); }
 }
+/* Hover: lift, cyan border glow, and a brighter fill — a layered ::before (rather than transitioning
+   the gradient itself, which browsers can't interpolate smoothly) fades in a higher-opacity version
+   of the same gradient so the card reads as "lit up" without changing its base colors. */
+.team-preview-card::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; opacity: 0;
+  background: linear-gradient(165deg, rgba(0, 212, 255, 0.42) 0%, rgba(10, 30, 90, 0.96) 45%, rgba(5, 11, 29, 0.96) 100%);
+  transition: opacity 0.35s ease;
+}
 .team-preview-card:hover {
   transform: translateY(-10px) scale(1.04);
   border-color: rgba(0, 212, 255, 0.7);
   box-shadow: 0 20px 50px -16px rgba(0, 212, 255, 0.5), 0 30px 60px -28px rgba(0, 0, 0, 0.7);
   z-index: 5; animation-play-state: paused;
 }
+.team-preview-card:hover::before { opacity: 1; }
 .team-preview-bg-text {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -46%) rotate(-90deg); transform-origin: center;
   font-size: 2.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
-  color: rgba(255, 255, 255, 0.07); pointer-events: none;
+  color: rgba(255, 255, 255, 0.07); pointer-events: none; z-index: 1;
 }
 .team-preview-photo {
-  position: absolute; left: 50%; bottom: 54px; width: 92px; height: 116px; transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: 54px; width: 92px; height: 116px; transform: translateX(-50%); z-index: 1;
   color: rgba(0, 212, 255, 0.5);
   transition: transform 0.35s ease, color 0.35s ease;
 }
@@ -2195,18 +2211,111 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   background: linear-gradient(0deg, rgba(0, 8, 30, 0.85), transparent); font-size: 12.5px; font-weight: 700; color: #fff;
 }
 
+/* Card + gap sizes step down per breakpoint so the row keeps roughly 5-6 cards visible on desktop,
+   3-4 on tablet and a 1.2-1.5-card "peek" on mobile, with no horizontal overflow (.team-preview-row
+   clips it) at any width. */
 @media (max-width: 960px) {
   .team-intro-inner { grid-template-columns: 1fr; text-align: center; }
   .team-intro-copy p { margin-inline: auto; }
   .team-intro-stats, .team-intro-actions { justify-content: center; }
   .team-preview-row { margin-top: 3rem; }
+  .team-preview-track { gap: 24px; animation-duration: 22s; }
+  .team-preview-card { width: 150px; height: 460px; border-radius: 100px 100px 18px 18px; }
+  .team-preview-bg-text { font-size: 2.1rem; }
+  .team-preview-photo { width: 78px; height: 98px; bottom: 44px; }
 }
 @media (max-width: 640px) {
   .team-intro { padding-top: 72px; padding-bottom: 72px; }
-  .team-preview-card { width: 140px; height: 440px; border-radius: 90px 90px 16px 16px; }
+  .team-preview-track { gap: 18px; animation-duration: 18s; }
+  .team-preview-card { width: 210px; height: 440px; border-radius: 95px 95px 16px 16px; }
   .team-preview-bg-text { font-size: 2rem; }
   .team-preview-photo { width: 74px; height: 92px; bottom: 42px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .team-intro-particle, .team-preview-track, .team-preview-card, .team-preview-photo, .team-intro-btn-glass { transition: none; animation: none; }
+  .team-intro-particle, .team-preview-track, .team-preview-card, .team-preview-card::before, .team-preview-photo, .team-intro-btn-glass { transition: none; animation: none; }
+}
+
+/* "Support & Assistance" — components/ContactSupport.tsx, /contact only, right after the (dark)
+   PageHero. Uses its own scoped accent pair (#1e88ff/#00d4ff, the same cyan already used on the
+   About dark sections) rather than touching the sitewide --brand/--ink tokens. */
+.support-section { background: #f8faff; padding: 120px 0; }
+.support-section .container { max-width: 1400px; }
+.support-section h2 { color: #050b1d; }
+
+.support-panel {
+  position: relative; margin-top: 3rem; display: grid; grid-template-columns: 30% 1fr;
+  border-radius: 24px; overflow: hidden; background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 30px 70px -40px rgba(10, 50, 184, 0.25);
+}
+
+.support-tabs {
+  display: flex; flex-direction: column; gap: 14px; padding: 32px 24px;
+  background: linear-gradient(165deg, #0a32b8 0%, #001450 100%);
+}
+.support-tab {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14); background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.75); font-weight: 600; font-size: 0.95rem; font-family: inherit;
+  text-align: left; cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.support-tab:hover { transform: translateX(4px); background: rgba(255, 255, 255, 0.1); color: #fff; }
+.support-tab.is-active {
+  background: linear-gradient(135deg, #1e88ff, #00d4ff); border-color: transparent; color: #001450;
+  box-shadow: 0 14px 30px -12px rgba(0, 212, 255, 0.55);
+}
+.support-tab-icon { display: inline-flex; width: 22px; height: 22px; flex: none; }
+.support-tab-icon svg { width: 100%; height: 100%; }
+
+/* Re-mounting on tab change (via the `key={tab.id}` in ContactSupport.tsx) re-triggers this fade +
+   slide-up each time, giving a smooth tab-switch transition with plain CSS (no animation library). */
+.support-content { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: start; padding: 44px 40px; animation: support-fade 0.45s ease; }
+@keyframes support-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.support-content-avatar {
+  width: 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1e88ff, #00d4ff); color: #fff;
+  box-shadow: 0 14px 30px -12px rgba(30, 136, 255, 0.5); flex: none;
+}
+.support-content-avatar svg { width: 40px; height: 40px; }
+.support-content-subtitle { display: block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #1e88ff; margin-bottom: 0.4rem; }
+.support-content-body h3 { margin: 0 0 0.6rem; color: #050b1d; }
+.support-content-body > p { color: var(--muted); max-width: 56ch; }
+
+.support-contact-list { list-style: none; margin: 1.4rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.support-contact-list li { display: flex; gap: 0.6rem; align-items: baseline; font-size: 0.92rem; }
+.support-contact-label { min-width: 74px; flex: none; font-weight: 700; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.support-contact-list a { color: #050b1d; font-weight: 600; }
+.support-contact-list a:hover { color: #1e88ff; }
+
+.support-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 1.8rem; }
+.support-action {
+  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; border-radius: 999px;
+  font-weight: 700; font-size: 0.9rem; color: #fff; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.support-action svg { width: 18px; height: 18px; }
+.support-action:hover { transform: translateY(-3px) scale(1.03); }
+.support-action-call { background: linear-gradient(135deg, #1e88ff, #0a32b8); }
+.support-action-whatsapp { background: linear-gradient(135deg, #25d366, #128c4a); }
+.support-action-email { background: linear-gradient(135deg, #fcd000, #f0c000); color: #001450; }
+
+@media (max-width: 860px) {
+  .support-panel { grid-template-columns: 1fr; }
+  .support-tabs { flex-direction: row; overflow-x: auto; padding: 18px; gap: 10px; -webkit-overflow-scrolling: touch; }
+  .support-tab { flex: none; white-space: nowrap; }
+  .support-content { grid-template-columns: 1fr; text-align: center; padding: 32px 24px; }
+  .support-content-avatar { margin: 0 auto; }
+  .support-contact-list { align-items: center; }
+  .support-contact-list li { flex-direction: column; gap: 0.2rem; }
+  .support-actions { justify-content: center; }
+}
+@media (max-width: 640px) {
+  .support-section { padding: 72px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .support-content, .support-tab, .support-action { transition: none; animation: none; }
 }

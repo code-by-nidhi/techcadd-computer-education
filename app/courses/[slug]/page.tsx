@@ -10,7 +10,8 @@ import EnquiryForm from "@/components/EnquiryForm";
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return courses.map((c) => ({ slug: c.slug }));
+  // basic-computer-course has its own page (app/courses/basic-computer-course).
+  return courses.filter((c) => c.slug !== "basic-computer-course").map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

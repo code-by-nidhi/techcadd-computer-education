@@ -37,9 +37,15 @@ export default function Aos() {
       AOS.refreshHard();
     };
     const schedule = () => {
+      // A longer delay plus a second animation frame gives streamed/Suspense-deferred segments more
+      // time to finish hydrating before AOS starts writing aos-init/aos-animate classes — narrows
+      // (can't fully close) the window where an above-the-fold data-aos node hydrates just as AOS
+      // touches it, which is what causes React's "tree hydrated but attributes didn't match" warning.
       timer = window.setTimeout(() => {
-        frame = requestAnimationFrame(start);
-      }, 120);
+        frame = requestAnimationFrame(() => {
+          frame = requestAnimationFrame(start);
+        });
+      }, 200);
     };
 
     if (document.readyState === "complete") schedule();

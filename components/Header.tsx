@@ -39,17 +39,14 @@ export default function Header() {
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
+  // These pages have a light hero, so at the very top of the page the bar is fully transparent with
+  // dark text/logo (merged into the hero) — see .header-light in globals.css. Once scrolled, every
+  // page (light-hero or not) gets the same dark glassmorphism pill, so header-light and is-scrolled
+  // are mutually exclusive: scrolling away from the top always drops header-light.
+  const isLightPage = pathname === "/" || pathname.startsWith("/about");
+
   return (
-    // These heroes are light, so the bar uses dark text there until it turns into the dark scrolled pill.
-    <header
-      className={`header ${
-        scrolled
-          ? "is-scrolled"
-          : pathname === "/" || pathname === "/about" || pathname === "/about/mission-vision"
-            ? "header-light"
-            : ""
-      }`}
-    >
+    <header className={`header ${scrolled ? "is-scrolled" : isLightPage ? "header-light" : ""}`}>
       <div className="header-bar">
         <div className="header-inner">
           <Link href="/" className="brand" aria-label={`${site.fullName} home`}>

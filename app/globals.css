@@ -88,16 +88,17 @@ p { margin: 0 0 1em; color: var(--muted); }
 .header-bar {
   position: relative; width: 100%; margin: 0 auto; color: #fff;
   background: transparent; border: 1px solid transparent;
-  transition: width 0.5s ease, border-radius 0.5s ease, background 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, width 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
 }
-.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; height: var(--header-h); max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); transition: height 0.5s ease, padding 0.5s ease; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; height: var(--header-h); max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); transition: height 0.3s ease, padding 0.3s ease; }
 .header.is-scrolled .header-bar {
   width: min(calc(var(--container) - 2 * var(--gutter)), calc(100% - 2 * var(--gutter))); border-radius: 999px;
-  /* Glass: translucent navy tint + blur + light edge highlight */
-  background: linear-gradient(180deg, rgba(0, 20, 80, 0.9), rgba(0, 12, 44, 0.84));
-  border-color: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(20px) saturate(170%); -webkit-backdrop-filter: blur(20px) saturate(170%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 12px 40px -14px rgba(0, 8, 30, 0.7);
+  /* Premium dark glassmorphism pill — same on every page once scrolled, light-hero or not. The
+     site's own navy blue (--navy/--navy-2), not flat near-black. */
+  background: linear-gradient(180deg, rgba(0, 20, 80, 0.92), rgba(0, 18, 74, 0.88));
+  border-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 40px rgba(0, 8, 30, 0.35);
 }
 .header.is-scrolled .header-inner { height: 64px; padding: 0 max(20px, var(--gutter)); }
 
@@ -275,25 +276,88 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
   .cert-card-icon, .cert-card-badge { transition: none; }
 }
 
-/* Trust / Google reviews card */
-.trust-card-wrap { max-width: 720px; margin: 0 auto; }
+/* Trust & Reviews — dark, decorative wrapper matching the rest of the site's dark-section language
+   (grid overlay, radial glows, floating particles). Always dark regardless of its position in the
+   page's light/dark alternation (see components/AboutBlocks.tsx AboutSections), since a premium
+   Google-reviews trust card is the whole point of this section's design brief. */
+.story-trust-section { position: relative; overflow: hidden; }
+.story-trust-grid-bg {
+  position: absolute; inset: 0; opacity: 0.05; pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.story-trust-glow { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+.story-trust-glow-1 { top: -120px; right: -60px; width: 460px; height: 460px; background: rgba(0, 212, 255, 0.2); }
+.story-trust-glow-2 { bottom: -140px; left: -80px; width: 380px; height: 380px; background: rgba(255, 210, 0, 0.1); }
+.story-trust-particle { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #00d4ff; filter: blur(1px); opacity: 0.5; animation: story-trust-float 7s ease-in-out infinite; pointer-events: none; }
+@keyframes story-trust-float {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-18px); opacity: 0.9; }
+}
+
+/* The card itself — glassmorphism on the dark section, with floating "Verified"/"Google Rated"
+   badges around it. */
+.trust-card-wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+.trust-card-stage { position: relative; padding: 28px 8px; }
+.trust-bubble {
+  position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
+  border-radius: 999px; font-size: 12.5px; font-weight: 700; color: #fff;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.3);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 14px 30px -14px rgba(0, 212, 255, 0.5);
+  animation: mv-float 6s ease-in-out infinite;
+}
+.trust-bubble-1 { top: 0; left: 4%; animation-delay: 0.3s; }
+.trust-bubble-2 { bottom: 6%; right: 2%; animation-delay: 2s; }
 .trust-card {
-  display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 48px 40px;
-  text-align: center; background: #fff; border: 1px solid var(--line); border-radius: 32px;
-  box-shadow: 0 30px 70px -30px rgba(15, 23, 42, 0.25);
+  position: relative; overflow: hidden; padding: 56px 48px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(0, 212, 255, 0.22); border-radius: 32px;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 .trust-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 30px 70px -30px rgba(15, 23, 42, 0.25), 0 20px 40px -20px rgba(var(--brand-rgb), 0.12);
+  border-color: rgba(0, 212, 255, 0.55);
+  box-shadow: 0 50px 100px -36px rgba(0, 212, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
-.trust-card .google-logo { width: 40px; height: 40px; }
-.trust-rating { display: flex; align-items: center; gap: 10px; font-size: 2.2rem; font-weight: 800; color: var(--navy); }
-.trust-rating .stars { font-size: 1.1rem; letter-spacing: 2px; }
-.trust-card p { max-width: 44ch; margin: 0; color: var(--muted); }
-.trust-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 8px; }
-.trust-actions .btn { transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease; }
-.trust-actions .btn:hover { transform: translateY(-2px); }
+.trust-card > * { position: relative; z-index: 1; }
+
+.trust-card-grid { display: grid; grid-template-columns: 1.15fr auto 1fr auto 1fr; align-items: center; gap: 28px; }
+.trust-card-divider { width: 1px; height: 72px; background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.18), transparent); justify-self: center; }
+.trust-card-col { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.trust-card-google { position: relative; align-items: flex-start; text-align: left; }
+.trust-rating-glow { position: absolute; top: -30px; left: -30px; width: 140px; height: 140px; border-radius: 50%; filter: blur(50px); background: rgba(0, 212, 255, 0.3); pointer-events: none; }
+.trust-card .google-logo { width: 34px; height: 34px; }
+.trust-rating { display: flex; align-items: center; gap: 10px; font-size: 2rem; font-weight: 800; color: #fff; }
+.trust-rating .stars { font-size: 1rem; letter-spacing: 2px; color: #ffd200; }
+.trust-card-google p { max-width: 26ch; margin: 0; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
+.trust-stat-big { font-size: clamp(2.2rem, 4vw, 2.9rem); font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #00d4ff, #ffd200); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.trust-stat-label { font-size: 0.85rem; font-weight: 600; color: rgba(255, 255, 255, 0.68); }
+.trust-card-side { gap: 20px; }
+.trust-stat-small { display: flex; flex-direction: column; gap: 2px; }
+.trust-stat-small strong { font-size: 1.4rem; font-weight: 800; color: #00d4ff; }
+.trust-stat-small span { font-size: 0.78rem; color: rgba(255, 255, 255, 0.6); }
+
+.trust-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 36px; padding-top: 32px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.trust-actions .btn { transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; }
+.trust-actions .btn:hover { transform: translateY(-3px); box-shadow: 0 16px 32px -14px rgba(0, 212, 255, 0.5); }
+.trust-actions .btn-outline { border-color: rgba(255, 255, 255, 0.3); color: #fff; }
+.trust-actions .btn-outline:hover { border-color: #00d4ff; background: rgba(0, 212, 255, 0.1); }
+
+@media (max-width: 900px) {
+  .trust-card-grid { grid-template-columns: 1fr; gap: 28px; }
+  .trust-card-divider { width: 60%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent); }
+  .trust-card-google { align-items: center; text-align: center; }
+  .trust-card-side { flex-direction: row; justify-content: center; gap: 36px; }
+}
+@media (max-width: 640px) {
+  .trust-card { padding: 40px 26px; }
+  .trust-bubble { display: none; }
+  .trust-card-side { flex-direction: column; gap: 16px; }
+}
 @media (prefers-reduced-motion: reduce) {
+  .trust-card, .trust-bubble, .story-trust-particle { transition: none; animation: none; }
   .trust-actions .btn { transition: none; }
 }
 
@@ -902,15 +966,18 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
 
 .menu-toggle { display: none; background: none; color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 999px; font-size: 1.2rem; width: 44px; height: 44px; cursor: pointer; }
 
-/* Header over the light home hero (before scrolling): dark text, navy logo, blue CTA. */
-.header-light .header-bar { color: var(--ink); }
+/* Header over a light hero/page (home, /about and its sub-pages), top of page only — fully
+   transparent, merged into the hero: dark text, navy logo, no bar/border/shadow of its own. Once
+   scrolled this class is removed (see components/Header.tsx) and .header.is-scrolled above takes
+   over unconditionally — same dark glass pill for every page. */
+.header-light .header-bar { color: var(--ink); background: transparent; border: none; box-shadow: none; }
 .header-light .brand img { filter: none; }
 .header-light .menu-toggle { color: var(--ink); border-color: rgba(0, 20, 80, 0.2); }
 .header-light .btn-white:hover { background: var(--navy); color: #fff; }
 @media (min-width: 961px) {
-  .header-light .nav-link { color: var(--muted); }
-  .header-light .nav-link:hover, .header-light .nav-link.active { color: var(--ink); }
-  .header-light .nav-link::after { background: var(--ink); }
+  .header-light .nav-link { color: #0b1736; }
+  .header-light .nav-link:hover, .header-light .nav-link.active { color: var(--brand); }
+  .header-light .nav-link::after { background: var(--brand); }
 }
 
 /* Home hero: light "analytics dashboard" layout */
@@ -1021,8 +1088,37 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
 .orbit-stage.is-3d .orbit { display: none; }
 .orbit-stage.is-3d .orbit-icon { top: 0 !important; left: 0 !important; margin: 0; animation: none; will-change: transform; }
 
-.page-hero { background: radial-gradient(circle at 85% 40%, rgba(var(--brand-rgb), 0.25), transparent 45%), linear-gradient(180deg, var(--hero-top) 0%, var(--hero-bg) 50%, var(--hero-bottom) 100%); color: #fff; padding: 56px 0; }
+/* Sitewide page banner (About sub-pages, course detail pages, FAQ/contact/etc via Sections.tsx
+   PageHero) — generous bottom padding plus a fade-to-transparent ::after so the dark hero always
+   blends into whatever section follows instead of cutting off abruptly. */
+.page-hero {
+  position: relative; overflow: hidden;
+  background: radial-gradient(circle at 85% 40%, rgba(var(--brand-rgb), 0.25), transparent 45%), linear-gradient(180deg, var(--hero-top) 0%, var(--hero-bg) 50%, var(--hero-bottom) 100%);
+  color: #fff; padding: 72px 0 140px;
+}
+.page-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 90px; pointer-events: none;
+  background: linear-gradient(180deg, transparent, var(--hero-bottom));
+}
 .page-hero p { color: #c9d3f0; max-width: 46rem; font-size: 1.05rem; }
+@media (max-width: 960px) {
+  .page-hero { padding-bottom: 110px; }
+}
+@media (max-width: 640px) {
+  .page-hero { padding: 56px 0 90px; }
+  .page-hero::after { height: 60px; }
+}
+
+/* Light variant — the /about sub-pages (accreditations-awards, our-team, founder; see
+   components/AboutBlocks.tsx AboutHero) now treat the hero itself as "1st section = light" for
+   strict alternation, so only .about-hero (never the plain .page-hero used by course pages,
+   FAQ/contact/etc via Sections.tsx PageHero) gets repainted light here. */
+.about-hero.page-hero { background: #f8fafc; color: var(--ink); }
+.about-hero.page-hero .crumbs { color: var(--muted); }
+.about-hero.page-hero .crumbs a:hover, .about-hero.page-hero .crumbs span { color: var(--ink); }
+.about-hero.page-hero .eyebrow-light { color: var(--brand); }
+.about-hero.page-hero p { color: var(--muted); }
+.about-hero .about-hero-media { background-color: rgba(10, 50, 184, 0.06); }
 /* Home "About us": blue band with copy + pill tags on the left and a bento grid of cards on the right */
 .ab {
   position: relative; overflow: hidden; color: #fff; padding: 88px 0;
@@ -1379,6 +1475,10 @@ main > .lx-hero:first-child { padding-top: calc(var(--header-h) + 48px); }
 
 /* Bigger phone-capture CTA (LeadCta in components/Sections.tsx) — precedes CtaStrip on pages that opt in */
 .lead-cta { text-align: center; background: var(--bg-alt); }
+.lead-cta.theme-dark { background: linear-gradient(160deg, #050b1d 0%, #0f2e6d 100%); }
+.lead-cta.theme-dark .lead-ticks { color: rgba(255, 255, 255, 0.72); }
+.lead-cta.theme-dark .lead-ticks li::before { color: #00d4ff; }
+.lead-cta.theme-dark .lead-avatar { border-color: rgba(0, 212, 255, 0.4); }
 .lead-cta-inner { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
 .lead-cta-inner h2 { margin: 0.3rem 0 0.7rem; }
 .lead-cta-inner > p { max-width: 46ch; margin-bottom: 2rem; }
@@ -1476,6 +1576,8 @@ a.card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(0, 20, 
 .duration-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .duration-card strong { display: block; font-size: 1.6rem; color: var(--brand); }
 .duration-card span { font-size: 0.9rem; color: var(--muted); }
+.theme-dark .duration-card strong { color: #00d4ff; }
+.theme-dark .duration-card span { color: rgba(255, 255, 255, 0.65); }
 
 .step-card { position: relative; }
 .step-num { display: inline-grid; place-items: center; min-width: 2.2rem; height: 2.2rem; border-radius: 10px; background: var(--navy); color: #fff; font-weight: 700; font-size: 0.85rem; margin-right: 0.6rem; margin-bottom: 0.6rem; }
@@ -1721,6 +1823,17 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   .about-accordion-link strong { font-size: 13.5px; color: #fff; }
   .about-accordion-link span { font-size: 12px; line-height: 1.5; color: rgba(255, 255, 255, 0.65); }
   .nav-cta { margin: 1rem 0 0; }
+
+  /* Mobile flyout menu, light variant (light hero/page — see .header-light on the header itself). */
+  .header-light .nav {
+    background: rgba(255, 255, 255, 0.96); color: var(--ink);
+    border-color: rgba(0, 20, 80, 0.1); box-shadow: 0 18px 40px -12px rgba(10, 50, 184, 0.2);
+  }
+  .header-light .nav > a:not(.btn), .header-light .nav-item, .header-light .nav-item.has-dropdown { border-bottom-color: rgba(0, 20, 80, 0.1); }
+  .header-light .about-accordion summary { color: var(--ink); }
+  .header-light .about-accordion-link { background: rgba(10, 50, 184, 0.05); }
+  .header-light .about-accordion-link strong { color: var(--ink); }
+  .header-light .about-accordion-link span { color: var(--muted); }
   .hero-inner, .about-grid, .detail-grid, .about-hero-inner { grid-template-columns: 1fr; }
   .dash { margin: 0 auto; }  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .sticky { position: static; }
@@ -2327,4 +2440,113 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   .bc-hub-lines path, .bc-hub-node, .bc-hub-cursor, .bc-marquee-track, .bc-syl-panel { animation: none; }
   .bc-marquee-track { flex-wrap: wrap; width: auto; justify-content: center; }
   .bc-review[aria-hidden] { display: none; }
+}
+
+/* "Meet the Team" intro — components/TeamIntro.tsx, /about/our-team only. Always dark (own design
+   brief), padding matches the 120px top/bottom the request specified explicitly. */
+.team-intro { position: relative; overflow: hidden; padding-top: 120px; padding-bottom: 120px; }
+.team-intro-grid-bg {
+  position: absolute; inset: 0; opacity: 0.05; pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.team-intro-glow { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+.team-intro-glow-1 { top: -120px; left: -60px; width: 460px; height: 460px; background: rgba(0, 212, 255, 0.2); }
+.team-intro-glow-2 { bottom: -140px; right: -80px; width: 380px; height: 380px; background: rgba(255, 210, 0, 0.1); }
+.team-intro-particle { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #00d4ff; filter: blur(1px); opacity: 0.5; animation: team-intro-float 7s ease-in-out infinite; pointer-events: none; }
+@keyframes team-intro-float {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-18px); opacity: 0.9; }
+}
+
+.team-intro-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 0.85fr 1.35fr; gap: 40px; align-items: center; }
+.team-intro-copy h2 { margin: 0.5rem 0 1.1rem; }
+.team-intro-copy p { max-width: 52ch; color: rgba(255, 255, 255, 0.75); }
+
+.team-intro-stats { display: flex; flex-wrap: wrap; gap: 32px; margin-top: 2rem; }
+.team-intro-stat { display: flex; flex-direction: column; gap: 2px; }
+.team-intro-stat strong { font-size: 1.7rem; font-weight: 800; background: linear-gradient(135deg, #00d4ff, #ffd200); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.team-intro-stat span { font-size: 0.8rem; font-weight: 600; color: rgba(255, 255, 255, 0.62); }
+
+.team-intro-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 2rem; }
+.team-intro-btn-glass {
+  display: inline-flex; align-items: center; height: 44px; padding: 0 24px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.25); color: #fff;
+  font-weight: 600; font-size: 14px;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.team-intro-btn-glass:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.12); border-color: #00d4ff; }
+
+/* Arch-shaped preview cards — same visual language as the (external, real-photo) trainer showcase
+   this section leads into, just with a generic silhouette + huge faded role text in place of a real
+   photo (see lib/teamIntroData.ts for why: this repo has no staff photos anywhere).
+   Infinite carousel: .team-preview-track renders the card list twice back to back and slides from
+   0 to -50% of its own width — since the second half is an exact copy of the first, the loop point
+   is invisible. Hovering the row (not just a single card) pauses the whole track so a card can
+   actually be read/clicked without it sliding away mid-hover. */
+.team-preview-row { position: relative; z-index: 1; overflow: hidden; padding: 24px 0; }
+.team-preview-track { display: flex; width: max-content; animation: team-preview-scroll 32s linear infinite; }
+.team-preview-row:hover .team-preview-track { animation-play-state: paused; }
+@keyframes team-preview-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.team-preview-card {
+  position: relative; flex: 0 0 auto; overflow: hidden;
+  width: 168px; height: 560px; margin-left: -28px; border-radius: 120px 120px 20px 20px;
+  background: linear-gradient(165deg, rgba(0, 212, 255, 0.22) 0%, rgba(10, 30, 90, 0.9) 45%, rgba(5, 11, 29, 0.95) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.7);
+  animation: team-preview-float 6s ease-in-out infinite;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, z-index 0.35s ease;
+}
+.team-preview-track > .team-preview-card:first-child { margin-left: 0; }
+@keyframes team-preview-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+/* Alternate cards run a phase-shifted keyframe (not just animation-delay on the same one) so the
+   row reads as a gentle zigzag instead of every-other-card breathing in sync. */
+.team-preview-card-alt { animation-name: team-preview-float-alt; }
+@keyframes team-preview-float-alt {
+  0%, 100% { transform: translateY(10px); }
+  50% { transform: translateY(-4px); }
+}
+.team-preview-card:hover {
+  transform: translateY(-10px) scale(1.04);
+  border-color: rgba(0, 212, 255, 0.7);
+  box-shadow: 0 20px 50px -16px rgba(0, 212, 255, 0.5), 0 30px 60px -28px rgba(0, 0, 0, 0.7);
+  z-index: 5; animation-play-state: paused;
+}
+.team-preview-bg-text {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -46%) rotate(-90deg); transform-origin: center;
+  font-size: 2.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
+  color: rgba(255, 255, 255, 0.07); pointer-events: none;
+}
+.team-preview-photo {
+  position: absolute; left: 50%; bottom: 54px; width: 92px; height: 116px; transform: translateX(-50%);
+  color: rgba(0, 212, 255, 0.5);
+  transition: transform 0.35s ease, color 0.35s ease;
+}
+.team-preview-photo svg { width: 100%; height: 100%; }
+.team-preview-card:hover .team-preview-photo { transform: translateX(-50%) scale(1.1); color: rgba(0, 212, 255, 0.85); }
+.team-preview-name {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 14px 12px 18px; text-align: center;
+  background: linear-gradient(0deg, rgba(0, 8, 30, 0.85), transparent); font-size: 12.5px; font-weight: 700; color: #fff;
+}
+
+@media (max-width: 960px) {
+  .team-intro-inner { grid-template-columns: 1fr; text-align: center; }
+  .team-intro-copy p { margin-inline: auto; }
+  .team-intro-stats, .team-intro-actions { justify-content: center; }
+  .team-preview-row { margin-top: 3rem; }
+}
+@media (max-width: 640px) {
+  .team-intro { padding-top: 72px; padding-bottom: 72px; }
+  .team-preview-card { width: 140px; height: 440px; border-radius: 90px 90px 16px 16px; }
+  .team-preview-bg-text { font-size: 2rem; }
+  .team-preview-photo { width: 74px; height: 92px; bottom: 42px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .team-intro-particle, .team-preview-track, .team-preview-card, .team-preview-photo, .team-intro-btn-glass { transition: none; animation: none; }
 }

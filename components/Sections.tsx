@@ -17,9 +17,9 @@ export function SectionHeading({ eyebrow, title, text }: { eyebrow?: string; tit
   );
 }
 
-export function PageHero({ title, text, crumb }: { title: string; text?: string; crumb: string }) {
+export function PageHero({ title, text, crumb, className }: { title: string; text?: string; crumb: string; className?: string }) {
   return (
-    <section className="page-hero">
+    <section className={`page-hero${className ? ` ${className}` : ""}`}>
       <div className="container">
         <nav className="crumbs">
           <Link href="/">Home</Link> / <span>{crumb}</span>

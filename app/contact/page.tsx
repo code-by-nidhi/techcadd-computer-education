@@ -11,7 +11,12 @@ export const metadata: Metadata = { title: "Contact Us" };
 export default function ContactPage() {
   return (
     <>
-      <PageHero crumb="Contact" title="Contact Us" text="Talk to a counsellor today — free career counselling, no registration fee." />
+      <PageHero
+        crumb="Contact"
+        title="Contact Us"
+        text="Talk to a counsellor today — free career counselling, no registration fee."
+        className="contact-hero"
+      />
 
       <ContactSupport />
 

@@ -1119,6 +1119,23 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
 .about-hero.page-hero .eyebrow-light { color: var(--brand); }
 .about-hero.page-hero p { color: var(--muted); }
 .about-hero .about-hero-media { background-color: rgba(10, 50, 184, 0.06); }
+
+/* Contact-page hero — same dark .page-hero, just taller (per an explicit spec: 700/600/auto min-
+   height across breakpoints, more top padding) so the Hero fully finishes in normal document flow
+   before Support & Assistance starts below it. Scoped to .contact-hero (not .page-hero itself) so
+   course/FAQ/other pages using the plain PageHero are unaffected. There was no actual negative
+   margin, translateY or absolute positioning pulling .support-section up into the hero — audited
+   both and found none — so this is purely a spacing/height pass, not a bug fix for a real collision. */
+.contact-hero.page-hero {
+  position: relative; z-index: 1; display: flex; align-items: center;
+  min-height: 700px; padding-top: 180px; padding-bottom: 140px;
+}
+@media (max-width: 960px) {
+  .contact-hero.page-hero { min-height: 600px; padding-top: 140px; padding-bottom: 110px; }
+}
+@media (max-width: 640px) {
+  .contact-hero.page-hero { min-height: auto; padding-top: 100px; padding-bottom: 90px; }
+}
 /* Home "About us": blue band with copy + pill tags on the left and a bento grid of cards on the right */
 .ab {
   position: relative; overflow: hidden; color: #fff; padding: 88px 0;
@@ -2238,7 +2255,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 /* "Support & Assistance" — components/ContactSupport.tsx, /contact only, right after the (dark)
    PageHero. Uses its own scoped accent pair (#1e88ff/#00d4ff, the same cyan already used on the
    About dark sections) rather than touching the sitewide --brand/--ink tokens. */
-.support-section { background: #f8faff; padding: 120px 0 64px; }
+.support-section { position: relative; z-index: 0; background: #f8faff; padding: 120px 0 64px; }
 .support-section .container { max-width: 1400px; }
 .support-section h2 { color: #050b1d; }
 
@@ -2322,7 +2339,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 
 /* "Schedule Virtual Counselling" banner — components/ContactSchedule.tsx, right after the
    Support & Assistance section on /contact. Same scoped blue/cyan accent pair as .support-section. */
-.schedule-standalone { padding: 0 0 64px; background: #fff; }
+.schedule-standalone { position: relative; z-index: 0; padding: 0 0 64px; background: #fff; }
 .schedule-banner {
   position: relative; display: flex; align-items: center; gap: 24px;
   padding: 28px 32px; border-radius: 20px; background: #fff; border: 1px solid var(--line);
@@ -2362,7 +2379,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 /* Final CTA form section — components/ContactCtaForm.tsx, right after the schedule banner on
    /contact. Always dark (own design brief), same scoped #1e88ff/#00d4ff accent pair as the other
    new /contact sections above. Posts to the real /api/demo backend — see that component's comment. */
-.contact-cta { padding: 100px 0; }
+.contact-cta { position: relative; z-index: 0; padding: 100px 0; }
 .contact-cta-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: start; }
 
 .contact-cta-highlight { color: #00d4ff; }
@@ -2482,7 +2499,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
    /contact sections above, which are dark) — top padding is intentionally lighter than the spec's
    literal 120px since .contact-cta right above it already carries 100px of its own bottom padding;
    stacking two full paddings was exactly the "too much space" issue already fixed once on this page. */
-.why-tc { padding: 40px 0 100px; background: #fff; }
+.why-tc { position: relative; z-index: 0; padding: 40px 0 100px; background: #fff; }
 .why-tc .container { max-width: 1400px; }
 
 .why-tc-grid { margin-top: 3.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; align-items: stretch; }
@@ -2564,7 +2581,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
    Google Maps embed (no API key required for the q=...&output=embed form) + the same real contact
    details used throughout this page. Slightly tinted background (not pure white) so it doesn't read
    as one continuous block with .why-tc directly above it, which is also light. */
-.find-us { padding: 40px 0 100px; background: var(--bg-alt); }
+.find-us { position: relative; z-index: 0; padding: 40px 0 100px; background: var(--bg-alt); }
 .find-us-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: stretch; }
 
 .find-us-map {

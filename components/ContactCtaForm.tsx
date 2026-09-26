@@ -16,9 +16,8 @@ const steps = [
 ];
 
 // Full-page "final CTA" form, right after the Schedule Virtual Counselling banner on /contact. Posts
-// to the same real /api/demo + MySQL backend as the header's "Book Demo" modal (see DemoModal.tsx) —
-// email/message are new optional columns added to that same table (see lib/db.ts) rather than a
-// fake endpoint, so this form actually reaches a counsellor like every other form on this site does.
+// to /api/contact, which saves into its own MySQL table (contact_enquiries — see lib/db.ts); the
+// header's "Book Demo" pop-up (DemoModal.tsx) uses /api/demo and the demo_requests table.
 export default function ContactCtaForm() {
   const [captcha, setCaptcha] = useState<Captcha | null>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
@@ -45,7 +44,7 @@ export default function ContactCtaForm() {
     setStatus("sending");
     setError("");
     try {
-      const res = await fetch("/api/demo", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

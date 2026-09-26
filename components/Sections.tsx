@@ -119,7 +119,6 @@ export function LeadCta({ dark }: { dark?: boolean } = {}) {
           career direction, and training roadmap.
         </p>
         <div className="lead-form-row">
-          <span className="lead-avatar" aria-hidden="true" />
           <LeadForm />
         </div>
         <a href={site.phoneHref} className="lead-call-btn">

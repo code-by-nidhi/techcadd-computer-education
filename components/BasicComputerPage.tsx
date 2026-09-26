@@ -84,7 +84,7 @@ function Hero() {
           </nav>
 
           <div className="bc-hero-inner">
-            <div className="bc-hero-copy" data-aos="fade-up">
+            <div className="bc-hero-copy" data-aos="fade-up" suppressHydrationWarning>
               <div className="bc-hero-badges">
                 <span className="bc-hero-logo" aria-hidden="true">
                   <Image src="/logos/windows.svg" alt="" width={22} height={22} />
@@ -115,12 +115,12 @@ function Hero() {
               </ul>
             </div>
 
-            <div className="bc-hero-visual" data-aos="fade-left" aria-hidden="true">
+            <div className="bc-hero-visual" data-aos="fade-left" aria-hidden="true" suppressHydrationWarning>
               <ComputerHub />
             </div>
           </div>
 
-          <dl className="bc-hero-facts" data-aos="fade-up">
+          <dl className="bc-hero-facts" data-aos="fade-up" suppressHydrationWarning>
             {bcHero.facts.map((f) => (
               <div key={f.label}>
                 <dt>{f.label}</dt>
@@ -134,7 +134,7 @@ function Hero() {
       <section className="bc-hero-stats">
         <div className="container">
           {bcHero.stats.map((s) => (
-            <div key={s.label} data-aos="fade-up">
+            <div key={s.label} data-aos="fade-up" suppressHydrationWarning>
               <strong>{s.value}</strong>
               <span>{s.label}</span>
               <small>{s.note}</small>

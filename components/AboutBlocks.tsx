@@ -90,7 +90,7 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
             </>
           )}
           <div className="container">
-            <div className="section-heading" data-aos="fade-up">
+            <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
               {s.eyebrow && <span className="eyebrow">{s.eyebrow}</span>}
               <h2>{s.heading}</h2>
               {(s.cards || s.trustCard) && s.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
@@ -117,12 +117,12 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
             ) : (
               <>
                 {s.body?.map((paragraph) => (
-                  <p key={paragraph} data-aos="fade-up">
+                  <p key={paragraph} suppressHydrationWarning data-aos="fade-up">
                     {paragraph}
                   </p>
                 ))}
                 {s.points && (
-                  <ul className="ticks" data-aos="fade-up">
+                  <ul className="ticks" suppressHydrationWarning data-aos="fade-up">
                     {s.points.map((point) => (
                       <li key={point}>{point}</li>
                     ))}
@@ -185,7 +185,7 @@ function TrustCard({ data }: { data: AboutTrustCard }) {
       <span className="trust-bubble trust-bubble-2" aria-hidden="true">
         Google Rated
       </span>
-      <SpotlightCard className="trust-card" data-aos="zoom-in">
+      <SpotlightCard className="trust-card" suppressHydrationWarning data-aos="zoom-in">
         <div className="trust-card-grid">
           <div className="trust-card-col trust-card-google">
             <span className="trust-rating-glow" aria-hidden="true" />
@@ -269,7 +269,7 @@ export function AboutGallery({ gallery, dark }: { gallery: AboutGalleryItem[]; d
       <div className="container">
         <div className="about-gallery">
           {gallery.map((item, i) => (
-            <figure key={item.caption} className="about-gallery-item" data-aos="fade-up" data-aos-delay={i * 80}>
+            <figure key={item.caption} className="about-gallery-item" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 80}>
               <span className="about-gallery-img" style={{ backgroundImage: `url(${item.image})` }} />
               <figcaption>{item.caption}</figcaption>
             </figure>

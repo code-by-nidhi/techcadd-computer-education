@@ -88,7 +88,7 @@ function MissionPillars() {
       <div className="mv-pillars-grid-bg" aria-hidden="true" />
       <span className="mv-pillars-glow" aria-hidden="true" />
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">{missionPillarsHeader.badge}</span>
           <h2>{missionPillarsHeader.heading}</h2>
           <p className="mv-pillars-subheading">{missionPillarsHeader.text}</p>
@@ -122,7 +122,7 @@ function VisionRadial() {
       <span className="mv-vision-particle" style={{ top: "24%", left: "88%", animationDelay: "3s" }} aria-hidden="true" />
       <span className="mv-vision-particle" style={{ top: "78%", left: "82%", animationDelay: "0.8s" }} aria-hidden="true" />
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">{visionHeader.badge}</span>
           <h2>{visionHeader.heading}</h2>
           <p className="mv-vision-subheading">{visionHeader.text}</p>
@@ -132,7 +132,7 @@ function VisionRadial() {
             carries an equal, opposite-direction animation (components/../globals.css mv-orbit-spin,
             same technique the homepage's .dash-orbit/.dash-app-inner already use) so the ring sweeps
             around while every card's text stays upright and readable. */}
-        <div className="mv-vision-orbit" data-aos="zoom-in">
+        <div className="mv-vision-orbit" suppressHydrationWarning data-aos="zoom-in">
           <span className="mv-vision-glow" aria-hidden="true" />
           <span className="mv-vision-ring mv-vision-ring-outer" aria-hidden="true" />
           <span className="mv-vision-ring mv-vision-ring-inner" aria-hidden="true" />
@@ -161,7 +161,7 @@ function VisionRadial() {
           </ul>
         </div>
 
-        <p className="mv-vision-footnote" data-aos="fade-up">
+        <p className="mv-vision-footnote" suppressHydrationWarning data-aos="fade-up">
           {visionFootnote}
         </p>
       </div>
@@ -175,7 +175,7 @@ function OurFuture() {
       <span className="mv-future-ring" aria-hidden="true" />
       <span className="mv-future-glow" aria-hidden="true" />
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">{ourFuture.badge}</span>
           <h2>{ourFuture.heading}</h2>
           <p className="mv-future-text">{ourFuture.text}</p>

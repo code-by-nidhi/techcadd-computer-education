@@ -148,7 +148,10 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
 .dropdown {
   position: absolute; top: calc(100% + 8px); left: 50%;
   display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.2rem;
-  width: min(calc(var(--container) - 2 * var(--gutter)), calc(100dvw - 2 * var(--gutter)));
+  /* Same width as the navbar. The containing block is .header-bar: at the top of the page that is the
+     full-width bar, so match .header-inner's content box (logo to Book Demo); once scrolled it is the
+     pill itself, so span it edge to edge (+2px for the pill's 1px border). */
+  width: calc(min(var(--container), 100%) - 2 * var(--gutter));
   background: #fff; color: var(--ink); padding: 1.4rem;
   border-radius: var(--radius); box-shadow: 0 18px 40px rgba(0, 8, 30, 0.35); border: 1px solid var(--line);
   white-space: normal;
@@ -156,6 +159,7 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
   transform: translate(-50%, -10px);
   transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
 }
+.header.is-scrolled .dropdown { width: calc(100% + 2px); }
 .has-dropdown:hover .dropdown, .has-dropdown:focus-within .dropdown {
   opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0);
 }
@@ -168,7 +172,7 @@ main > section:first-child { padding-top: calc(var(--header-h) + 64px); }
 /* About mega menu: left link list + divider + CTA, right side a row of photo cards (generated from aboutData) */
 .about-dropdown {
   display: flex; align-items: stretch; gap: 0; padding: 0; overflow: hidden;
-  width: min(95vw, 1550px); min-height: 360px;
+  min-height: 360px;
   border-radius: 32px; border: none;
   background: #fff;
   box-shadow: 0 40px 90px -24px rgba(0, 8, 30, 0.3);

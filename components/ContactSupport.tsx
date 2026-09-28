@@ -49,13 +49,13 @@ export default function ContactSupport() {
   return (
     <section className="section support-section">
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">Support</span>
           <h2>Support &amp; Assistance</h2>
           <p>Get personalised support for your educational journey.</p>
         </div>
 
-        <div className="support-panel" data-aos="fade-up">
+        <div className="support-panel" suppressHydrationWarning data-aos="fade-up">
           <div className="support-tabs" role="tablist" aria-label="Support categories">
             {supportTabs.map((t, i) => (
               <button

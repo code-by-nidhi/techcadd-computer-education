@@ -6,23 +6,33 @@ import { included } from "@/lib/content";
 import { site } from "@/lib/site";
 import { CourseCard, CtaBanner } from "@/components/Sections";
 import EnquiryForm from "@/components/EnquiryForm";
+import CourseDetailPage from "@/components/CoursePage";
+import { getCourseDetail } from "@/lib/courseDetails";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  // basic-computer-course has its own page (app/courses/basic-computer-course).
-  return courses.filter((c) => c.slug !== "basic-computer-course").map((c) => ({ slug: c.slug }));
+  return courses.map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const course = getCourse((await params).slug);
+  const slug = (await params).slug;
+  const detail = getCourseDetail(slug);
+  if (detail) return { title: detail.seo.title, description: detail.seo.description };
+  const course = getCourse(slug);
   if (!course) return {};
   return { title: `${course.title} Course in ${site.city}`, description: course.summary };
 }
 
 export default async function CoursePage({ params }: Props) {
-  const course = getCourse((await params).slug);
+  const slug = (await params).slug;
+  const course = getCourse(slug);
   if (!course) notFound();
+
+  // Courses with a full detail entry (lib/courseDetails) get the rich course page; any course
+  // without one falls back to the simple layout below.
+  const detail = getCourseDetail(slug);
+  if (detail) return <CourseDetailPage d={detail} />;
 
   const cat = getCategory(course.category);
   const related = coursesIn(course.category).filter((c) => c.slug !== course.slug).slice(0, 3);

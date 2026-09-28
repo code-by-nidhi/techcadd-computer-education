@@ -41,6 +41,7 @@ export default function Aos() {
       // time to finish hydrating before AOS starts writing aos-init/aos-animate classes — narrows
       // (can't fully close) the window where an above-the-fold data-aos node hydrates just as AOS
       // touches it, which is what causes React's "tree hydrated but attributes didn't match" warning.
+      // The remaining window is closed by suppressHydrationWarning on every data-aos element.
       timer = window.setTimeout(() => {
         frame = requestAnimationFrame(() => {
           frame = requestAnimationFrame(start);

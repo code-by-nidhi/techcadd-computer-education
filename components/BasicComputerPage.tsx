@@ -59,7 +59,7 @@ export default function BasicComputerPage() {
 
 function Heading({ eyebrow, title, text, split, center }: { eyebrow: string; title: string; text?: string; split?: boolean; center?: boolean }) {
   return (
-    <div className={`bc-head${split ? " bc-head-split" : ""}${center ? " bc-head-center" : ""}`} data-aos="fade-up">
+    <div className={`bc-head${split ? " bc-head-split" : ""}${center ? " bc-head-center" : ""}`} suppressHydrationWarning data-aos="fade-up">
       <div>
         <span className="bc-eyebrow">{eyebrow}</span>
         <h2>{title}</h2>
@@ -195,7 +195,7 @@ function Overview() {
   return (
     <section className="bc-section">
       <div className="container bc-overview">
-        <div className="bc-overview-copy" data-aos="fade-up">
+        <div className="bc-overview-copy" suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">{bcOverview.eyebrow}</span>
           <h2>{bcOverview.title}</h2>
           {bcOverview.paragraphs.map((p) => (
@@ -206,7 +206,7 @@ function Overview() {
             <span className="bc-overview-photo-tag">Hands-on from day one</span>
           </div>
         </div>
-        <aside className="bc-overview-side" data-aos="fade-up" data-aos-delay="100">
+        <aside className="bc-overview-side" suppressHydrationWarning data-aos="fade-up" data-aos-delay="100">
           <div className="bc-get">
             <span className="bc-eyebrow">What you get</span>
             <ul>
@@ -244,7 +244,7 @@ function Audience() {
         <Heading eyebrow={bcAudience.eyebrow} title={bcAudience.title} text={bcAudience.text} split />
         <div className="bc-audience">
           {bcAudience.items.map((a, i) => (
-            <article key={a.title} className="bc-card bc-aud-card" data-aos="fade-up" data-aos-delay={(i % 3) * 50}>
+            <article key={a.title} className="bc-card bc-aud-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 3) * 50}>
               <span className="bc-icon">
                 <Icon name={a.icon} />
               </span>
@@ -265,7 +265,7 @@ function CaseForIt() {
       <div className="container">
         <Heading eyebrow={bcCase.eyebrow} title={bcCase.title} center />
         <div className="bc-bento">
-          <article className="bc-card bc-bento-feature" data-aos="fade-up">
+          <article className="bc-card bc-bento-feature" suppressHydrationWarning data-aos="fade-up">
             <span className="bc-tag">{f.tag}</span>
             <h3>{f.title}</h3>
             <p>{f.text}</p>
@@ -276,7 +276,7 @@ function CaseForIt() {
             </div>
           </article>
           {bcCase.cards.map((c, i) => (
-            <article key={c.title} className="bc-card bc-bento-card" data-aos="fade-up" data-aos-delay={(i % 2) * 50 + 50}>
+            <article key={c.title} className="bc-card bc-bento-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 2) * 50 + 50}>
               <span className="bc-tag">{c.tag}</span>
               <h3>{c.title}</h3>
               <p>{c.text}</p>
@@ -292,7 +292,7 @@ function WhyNow() {
   return (
     <section className="bc-band">
       <div className="container bc-whynow">
-        <div data-aos="fade-up">
+        <div suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow bc-eyebrow-light">{bcWhyNow.eyebrow}</span>
           <h2>{bcWhyNow.title}</h2>
           <ul className="bc-whynow-list">
@@ -306,7 +306,7 @@ function WhyNow() {
             Talk to a course advisor <ArrowIcon />
           </a>
         </div>
-        <div className="bc-whynow-panel" data-aos="fade-left" aria-hidden="true">
+        <div className="bc-whynow-panel" suppressHydrationWarning data-aos="fade-left" aria-hidden="true">
           {[
             { k: "Online forms", v: "Admissions, jobs, KYC" },
             { k: "Email & PDFs", v: "Every application" },
@@ -332,7 +332,7 @@ function Tools() {
         <Heading eyebrow={bcTools.eyebrow} title={bcTools.title} text={bcTools.text} center />
         <div className="bc-tools">
           {bcTools.tools.map((t, i) => (
-            <div key={t.name} className="bc-tool" data-aos="zoom-in" data-aos-delay={i * 50}>
+            <div key={t.name} className="bc-tool" suppressHydrationWarning data-aos="zoom-in" data-aos-delay={i * 50}>
               <span className="bc-tool-logo">
                 <Image src={`/logos/${t.logo}`} alt="" width={40} height={40} />
               </span>
@@ -350,7 +350,7 @@ function Certificate() {
   return (
     <section className="bc-section">
       <div className="container bc-cert">
-        <div data-aos="fade-up">
+        <div suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">{bcCertificate.eyebrow}</span>
           <h2>{bcCertificate.title}</h2>
           <p className="bc-lead">{bcCertificate.text}</p>
@@ -371,7 +371,7 @@ function Certificate() {
             Enrol for the next batch <ArrowIcon />
           </DemoButton>
         </div>
-        <div className="bc-cert-visual" data-aos="fade-left" aria-hidden="true">
+        <div className="bc-cert-visual" suppressHydrationWarning data-aos="fade-left" aria-hidden="true">
           <div className="bc-cert-paper">
             <Image src="/techcadd-logo.webp" alt="" width={952} height={262} className="bc-cert-logo" />
             <span className="bc-cert-sub">Computer Education · {site.city}</span>
@@ -400,7 +400,7 @@ function Careers() {
         <Heading eyebrow={bcCareers.eyebrow} title={bcCareers.title} text={bcCareers.text} split />
         <div className="bc-roles">
           {bcCareers.roles.map((r, i) => (
-            <article key={r.title} className="bc-card bc-role" data-aos="fade-up" data-aos-delay={i * 50}>
+            <article key={r.title} className="bc-card bc-role" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 50}>
               <span className="bc-role-pay">
                 {r.pay}
                 <small>/month</small>
@@ -410,7 +410,7 @@ function Careers() {
             </article>
           ))}
         </div>
-        <div className="bc-hiring" data-aos="fade-up">
+        <div className="bc-hiring" suppressHydrationWarning data-aos="fade-up">
           <strong>Who hires for these roles</strong>
           <div>
             {bcCareers.hiring.map((h) => (
@@ -420,7 +420,7 @@ function Careers() {
         </div>
         <div className="bc-qa">
           {bcCareers.qa.map((q, i) => (
-            <article key={q.q} data-aos="fade-up" data-aos-delay={(i % 2) * 50}>
+            <article key={q.q} suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 2) * 50}>
               <span>{String(i + 1).padStart(2, "0")}</span>
               <h3>{q.q}</h3>
               <p>{q.a}</p>
@@ -439,7 +439,7 @@ function Projects() {
         <Heading eyebrow={bcProjects.eyebrow} title={bcProjects.title} split text="Each module ends with a task you finish on your own. Together they become the work folder you take home." />
         <div className="bc-projects">
           {bcProjects.items.map((p, i) => (
-            <article key={p.n} className="bc-card bc-project" data-aos="fade-up" data-aos-delay={i * 50}>
+            <article key={p.n} className="bc-card bc-project" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 50}>
               <span className="bc-project-n">{p.n}</span>
               <h3>{p.title}</h3>
               <p>{p.text}</p>
@@ -460,14 +460,14 @@ function Loop() {
   return (
     <section className="bc-section bc-alt">
       <div className="container bc-loop">
-        <div data-aos="fade-up">
+        <div suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">{bcLoop.eyebrow}</span>
           <h2>{bcLoop.title}</h2>
           <p className="bc-lead">{bcLoop.text}</p>
         </div>
         <ol className="bc-loop-steps">
           {bcLoop.steps.map((s, i) => (
-            <li key={s.title} data-aos="fade-up" data-aos-delay={i * 100}>
+            <li key={s.title} suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 100}>
               <span className="bc-loop-n">{i + 1}</span>
               <h3>{s.title}</h3>
               <p>{s.text}</p>
@@ -487,7 +487,7 @@ function WhyTechcadd() {
         <Heading eyebrow={bcWhy.eyebrow} title={bcWhy.title} text={bcWhy.text} split />
         <div className="bc-why">
           {bcWhy.items.map((w, i) => (
-            <article key={w.title} data-aos="fade-up" data-aos-delay={(i % 3) * 50}>
+            <article key={w.title} suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 3) * 50}>
               <span className="bc-why-n">{String(i + 1).padStart(2, "0")}</span>
               <h3>{w.title}</h3>
               <p>{w.text}</p>
@@ -504,7 +504,7 @@ function Compare() {
     <section className="bc-section">
       <div className="container">
         <Heading eyebrow={bcCompare.eyebrow} title={bcCompare.title} text={bcCompare.text} center />
-        <div className="bc-table-wrap" data-aos="fade-up">
+        <div className="bc-table-wrap" suppressHydrationWarning data-aos="fade-up">
           <table className="bc-table">
             <thead>
               <tr>
@@ -582,7 +582,7 @@ function Faq() {
   return (
     <section className="bc-section">
       <div className="container bc-faq">
-        <div className="bc-faq-side" data-aos="fade-up">
+        <div className="bc-faq-side" suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">Got questions?</span>
           <h2>Frequently asked questions</h2>
           <p className="bc-lead">Still unsure? A counsellor can walk you through batches, fees and the syllabus in one short call.</p>
@@ -596,7 +596,7 @@ function Faq() {
         </div>
         <div className="bc-faq-list">
           {bcFaqs.map((f, i) => (
-            <details key={f.q} className="bc-faq-item" data-aos="fade-up" data-aos-delay={(i % 4) * 50} open={i === 0}>
+            <details key={f.q} className="bc-faq-item" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 4) * 50} open={i === 0}>
               <summary>{f.q}</summary>
               <p>{f.a}</p>
             </details>

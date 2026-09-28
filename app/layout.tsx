@@ -19,8 +19,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    // AOS.init writes data-aos-easing / -duration / -delay onto <body>, and browser extensions
+    // (Grammarly, password managers, translators) add their own attributes to <html>/<body> before
+    // React hydrates. suppressHydrationWarning only covers this element's own attributes, not children.
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
         {/* AOS hides [data-aos] elements in CSS, so keep them visible when scripts don't run. The markup
             has to go in as raw HTML: a browser with scripting on parses noscript content as plain text,
             so a <style> child here would not match on hydration. */}

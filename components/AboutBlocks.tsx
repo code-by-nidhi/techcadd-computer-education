@@ -37,7 +37,7 @@ export function AboutHero({
   return (
     <section className="page-hero about-hero">
       <div className="container about-hero-inner">
-        <div data-aos="fade-up">
+        <div suppressHydrationWarning data-aos="fade-up">
           <Breadcrumbs items={crumbs} />
           <span className="eyebrow eyebrow-light">{data.heroBadge}</span>
           <h1>{data.title}</h1>
@@ -46,7 +46,7 @@ export function AboutHero({
         <div
           className="about-hero-media"
           style={{ backgroundImage: `url(${data.heroImage})` }}
-          data-aos="fade-left"
+          suppressHydrationWarning data-aos="fade-left"
           aria-hidden="true"
         />
       </div>
@@ -75,7 +75,7 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
             </>
           )}
           <div className="container">
-            <div className="section-heading" data-aos="fade-up">
+            <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
               {s.eyebrow && <span className="eyebrow">{s.eyebrow}</span>}
               <h2>{s.heading}</h2>
               {(s.cards || s.trustCard) && s.body?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
@@ -93,7 +93,7 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
                     <SpotlightCard
                       key={card.title}
                       className="about-feature-card"
-                      data-aos="fade-up"
+                      suppressHydrationWarning data-aos="fade-up"
                       data-aos-delay={ci * 80}
                     >
                       <h3>{card.title}</h3>
@@ -105,12 +105,12 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
             ) : (
               <>
                 {s.body?.map((paragraph) => (
-                  <p key={paragraph} data-aos="fade-up">
+                  <p key={paragraph} suppressHydrationWarning data-aos="fade-up">
                     {paragraph}
                   </p>
                 ))}
                 {s.points && (
-                  <ul className="ticks" data-aos="fade-up">
+                  <ul className="ticks" suppressHydrationWarning data-aos="fade-up">
                     {s.points.map((point) => (
                       <li key={point}>{point}</li>
                     ))}
@@ -127,7 +127,7 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
 
 function CertificationCard({ card, delay }: { card: AboutCard; delay: number }) {
   return (
-    <SpotlightCard className="cert-card" data-aos="fade-up" data-aos-delay={delay}>
+    <SpotlightCard className="cert-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={delay}>
       <span className="cert-card-icon">
         <CertIcon icon={card.icon} />
       </span>
@@ -171,7 +171,7 @@ function TrustCard({ data }: { data: AboutTrustCard }) {
       <span className="trust-bubble trust-bubble-2" aria-hidden="true">
         Google Rated
       </span>
-      <SpotlightCard className="trust-card" data-aos="zoom-in">
+      <SpotlightCard className="trust-card" suppressHydrationWarning data-aos="zoom-in">
         <div className="trust-card-grid">
           <div className="trust-card-col trust-card-google">
             <span className="trust-rating-glow" aria-hidden="true" />
@@ -233,7 +233,7 @@ export function AboutStats({ stats, dark }: { stats: AboutStat[]; dark?: boolean
   return (
     <section className={`section ${dark ? "theme-dark" : "theme-light"}`}>
       <div className="container">
-        <div className="duration-grid" data-aos="fade-up">
+        <div className="duration-grid" suppressHydrationWarning data-aos="fade-up">
           {stats.map((s) => (
             <div key={s.label} className="card duration-card">
               <strong>{s.value}</strong>
@@ -253,7 +253,7 @@ export function AboutGallery({ gallery, dark }: { gallery: AboutGalleryItem[]; d
       <div className="container">
         <div className="about-gallery">
           {gallery.map((item, i) => (
-            <figure key={item.caption} className="about-gallery-item" data-aos="fade-up" data-aos-delay={i * 80}>
+            <figure key={item.caption} className="about-gallery-item" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 80}>
               <span className="about-gallery-img" style={{ backgroundImage: `url(${item.image})` }} />
               <figcaption>{item.caption}</figcaption>
             </figure>

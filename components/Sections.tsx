@@ -9,7 +9,7 @@ import LeadForm from "./LeadForm";
 export function SectionHeading({ eyebrow, title, text }: { eyebrow?: string; title: string; text?: string }) {
   return (
     // Every section's heading eases in as it scrolls up (see ScrollReveal)
-    <div className="section-heading" data-aos="fade-up">
+    <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
       {eyebrow && <span className="eyebrow">{eyebrow}</span>}
       <h2>{title}</h2>
       {text && <p>{text}</p>}
@@ -78,7 +78,7 @@ export function CtaStrip({ dark }: { dark?: boolean } = {}) {
 export function CourseCard({ course }: { course: Course }) {
   const cat = getCategory(course.category);
   return (
-    <Link href={`/courses/${course.slug}`} className="card course-card" data-aos="fade-up">
+    <Link href={`/courses/${course.slug}`} className="card course-card" suppressHydrationWarning data-aos="fade-up">
       <span className="chip">
         {cat.icon} {cat.name}
       </span>
@@ -97,7 +97,7 @@ export function FaqList({ items = allFaqs }: { items?: { q: string; a: string }[
   return (
     <div className="faq-list">
       {items.map((f, i) => (
-        <details key={f.q} className="faq" data-aos="fade-up" data-aos-delay={i * 50}>
+        <details key={f.q} className="faq" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 50}>
           <summary>{f.q}</summary>
           <p>{f.a}</p>
         </details>
@@ -111,7 +111,7 @@ export function FaqList({ items = allFaqs }: { items?: { q: string; a: string }[
 export function LeadCta({ dark }: { dark?: boolean } = {}) {
   return (
     <section className={`section lead-cta ${dark ? "theme-dark" : ""}`}>
-      <div className="container lead-cta-inner" data-aos="fade-up">
+      <div className="container lead-cta-inner" suppressHydrationWarning data-aos="fade-up">
         <span className="eyebrow">Ready to get started?</span>
         <h2>Start building your career today.</h2>
         <p>
@@ -142,7 +142,7 @@ export function CtaBanner({ dark }: { dark?: boolean } = {}) {
   return (
     <section className={`section ${dark ? "theme-dark" : ""}`}>
       <div className="container">
-        <div className="cta-banner" data-aos="zoom-in">
+        <div className="cta-banner" suppressHydrationWarning data-aos="zoom-in">
           <div>
             <span className="eyebrow eyebrow-light">Ready to get started?</span>
             <h2>Start building your career today.</h2>

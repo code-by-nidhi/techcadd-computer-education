@@ -12,7 +12,7 @@ export default function ContactMap() {
   return (
     <section className="section find-us">
       <div className="container find-us-grid">
-        <div className="find-us-map" data-aos="fade-up">
+        <div className="find-us-map" suppressHydrationWarning data-aos="fade-up">
           <iframe
             src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
             title={`${site.fullName} location on Google Maps`}
@@ -21,7 +21,7 @@ export default function ContactMap() {
           />
         </div>
 
-        <div className="find-us-panel" data-aos="fade-up">
+        <div className="find-us-panel" suppressHydrationWarning data-aos="fade-up">
           <div className="find-us-info">
             <div className="find-us-card">
               <span className="find-us-icon" aria-hidden="true">

@@ -20,7 +20,7 @@ export default function TeamIntro() {
       <span className="team-intro-particle" style={{ top: "22%", left: "92%", animationDelay: "3s" }} aria-hidden="true" />
       <span className="team-intro-particle" style={{ top: "80%", left: "88%", animationDelay: "0.8s" }} aria-hidden="true" />
       <div className="container team-intro-inner">
-        <div className="team-intro-copy" data-aos="fade-up">
+        <div className="team-intro-copy" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">{teamIntro.badge}</span>
           <h2>{teamIntro.heading}</h2>
           <p>{teamIntro.text}</p>
@@ -44,7 +44,7 @@ export default function TeamIntro() {
           </div>
         </div>
 
-        <div className="team-intro-visual" data-aos="fade-left">
+        <div className="team-intro-visual" suppressHydrationWarning data-aos="fade-left">
           {/* Infinite marquee carousel: the card list is rendered twice back to back and the track
               animates from 0 to -50%, so the seam between the first and second copy is invisible and
               it loops forever without any JS. Hovering the row pauses it so a card can be read. */}

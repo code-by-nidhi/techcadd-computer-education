@@ -52,7 +52,7 @@ export default function Home() {
           />
           <div className="grid grid-3">
             {testimonials.map((t, i) => (
-              <figure key={t.name} className="card testimonial" data-aos="fade-up" data-aos-delay={(i % 3) * 100}>
+              <figure key={t.name} className="card testimonial" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 3) * 100}>
                 <div className="stars">★★★★★</div>
                 <blockquote>“{t.quote}”</blockquote>
                 <figcaption>
@@ -74,7 +74,7 @@ export default function Home() {
           <div className="grid grid-5 included-grid">
             {included.map((m, i) => (
               // Each card rises from below as the section scrolls in, one after the next
-              <div key={m.title} className="included-card" data-aos="fade-up" data-aos-delay={i * 150}>
+              <div key={m.title} className="included-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 150}>
                 <span className="step-num">{i + 1}</span>
                 <h3>{m.title}</h3>
                 <p>{m.text}</p>

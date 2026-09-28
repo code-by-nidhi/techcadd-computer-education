@@ -3,6 +3,8 @@ import type { AboutCard, AboutGalleryItem, AboutPageData, AboutSection, AboutSta
 import SpotlightCard from "./SpotlightCard";
 import { MotionCounter, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem, TiltCard } from "./motion/Reveal";
 import HeroParallax from "./motion/HeroParallax";
+import MouseSpotlight from "./motion/MouseSpotlight";
+import ScrollZoom from "./motion/ScrollZoom";
 
 // Reusable building blocks every /about/[slug] page is assembled from — see app/about/[slug]/page.tsx
 // and app/about/page.tsx. Keeping these generic is what lets a new lib/aboutData.ts entry become a
@@ -46,6 +48,7 @@ export function AboutHero({
         <span className="about-hero-particle" style={{ top: "70%", left: "12%", animationDelay: "1.8s" }} />
         <span className="about-hero-particle" style={{ top: "26%", left: "90%", animationDelay: "3.2s" }} />
       </HeroParallax>
+      <MouseSpotlight className="about-hero-spotlight" />
       <div className="container about-hero-inner">
         <div>
           <Reveal>
@@ -61,8 +64,14 @@ export function AboutHero({
             <p>{data.subtitle}</p>
           </Reveal>
         </div>
-        <TiltCard className="about-hero-media" max={6}>
-          <div className="about-hero-media-img" style={{ backgroundImage: `url(${data.heroImage})` }} aria-hidden="true" />
+        <TiltCard className={`about-hero-media ${data.slug === "founder" ? "about-hero-media-founder" : ""}`} max={6}>
+          {data.slug === "founder" ? (
+            <ScrollZoom className="about-hero-media-zoom">
+              <div className="about-hero-media-img" style={{ backgroundImage: `url(${data.heroImage})` }} aria-hidden="true" />
+            </ScrollZoom>
+          ) : (
+            <div className="about-hero-media-img" style={{ backgroundImage: `url(${data.heroImage})` }} aria-hidden="true" />
+          )}
         </TiltCard>
       </div>
     </section>
@@ -115,20 +124,22 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
                 )}
               </Stagger>
             ) : (
-              <>
+              <Stagger>
                 {s.body?.map((paragraph) => (
-                  <p key={paragraph} suppressHydrationWarning data-aos="fade-up">
-                    {paragraph}
-                  </p>
+                  <StaggerItem key={paragraph} className="about-body-p">
+                    <p>{paragraph}</p>
+                  </StaggerItem>
                 ))}
                 {s.points && (
-                  <ul className="ticks" suppressHydrationWarning data-aos="fade-up">
-                    {s.points.map((point) => (
-                      <li key={point}>{point}</li>
-                    ))}
-                  </ul>
+                  <StaggerItem>
+                    <ul className="ticks">
+                      {s.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  </StaggerItem>
                 )}
-              </>
+              </Stagger>
             )}
           </div>
         </section>

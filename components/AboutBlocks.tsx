@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { AboutCard, AboutGalleryItem, AboutPageData, AboutSection, AboutStat, AboutTrustCard } from "@/lib/aboutData";
 import SpotlightCard from "./SpotlightCard";
+import { MotionCounter, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem, TiltCard } from "./motion/Reveal";
+import HeroParallax from "./motion/HeroParallax";
 
 // Reusable building blocks every /about/[slug] page is assembled from — see app/about/[slug]/page.tsx
 // and app/about/page.tsx. Keeping these generic is what lets a new lib/aboutData.ts entry become a
@@ -36,19 +38,32 @@ export function AboutHero({
 }) {
   return (
     <section className="page-hero about-hero">
+      <HeroParallax>
+        <div className="about-hero-grid-bg" />
+        <span className="about-hero-glow about-hero-glow-1" />
+        <span className="about-hero-glow about-hero-glow-2" />
+        <span className="about-hero-particle" style={{ top: "18%", left: "6%" }} />
+        <span className="about-hero-particle" style={{ top: "70%", left: "12%", animationDelay: "1.8s" }} />
+        <span className="about-hero-particle" style={{ top: "26%", left: "90%", animationDelay: "3.2s" }} />
+      </HeroParallax>
       <div className="container about-hero-inner">
-        <div data-aos="fade-up">
-          <Breadcrumbs items={crumbs} />
-          <span className="eyebrow eyebrow-light">{data.heroBadge}</span>
-          <h1>{data.title}</h1>
-          <p>{data.subtitle}</p>
+        <div>
+          <Reveal>
+            <Breadcrumbs items={crumbs} />
+          </Reveal>
+          <ScaleIn className="eyebrow eyebrow-light" delay={0.1}>
+            {data.heroBadge}
+          </ScaleIn>
+          <h1>
+            <RevealHeading text={data.title} delay={0.2} />
+          </h1>
+          <Reveal delay={0.35}>
+            <p>{data.subtitle}</p>
+          </Reveal>
         </div>
-        <div
-          className="about-hero-media"
-          style={{ backgroundImage: `url(${data.heroImage})` }}
-          data-aos="fade-left"
-          aria-hidden="true"
-        />
+        <TiltCard className="about-hero-media" max={6}>
+          <div className="about-hero-media-img" style={{ backgroundImage: `url(${data.heroImage})` }} aria-hidden="true" />
+        </TiltCard>
       </div>
     </section>
   );
@@ -85,23 +100,20 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
                 <TrustCard data={s.trustCard} />
               </div>
             ) : s.cards ? (
-              <div className={`about-card-grid ${s.cardStyle === "certification" ? "about-card-grid-cert" : ""}`}>
-                {s.cards.map((card, ci) =>
+              <Stagger className={`about-card-grid ${s.cardStyle === "certification" ? "about-card-grid-cert" : ""}`}>
+                {s.cards.map((card) =>
                   s.cardStyle === "certification" ? (
-                    <CertificationCard key={card.title} card={card} delay={ci * 80} />
+                    <CertificationCard key={card.title} card={card} />
                   ) : (
-                    <SpotlightCard
-                      key={card.title}
-                      className="about-feature-card"
-                      data-aos="fade-up"
-                      data-aos-delay={ci * 80}
-                    >
-                      <h3>{card.title}</h3>
-                      <p>{card.text}</p>
-                    </SpotlightCard>
+                    <StaggerItem key={card.title}>
+                      <SpotlightCard className="about-feature-card">
+                        <h3>{card.title}</h3>
+                        <p>{card.text}</p>
+                      </SpotlightCard>
+                    </StaggerItem>
                   )
                 )}
-              </div>
+              </Stagger>
             ) : (
               <>
                 {s.body?.map((paragraph) => (
@@ -125,26 +137,28 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
   );
 }
 
-function CertificationCard({ card, delay }: { card: AboutCard; delay: number }) {
+function CertificationCard({ card }: { card: AboutCard }) {
   return (
-    <SpotlightCard className="cert-card" data-aos="fade-up" data-aos-delay={delay}>
-      <span className="cert-card-icon">
-        <CertIcon icon={card.icon} />
-      </span>
-      <div className="cert-card-head">
-        <h3>{card.title}</h3>
-        {card.badge && <span className="cert-card-badge">{card.badge}</span>}
-      </div>
-      {card.authority && <p className="cert-card-authority">{card.authority}</p>}
-      <p className="cert-card-text">{card.text}</p>
-      {card.benefits && (
-        <ul className="ticks cert-card-benefits">
-          {card.benefits.map((benefit) => (
-            <li key={benefit}>{benefit}</li>
-          ))}
-        </ul>
-      )}
-    </SpotlightCard>
+    <StaggerItem>
+      <SpotlightCard className="cert-card">
+        <span className="cert-card-icon">
+          <CertIcon icon={card.icon} />
+        </span>
+        <div className="cert-card-head">
+          <h3>{card.title}</h3>
+          {card.badge && <span className="cert-card-badge">{card.badge}</span>}
+        </div>
+        {card.authority && <p className="cert-card-authority">{card.authority}</p>}
+        <p className="cert-card-text">{card.text}</p>
+        {card.benefits && (
+          <ul className="ticks cert-card-benefits">
+            {card.benefits.map((benefit) => (
+              <li key={benefit}>{benefit}</li>
+            ))}
+          </ul>
+        )}
+      </SpotlightCard>
+    </StaggerItem>
   );
 }
 
@@ -233,14 +247,16 @@ export function AboutStats({ stats, dark }: { stats: AboutStat[]; dark?: boolean
   return (
     <section className={`section ${dark ? "theme-dark" : "theme-light"}`}>
       <div className="container">
-        <div className="duration-grid" data-aos="fade-up">
+        <Stagger className="duration-grid">
           {stats.map((s) => (
-            <div key={s.label} className="card duration-card">
-              <strong>{s.value}</strong>
+            <StaggerItem key={s.label} className="card duration-card">
+              <strong>
+                <MotionCounter value={s.value} />
+              </strong>
               <span>{s.label}</span>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

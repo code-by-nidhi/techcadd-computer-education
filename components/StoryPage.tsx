@@ -23,6 +23,8 @@ import SpotlightCard from "./SpotlightCard";
 import DemoButton from "./DemoButton";
 import CountUp from "./CountUp";
 import { LeadCta, CtaStrip } from "./Sections";
+import { Magnetic, MotionCounter, Reveal, RevealHeading, ScaleIn } from "./motion/Reveal";
+import HeroParallax from "./motion/HeroParallax";
 
 // The redesigned /about page (app/about/page.tsx). Fourteen sections, each a small local component —
 // see lib/storyData.ts for the copy that isn't already sourced from lib/courses.ts / lib/content.ts /
@@ -54,26 +56,45 @@ export default function StoryPage() {
 function StoryHero() {
   return (
     <section className="story-hero">
+      <HeroParallax>
+        <div className="story-hero-grid-bg" />
+        <span className="story-hero-glow story-hero-glow-1" />
+        <span className="story-hero-glow story-hero-glow-2" />
+        <span className="story-hero-particle" style={{ top: "20%", left: "8%" }} />
+        <span className="story-hero-particle" style={{ top: "68%", left: "14%", animationDelay: "2s" }} />
+        <span className="story-hero-particle" style={{ top: "30%", left: "92%", animationDelay: "3.6s" }} />
+        <span className="story-hero-particle" style={{ top: "78%", left: "88%", animationDelay: "1s" }} />
+      </HeroParallax>
       <div className="container story-hero-inner">
-        <div data-aos="fade-up">
-          <span className="eyebrow eyebrow-light">{heroCopy.eyebrow}</span>
-          <h1>{heroCopy.headline}</h1>
-          <p>{heroCopy.text}</p>
-          <div className="story-hero-actions">
-            <DemoButton className="btn hero-btn">Book a free demo</DemoButton>
-            <Link href="/courses" className="btn hero-btn-outline story-hero-outline">
-              Explore courses
-            </Link>
-          </div>
+        <div>
+          <ScaleIn className="eyebrow eyebrow-light">{heroCopy.eyebrow}</ScaleIn>
+          <h1>
+            <RevealHeading text={heroCopy.headline} delay={0.1} />
+          </h1>
+          <Reveal delay={0.3}>
+            <p>{heroCopy.text}</p>
+            <div className="story-hero-actions">
+              <Magnetic>
+                <DemoButton className="btn hero-btn">Book a free demo</DemoButton>
+              </Magnetic>
+              <Magnetic>
+                <Link href="/courses" className="btn hero-btn-outline story-hero-outline">
+                  Explore courses
+                </Link>
+              </Magnetic>
+            </div>
+          </Reveal>
         </div>
-        <div className="story-hero-stats" data-aos="fade-up" data-aos-delay="100">
+        <Reveal delay={0.2} className="story-hero-stats">
           {stats.map((s) => (
             <div key={s.label} className="story-stat">
-              <strong>{s.value}</strong>
+              <strong>
+                <MotionCounter value={s.value} />
+              </strong>
               <span>{s.label}</span>
             </div>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

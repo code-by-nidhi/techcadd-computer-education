@@ -1,5 +1,6 @@
 import SpotlightCard from "./SpotlightCard";
 import { CtaStrip, LeadCta } from "./Sections";
+import { MotionCounter, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "./motion/Reveal";
 import {
   missionPillars,
   missionPillarsHeader,
@@ -44,12 +45,16 @@ function MissionVisionHero() {
       <span className="mv-hero-glow mv-hero-glow-1" aria-hidden="true" />
       <span className="mv-hero-glow mv-hero-glow-2" aria-hidden="true" />
       <div className="container mv-hero-inner">
-        <div className="mv-hero-copy" data-aos="fade-up">
-          <span className="eyebrow">{missionVisionHero.label}</span>
-          <h1>{missionVisionHero.heading}</h1>
-          <p>{missionVisionHero.description}</p>
+        <div className="mv-hero-copy">
+          <ScaleIn className="eyebrow">{missionVisionHero.label}</ScaleIn>
+          <h1>
+            <RevealHeading text={missionVisionHero.heading} delay={0.1} />
+          </h1>
+          <Reveal delay={0.3}>
+            <p>{missionVisionHero.description}</p>
+          </Reveal>
         </div>
-        <div className="mv-hero-visual" data-aos="fade-left">
+        <Reveal delay={0.2} y={30} className="mv-hero-visual">
           <span className="mv-hero-orbit" aria-hidden="true" />
           <div className="mv-hero-card mv-hero-card-1">
             <span className="mv-hero-card-icon">
@@ -66,10 +71,12 @@ function MissionVisionHero() {
             <span>Job-ready from day one</span>
           </div>
           <div className="mv-hero-card mv-hero-card-3">
-            <strong>25,000+</strong>
+            <strong>
+              <MotionCounter value="25,000+" />
+            </strong>
             <span>Students trained</span>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -87,18 +94,20 @@ function MissionPillars() {
           <p className="mv-pillars-subheading">{missionPillarsHeader.text}</p>
         </div>
 
-        <div className="mv-pillars-grid">
-          {missionPillars.map((p, i) => (
-            <SpotlightCard key={p.title} className="mv-pillar-card" data-aos="fade-up" data-aos-delay={i * 80}>
-              <span className="mv-pillar-icon">
-                <MvIcon icon={p.icon} />
-              </span>
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
-              <span className="mv-pillar-accent" aria-hidden="true" />
-            </SpotlightCard>
+        <Stagger className="mv-pillars-grid">
+          {missionPillars.map((p) => (
+            <StaggerItem key={p.title}>
+              <SpotlightCard className="mv-pillar-card">
+                <span className="mv-pillar-icon">
+                  <MvIcon icon={p.icon} />
+                </span>
+                <h3>{p.title}</h3>
+                <p>{p.text}</p>
+                <span className="mv-pillar-accent" aria-hidden="true" />
+              </SpotlightCard>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

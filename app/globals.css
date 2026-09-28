@@ -4133,3 +4133,110 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .ah-metric, .ah-node, .ah-hub-ring { animation: none; transition: none; }
 }
+
+/* Who We Are — components/WhoWeAreSection.tsx (redesign of the /about hub's second section).
+   Supersedes the old .story-who/.story-collage rules above (left in place, unused) — this replaces
+   the two broken /about-menu/*.jpg photo-collage columns with an interactive "techcadd ecosystem"
+   hub, reusing the .ach/.ah glow-background and hub-and-node techniques already built for
+   components/AccreditationHub.tsx and components/AccreditationHero.tsx, restyled for this section's
+   dark palette. */
+.wwa { position: relative; overflow: hidden; }
+.wwa-grid-bg {
+  position: absolute; inset: 0; opacity: 0.4; pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, #000 40%, transparent 90%);
+}
+.wwa-glow { position: absolute; border-radius: 50%; filter: blur(110px); pointer-events: none; animation: story-hero-pulse 8s ease-in-out infinite; }
+.wwa-glow-1 { top: -100px; left: 6%; width: 440px; height: 440px; background: rgba(255, 210, 0, 0.14); }
+.wwa-glow-2 { bottom: -120px; right: 8%; width: 380px; height: 380px; background: rgba(0, 212, 255, 0.14); animation-delay: 2.5s; }
+.wwa-particle { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #ffd200; opacity: 0.45; filter: blur(0.5px); animation: story-hero-float 7s ease-in-out infinite; pointer-events: none; }
+.wwa-spotlight { position: absolute; inset: 0; pointer-events: none; opacity: 0.6; background: radial-gradient(circle 380px at var(--mx, 50%) var(--my, 50%), rgba(255, 210, 0, 0.07), transparent 70%); }
+
+.wwa-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+.wwa-story p { color: rgba(255, 255, 255, 0.78); }
+.wwa-heading { margin: 0.5rem 0 1.2rem; max-width: 16ch; font-size: clamp(1.9rem, 3.4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.18; color: #fff; }
+.wwa-highlight-heading { background: linear-gradient(90deg, #ffd200, #fff2b0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.wwa-highlight { font-weight: 700; color: #ffd200; }
+.wwa-founder { font-weight: 700; color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 210, 0, 0.5); text-underline-offset: 3px; transition: color 0.2s ease; }
+.wwa-founder:hover { color: #ffd200; }
+
+.wwa-teach { margin-top: 1.6rem; padding-top: 1.6rem; border-top: 1px solid rgba(255, 255, 255, 0.18); }
+.wwa-teach h3 { margin: 0 0 0.3rem; font-size: 1.05rem; color: #fff; }
+.wwa-teach > p { margin: 0 0 1rem; font-size: 0.92rem; color: rgba(255, 255, 255, 0.72); }
+.wwa-chip-cloud { display: flex; flex-wrap: wrap; gap: 10px; }
+.wwa-chip {
+  padding: 6px 14px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.85);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.wwa-chip:hover { background: #ffd200; border-color: #ffd200; color: #0f2e6d; transform: translateY(-2px); }
+
+.wwa-hq { margin: 1.6rem 0 0; font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
+
+.wwa-stats { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: 12px; }
+.wwa-stat {
+  display: flex; flex-direction: column; gap: 2px; padding: 12px 18px; border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14); transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.wwa-stat:hover { transform: translateY(-4px); border-color: rgba(255, 210, 0, 0.4); }
+.wwa-stat strong { font-size: 1.15rem; font-weight: 800; color: #ffd200; }
+.wwa-stat span { font-size: 0.66rem; font-weight: 600; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; letter-spacing: 0.03em; }
+
+.wwa-showcase-panel {
+  position: relative; aspect-ratio: 1 / 1; max-width: 440px; margin: 0 auto; border-radius: 32px;
+  background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.14); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+.wwa-since-badge {
+  position: absolute; top: 18px; right: 18px; z-index: 2; display: flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px); font-size: 0.72rem; font-weight: 700; color: #fff;
+}
+.wwa-since-pulse { width: 7px; height: 7px; border-radius: 50%; background: #ffd200; box-shadow: 0 0 0 4px rgba(255, 210, 0, 0.25); animation: story-hero-pulse 2.2s ease-in-out infinite; }
+.wwa-showcase-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+.wwa-showcase-lines line { stroke: rgba(255, 210, 0, 0.3); stroke-width: 0.6; }
+
+.wwa-hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 130px; height: 130px; }
+.wwa-hub-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px dashed rgba(255, 210, 0, 0.4); animation: awd-ring-spin 14s linear infinite; }
+.wwa-hub-ring-2 { inset: -18px; border-color: rgba(0, 212, 255, 0.3); animation-duration: 20s; animation-direction: reverse; }
+.wwa-hub-fast { animation-duration: 4s !important; }
+.wwa-hub-core {
+  position: relative; z-index: 1; width: 100%; height: 100%; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  background: linear-gradient(135deg, #ffd200, #ffb700); color: #0f2e6d; box-shadow: 0 20px 40px -16px rgba(255, 210, 0, 0.45);
+}
+.wwa-hub-core strong { font-size: 1rem; font-weight: 800; }
+.wwa-hub-core span { font-size: 0.68rem; font-weight: 700; opacity: 0.8; }
+
+.wwa-node {
+  position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 10px 12px; width: 96px; text-align: center; border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.16); box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.4);
+  font-size: 0.66rem; font-weight: 700; color: #fff; cursor: default;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.wwa-node-icon { width: 18px; height: 18px; color: #ffd200; }
+.wwa-node:hover, .wwa-node-active { transform: translate(-50%, -50%) translateY(-4px) scale(1.08); background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 210, 0, 0.5); box-shadow: 0 20px 40px -18px rgba(255, 210, 0, 0.35); }
+.wwa-node-0 { top: 5%; left: 50%; }
+.wwa-node-1 { top: 30%; left: 90%; }
+.wwa-node-2 { top: 70%; left: 90%; }
+.wwa-node-3 { top: 95%; left: 50%; }
+.wwa-node-4 { top: 70%; left: 10%; }
+.wwa-node-5 { top: 30%; left: 10%; }
+
+@media (max-width: 960px) {
+  .wwa-inner { grid-template-columns: 1fr; }
+  .wwa-showcase-panel { max-width: 360px; }
+}
+@media (max-width: 640px) {
+  .wwa-showcase-panel { max-width: 300px; }
+  .wwa-node { width: 78px; padding: 8px 10px; font-size: 0.6rem; }
+  .wwa-node-icon { width: 15px; height: 15px; }
+  .wwa-hub-core strong { font-size: 0.86rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wwa-glow, .wwa-particle, .wwa-since-pulse, .wwa-hub-ring, .wwa-node, .wwa-stat, .wwa-chip { animation: none; transition: none; }
+}

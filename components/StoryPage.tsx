@@ -1,21 +1,14 @@
 import Link from "next/link";
-import { categories, coursesIn, getCourse } from "@/lib/courses";
+import { categories, coursesIn } from "@/lib/courses";
 import { site } from "@/lib/site";
-import {
-  belief,
-  heroCopy,
-  industryEngagement,
-  industryPartners,
-  learningEcosystem,
-  skillEcosystem,
-  whoWeAre,
-} from "@/lib/storyData";
+import { belief, heroCopy, industryEngagement, industryPartners, learningEcosystem, skillEcosystem } from "@/lib/storyData";
 import SpotlightCard from "./SpotlightCard";
 import DemoButton from "./DemoButton";
 import { LeadCta, CtaStrip } from "./Sections";
 import { Magnetic, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "./motion/Reveal";
 import HeroParallax from "./motion/HeroParallax";
 import MouseSpotlight from "./motion/MouseSpotlight";
+import WhoWeAreSection from "./WhoWeAreSection";
 import WhoWeTeach from "./WhoWeTeach";
 import LearningJourney from "./LearningJourney";
 import WhyDifferent from "./WhyDifferent";
@@ -32,7 +25,7 @@ export default function StoryPage() {
   return (
     <>
       <StoryHero />
-      <WhoWeAre />
+      <WhoWeAreSection />
       <SkillEcosystem />
       <WhyItMattersSection />
       <WhoWeTeach />
@@ -94,65 +87,8 @@ function StoryHero() {
 // Learning Flow — redesigned in its own file, components/LearningJourney.tsx, as a connected
 // roadmap (needs client-side hover state for the per-card spotlight).
 
-// 2. Who We Are — two-column: story + real course chips on the left, a photo collage on the right.
-function WhoWeAre() {
-  return (
-    <section className="section theme-dark story-who">
-      <div className="container story-who-inner">
-        <div suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">Who we are</span>
-          <h2 className="story-who-heading">
-            Empowering Skills. Enabling Careers. <span className="story-who-highlight">Building the Future.</span>
-          </h2>
-          <p>
-            Founded in {site.since} by{" "}
-            <Link href="/about/founder" className="story-who-founder">
-              Mr. Gourav Gupta
-            </Link>
-            , {whoWeAre.paragraphs[0]}
-          </p>
-          <p>{whoWeAre.paragraphs[1]}</p>
-
-          <div className="story-who-teach">
-            <h3>What we teach</h3>
-            <p>{whoWeAre.teachIntro}</p>
-            <div className="story-chip-cloud">
-              {whoWeAre.featuredCourseSlugs.map((slug, i) => {
-                const course = getCourse(slug);
-                if (!course) return null;
-                return (
-                  <span key={slug} className="story-chip" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 8) * 30}>
-                    {course.title}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-
-          <p className="story-who-hq">Headquartered in {site.city}, Punjab.</p>
-        </div>
-
-        <div className="story-collage" suppressHydrationWarning data-aos="fade-up" data-aos-delay="120">
-          <div className="story-collage-frame story-collage-main">
-            <span className="story-collage-img" style={{ backgroundImage: "url(/about-menu/our-team.jpg)" }} />
-            <span className="story-collage-caption">Team techcadd</span>
-          </div>
-          <div className="story-collage-row">
-            <div className="story-collage-frame">
-              <span className="story-collage-img" style={{ backgroundImage: "url(/about-menu/about-techcadd.jpg)" }} />
-            </div>
-            <div className="story-collage-frame">
-              <span className="story-collage-img" style={{ backgroundImage: "url(/about-menu/mission-vision.jpg)" }} />
-            </div>
-          </div>
-          <span className="story-collage-badge">
-            <strong>Since {site.since}</strong>
-          </span>
-        </div>
-      </div>
-    </section>
-  );
-}
+// Who We Are — redesigned in its own file, components/WhoWeAreSection.tsx, as a brand-story panel
+// paired with an interactive "techcadd ecosystem" hub (needs client-side hover state).
 
 // 4. Skill Building Ecosystem — reading column on the left, an asymmetrical 3-image composition on
 // the right, over a decorative dark-navy backdrop (glow orbs + faint grid — see globals.css).

@@ -21,7 +21,7 @@ const trackColors: Record<CategoryId, string> = {
 };
 
 // Courses that have a real software logo in public/logos.
-const logos: Record<string, string> = {
+export const logos: Record<string, string> = {
   "basic-computer-course-in-jalandhar": "word",
   "advanced-excel-training-in-jalandhar": "excel",
   "tally-prime-training-in-jalandhar": "tally",

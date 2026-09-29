@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/lib/site";
-import { categories } from "@/lib/courses";
+import { categories, categorySlug } from "@/lib/courses";
 import ScrollTop from "./ScrollTop";
 
 export default function Footer() {
@@ -27,7 +27,7 @@ export default function Footer() {
         <div>
           <h4>Courses</h4>
           {categories.map((c) => (
-            <Link key={c.id} href={`/courses#${c.id}`}>
+            <Link key={c.id} href={`/internship-training/${categorySlug(c.id)}`}>
               {c.name}
             </Link>
           ))}

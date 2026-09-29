@@ -23,7 +23,7 @@ import {
   bcWhyNow,
 } from "@/lib/basicComputerData";
 
-// Dedicated Basic Computer Course page (app/courses/basic-computer-course/page.tsx). Same section
+// Dedicated Basic Computer Course page (app/internship-training/basic-computer-course-in-jalandhar/page.tsx). Same section
 // order as the course-page reference, redrawn in a light "product site" style: ice-blue hero with a
 // drawn desktop mock-up, bento cards, a tabbed syllabus, and navy bands (Why now, Tools, Why techcadd)
 // to break up the light sections. All copy lives in lib/basicComputerData.ts; styles are the

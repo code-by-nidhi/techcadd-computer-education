@@ -83,7 +83,7 @@ export function CtaStrip({ dark }: { dark?: boolean } = {}) {
 export function CourseCard({ course }: { course: Course }) {
   const cat = getCategory(course.category);
   return (
-    <Link href={`/courses/${course.slug}`} className="card course-card" suppressHydrationWarning data-aos="fade-up">
+    <Link href={`/internship-training/${course.slug}`} className="card course-card" suppressHydrationWarning data-aos="fade-up">
       <span className="chip">
         {cat.icon} {cat.name}
       </span>

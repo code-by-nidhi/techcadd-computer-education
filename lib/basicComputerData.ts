@@ -1,4 +1,4 @@
-// Copy for the dedicated Basic Computer Course page (app/courses/basic-computer-course/page.tsx,
+// Copy for the dedicated Basic Computer Course page (app/internship-training/basic-computer-course-in-jalandhar/page.tsx,
 // rendered by components/BasicComputerPage.tsx). The section list follows the course-page reference
 // (hero → overview → audience → case for it → syllabus → tools → certificate → careers → projects →
 // loop → why techcadd → comparison → reviews → FAQ); the layout is deliberately its own.

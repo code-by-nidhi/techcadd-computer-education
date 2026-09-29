@@ -10,6 +10,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://techcadd.com"),
   title: {
     default: `${site.fullName} ${site.city} | Computer, Tally, CAD, Digital Marketing & Graphic Design Courses`,
     template: `%s | ${site.fullName} ${site.city}`,

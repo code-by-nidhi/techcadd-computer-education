@@ -22,13 +22,13 @@ const trackColors: Record<CategoryId, string> = {
 
 // Courses that have a real software logo in public/logos.
 const logos: Record<string, string> = {
-  "basic-computer-course": "word",
-  "ms-office-advanced-excel": "excel",
-  "tally-prime-gst": "tally",
-  autocad: "autocad",
-  solidworks: "solidworks",
-  "adobe-photoshop": "photoshop",
-  coreldraw: "coreldraw",
+  "basic-computer-course-in-jalandhar": "word",
+  "advanced-excel-training-in-jalandhar": "excel",
+  "tally-prime-training-in-jalandhar": "tally",
+  "autocad-training-in-jalandhar": "autocad",
+  "solidworks-training-in-jalandhar": "solidworks",
+  "adobe-photoshop-training-in-jalandhar": "photoshop",
+  "coreldraw-training-in-jalandhar": "coreldraw",
 };
 
 const SKIP = new Set(["&", "and", "with", "in", "of", "the", "for"]);
@@ -49,7 +49,7 @@ function initials(title: string) {
 export function courseItem(course: Course): ListItem {
   const cat = getCategory(course.category);
   return {
-    href: `/courses/${course.slug}`,
+    href: `/internship-training/${course.slug}`,
     title: course.title,
     meta: `${course.duration} · Live projects`,
     search: [course.title, cat.name, ...course.tools].join(" ").toLowerCase(),

@@ -1987,7 +1987,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   .nav.nav-open { display: flex; }
   .nav > a:not(.btn), .nav-item, .nav-item.has-dropdown { padding: 0.8rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
   .nav-glow { align-self: flex-start; }
-  .dropdown { display: none !important; }
+  .dropdown, .cpm-dropdown { display: none !important; }
   .nav-item.has-dropdown { flex-direction: column; align-items: stretch; }
   .about-accordion { display: block; }
   .about-accordion summary { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; padding: 4px 0; font-weight: 600; font-size: 13.5px; color: rgba(255, 255, 255, 0.75); cursor: pointer; list-style: none; }
@@ -4239,4 +4239,167 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) {
   .wwa-glow, .wwa-particle, .wwa-since-pulse, .wwa-hub-ring, .wwa-node, .wwa-stat, .wwa-chip { animation: none; transition: none; }
+}
+
+/* Ecosystem diagram — components/EcosystemDiagramSection.tsx (redesign of "A skill-building
+   ecosystem", the section right after Who We Are). Supersedes the old .story-ecosystem-images/
+   .story-ecosystem-content two-column rules above (left in place, unused; .story-ecosystem-orb-*
+   and the section's theme-light background are still reused as-is). A reference spec for this
+   section asked for a page-wide deep-navy (#050B1D) background, but this section must stay
+   theme-light to keep the page's alternation intact (see the component file's header comment) — so
+   the deep-navy treatment lives on .eco-panel instead, as a dark canvas embedded in the light
+   section, same resolution used for components/OurApproachSection.tsx. */
+.eco-container { display: flex; flex-direction: column; gap: 3.5rem; }
+.eco-heading { max-width: 760px; }
+.eco-heading p { margin: 0 0 0.6rem; }
+
+.eco-panel {
+  position: relative; overflow: hidden; border-radius: 32px; background: #050b1d;
+  padding: 56px 40px; min-height: 680px; box-shadow: 0 50px 120px -40px rgba(0, 8, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  --px: 0; --py: 0;
+}
+.eco-grid-bg {
+  position: absolute; inset: -20px; opacity: 0.35; pointer-events: none; transition: transform 0.2s ease-out;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 40%, transparent 90%);
+}
+.eco-glow { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; animation: story-hero-pulse 8s ease-in-out infinite; transition: transform 0.2s ease-out; }
+.eco-glow-1 { top: -120px; left: 4%; width: 460px; height: 460px; background: rgba(0, 212, 255, 0.18); }
+.eco-glow-2 { bottom: -140px; right: 4%; width: 420px; height: 420px; background: rgba(255, 210, 0, 0.14); animation-delay: 2.5s; }
+.eco-particle { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #00d4ff; opacity: 0.5; filter: blur(0.5px); animation: story-hero-float 7s ease-in-out infinite; pointer-events: none; transition: transform 0.2s ease-out; }
+.eco-spotlight { position: absolute; inset: 0; pointer-events: none; opacity: 0.7; background: radial-gradient(circle 420px at var(--mx, 50%) var(--my, 50%), rgba(0, 212, 255, 0.1), transparent 70%); }
+
+.eco-diagram { position: relative; z-index: 1; width: 100%; max-width: 620px; aspect-ratio: 1 / 1; margin: 0 auto; transition: transform 0.2s ease-out; }
+.eco-links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.eco-spoke { animation: oa-path-pulse 3s ease-in-out infinite; transition: stroke-width 0.3s ease, opacity 0.3s ease; }
+.eco-link { transition: stroke-width 0.3s ease, opacity 0.3s ease; }
+
+.eco-hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; }
+.eco-hub-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px dashed rgba(255, 210, 0, 0.4); animation: awd-ring-spin 14s linear infinite; }
+.eco-hub-ring-2 { inset: -22px; border-color: rgba(0, 212, 255, 0.3); animation-duration: 22s; animation-direction: reverse; }
+.eco-hub-fast { animation-duration: 4s !important; }
+.eco-hub-glow { position: absolute; inset: -30px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 210, 0, 0.35), transparent 70%); filter: blur(20px); pointer-events: none; }
+.eco-hub-core {
+  position: relative; z-index: 1; width: 150px; height: 150px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center; padding: 0 14px;
+  background: linear-gradient(135deg, #ffd200, #ffb700); box-shadow: 0 30px 60px -20px rgba(255, 210, 0, 0.55);
+}
+.eco-hub-core strong { font-size: 1.05rem; font-weight: 800; letter-spacing: 0.02em; color: #0f2e6d; }
+.eco-hub-core span { font-size: 0.62rem; font-weight: 700; color: rgba(15, 46, 109, 0.75); line-height: 1.3; }
+
+.eco-node {
+  position: absolute; transform: translate(-50%, -50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 12px 14px; width: 108px; text-align: center; border-radius: 20px; cursor: default;
+  background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 212, 255, 0.28); box-shadow: 0 16px 34px -20px rgba(0, 0, 0, 0.55);
+  font-size: 0.72rem; font-weight: 700; color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.eco-node-icon { width: 20px; height: 20px; color: #00d4ff; transition: transform 0.3s ease, color 0.3s ease; }
+.eco-node:hover, .eco-node-active {
+  transform: translate(-50%, -50%) translateY(-6px) scale(1.08);
+  background: rgba(255, 255, 255, 0.12); border-color: rgba(0, 212, 255, 0.65);
+  box-shadow: 0 24px 48px -20px rgba(0, 212, 255, 0.45);
+}
+.eco-node:hover .eco-node-icon, .eco-node-active .eco-node-icon { color: #ffd200; transform: scale(1.15) rotate(-6deg); }
+
+.eco-metric {
+  position: absolute; z-index: 3; display: flex; flex-direction: column; gap: 2px; padding: 10px 16px; border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.14); transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.eco-metric:hover { transform: translateY(-4px); border-color: rgba(255, 210, 0, 0.4); }
+.eco-metric strong { font-size: 1.05rem; font-weight: 800; color: #ffd200; }
+.eco-metric span { font-size: 0.62rem; font-weight: 600; color: rgba(255, 255, 255, 0.65); text-transform: uppercase; letter-spacing: 0.03em; }
+.eco-metric-0 { top: 6%; left: 3%; }
+.eco-metric-1 { top: 6%; right: 3%; }
+.eco-metric-2 { bottom: 6%; left: 3%; }
+.eco-metric-3 { bottom: 6%; right: 3%; }
+
+@media (max-width: 960px) {
+  .eco-panel { min-height: 0; padding: 40px 24px; }
+  .eco-diagram { max-width: 460px; }
+  .eco-hub { width: 140px; height: 140px; }
+  .eco-hub-core { width: 116px; height: 116px; }
+  .eco-node { width: 90px; padding: 9px 10px; font-size: 0.64rem; }
+  .eco-node-icon { width: 17px; height: 17px; }
+  .eco-metric { padding: 7px 12px; }
+  .eco-metric-0, .eco-metric-2 { left: 2%; }
+  .eco-metric-1, .eco-metric-3 { right: 2%; }
+}
+@media (max-width: 640px) {
+  .eco-panel { border-radius: 22px; }
+  .eco-diagram { max-width: 300px; }
+  .eco-hub { width: 116px; height: 116px; }
+  .eco-hub-core { width: 96px; height: 96px; }
+  .eco-hub-core strong { font-size: 0.82rem; }
+  .eco-hub-core span { font-size: 0.54rem; }
+  .eco-node { width: 74px; padding: 7px 8px; font-size: 0.56rem; }
+  .eco-node-icon { width: 15px; height: 15px; }
+  .eco-metric { display: flex; flex-direction: row; align-items: baseline; gap: 5px; padding: 6px 10px; }
+  .eco-metric strong { font-size: 0.85rem; }
+  .eco-metric span { font-size: 0.52rem; }
+  .eco-metric-0 { top: 2%; left: 1%; }
+  .eco-metric-1 { top: 2%; right: 1%; }
+  .eco-metric-2 { bottom: 2%; left: 1%; }
+  .eco-metric-3 { bottom: 2%; right: 1%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eco-glow, .eco-particle, .eco-hub-ring, .eco-spoke, .eco-node, .eco-metric { animation: none; transition: none; }
+  .eco-grid-bg, .eco-glow, .eco-particle, .eco-diagram { transform: none !important; }
+}
+
+/* Certificate Programs mega-menu — components/CertificateProgramsMenu.tsx. Deliberately its own
+   positioning class (not .dropdown, which the Courses mega-menu above uses) so the two menus are
+   visually distinct at a glance: a white-glass 2x2 card grid instead of text columns. Same
+   hover/focus-within trigger mechanics as .dropdown (see .has-dropdown above), just its own visual
+   language. Below 960px this site's nav is a mobile flyout with no hover state (see .dropdown's own
+   forced-hidden rule at that breakpoint) — .cpm-dropdown is hidden there the same way, so the
+   "tablet: 2 columns / mobile: 1 column" split only really applies to a resized desktop viewport; the
+   1-column rule below is kept as a defensive fallback for that case. */
+.cpm-dropdown {
+  position: absolute; top: calc(100% + 8px); left: 50%;
+  width: min(1000px, calc(100vw - 2 * var(--gutter)));
+  background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  padding: 28px; border-radius: 24px; border: 1px solid rgba(10, 50, 184, 0.1);
+  box-shadow: 0 30px 70px -20px rgba(0, 8, 30, 0.35);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translate(-50%, -10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+.header.is-scrolled .cpm-dropdown { width: min(1000px, calc(100vw - 2 * var(--gutter))); }
+.has-dropdown:hover .cpm-dropdown, .has-dropdown:focus-within .cpm-dropdown {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0);
+}
+.cpm-dropdown::before { content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
+
+.cpm-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.cpm-card {
+  position: relative; display: flex; flex-direction: column; gap: 10px; padding: 26px;
+  border-radius: 20px; background: #fff; border: 1.5px solid rgba(10, 50, 184, 0.1);
+  box-shadow: 0 16px 34px -22px rgba(10, 50, 184, 0.3);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cpm-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 26px 50px -18px rgba(255, 210, 0, 0.35); }
+.cpm-card-icon {
+  display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px;
+  border-radius: 15px; background: var(--brand-soft); color: var(--brand);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.cpm-card-icon svg { width: 24px; height: 24px; }
+.cpm-card:hover .cpm-card-icon { background: #fff2b0; color: #a86b00; transform: rotate(-6deg) scale(1.06); }
+.cpm-card-title { font-size: 1.05rem; font-weight: 700; color: var(--navy); }
+.cpm-card-desc { font-size: 0.86rem; line-height: 1.5; color: var(--muted); flex: 1; }
+.cpm-card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
+.cpm-card-count { font-size: 0.78rem; font-weight: 700; color: var(--brand); }
+.cpm-card-arrow { width: 18px; height: 18px; color: var(--muted); transition: transform 0.3s ease, color 0.3s ease; }
+.cpm-card:hover .cpm-card-arrow { transform: translate(3px, -3px); color: #a86b00; }
+
+@media (max-width: 640px) {
+  .cpm-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cpm-dropdown, .cpm-card, .cpm-card-icon, .cpm-card-arrow { transition: none; }
 }

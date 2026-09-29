@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { categories, coursesIn } from "@/lib/courses";
 import { site } from "@/lib/site";
-import { belief, heroCopy, industryEngagement, industryPartners, learningEcosystem, skillEcosystem } from "@/lib/storyData";
+import { belief, heroCopy, industryEngagement, industryPartners, learningEcosystem } from "@/lib/storyData";
 import SpotlightCard from "./SpotlightCard";
 import DemoButton from "./DemoButton";
 import { LeadCta, CtaStrip } from "./Sections";
@@ -9,6 +9,7 @@ import { Magnetic, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "
 import HeroParallax from "./motion/HeroParallax";
 import MouseSpotlight from "./motion/MouseSpotlight";
 import WhoWeAreSection from "./WhoWeAreSection";
+import EcosystemDiagramSection from "./EcosystemDiagramSection";
 import WhoWeTeach from "./WhoWeTeach";
 import LearningJourney from "./LearningJourney";
 import WhyDifferent from "./WhyDifferent";
@@ -26,7 +27,7 @@ export default function StoryPage() {
     <>
       <StoryHero />
       <WhoWeAreSection />
-      <SkillEcosystem />
+      <EcosystemDiagramSection />
       <WhyItMattersSection />
       <WhoWeTeach />
       <LearningJourney />
@@ -92,38 +93,8 @@ function StoryHero() {
 
 // 4. Skill Building Ecosystem — reading column on the left, an asymmetrical 3-image composition on
 // the right, over a decorative dark-navy backdrop (glow orbs + faint grid — see globals.css).
-function SkillEcosystem() {
-  const [before, after] = skillEcosystem.paragraphs[0].split(skillEcosystem.highlight);
-  return (
-    <section className="section theme-light story-ecosystem">
-      <span className="story-ecosystem-orb story-ecosystem-orb-blue" aria-hidden="true" />
-      <span className="story-ecosystem-orb story-ecosystem-orb-yellow" aria-hidden="true" />
-      <div className="container story-ecosystem-inner">
-        <div className="story-ecosystem-content" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">{skillEcosystem.eyebrow}</span>
-          <h2>{skillEcosystem.heading}</h2>
-          <p>
-            {before}
-            <strong>{skillEcosystem.highlight}</strong>
-            {after}
-          </p>
-          <p>{skillEcosystem.paragraphs[1]}</p>
-        </div>
-        <div className="story-ecosystem-images" suppressHydrationWarning data-aos="fade-up" data-aos-delay="120">
-          <div className="story-ecosystem-frame story-ecosystem-main">
-            <span className="story-ecosystem-img" style={{ backgroundImage: `url(${skillEcosystem.images[0]})` }} />
-          </div>
-          <div className="story-ecosystem-frame story-ecosystem-float story-ecosystem-float-1">
-            <span className="story-ecosystem-img" style={{ backgroundImage: `url(${skillEcosystem.images[1]})` }} />
-          </div>
-          <div className="story-ecosystem-frame story-ecosystem-float story-ecosystem-float-2">
-            <span className="story-ecosystem-img" style={{ backgroundImage: `url(${skillEcosystem.images[2]})` }} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+// "A skill-building ecosystem" — redesigned in its own file, components/EcosystemDiagramSection.tsx,
+// as a hub-and-network visualization (needs client-side hover state + mouse-parallax).
 
 // 5. Why It Matters — redesigned in its own file, components/WhyItMattersSection.tsx, as a connected
 // horizontal story flow (needs client-side hover state for the per-card spotlight).
@@ -178,7 +149,7 @@ function TechDomains() {
                 <p className="story-ecosystem2-desc">{cat.blurb}</p>
                 <div className="story-ecosystem2-pills">
                   {shown.map((c) => (
-                    <Link key={c.slug} href={`/courses/${c.slug}`} className="story-ecosystem2-pill">
+                    <Link key={c.slug} href={`/internship-training/${c.slug}`} className="story-ecosystem2-pill">
                       {c.title}
                     </Link>
                   ))}
@@ -190,7 +161,7 @@ function TechDomains() {
                     </summary>
                     <div className="story-ecosystem2-pills story-ecosystem2-pills-extra">
                       {rest.map((c) => (
-                        <Link key={c.slug} href={`/courses/${c.slug}`} className="story-ecosystem2-pill">
+                        <Link key={c.slug} href={`/internship-training/${c.slug}`} className="story-ecosystem2-pill">
                           {c.title}
                         </Link>
                       ))}

@@ -22,14 +22,14 @@ const tones: Record<CategoryId, string> = {
 
 // Course photos (public/courses, 3:4). A card with a photo shows it full-bleed instead of the logo tile.
 const photos: Record<string, string> = {
-  "basic-computer-course": "/courses/basic-computer.webp",
-  "ms-office-advanced-excel": "/courses/ms-office-excel.webp",
-  "tally-prime-gst": "/courses/tally-gst.webp",
+  "basic-computer-course-in-jalandhar": "/courses/basic-computer.webp",
+  "advanced-excel-training-in-jalandhar": "/courses/ms-office-excel.webp",
+  "tally-prime-training-in-jalandhar": "/courses/tally-gst.webp",
   "punjabi-typing": "/courses/punjabi-typing.webp",
-  autocad: "/courses/autocad.webp",
-  "3ds-max": "/courses/3ds-max.webp",
-  "graphic-design": "/courses/graphic-design.webp",
-  "digital-marketing": "/courses/digital-marketing.webp",
+  "autocad-training-in-jalandhar": "/courses/autocad.webp",
+  "3ds-max-training-in-jalandhar": "/courses/3ds-max.webp",
+  "graphic-design-course-in-jalandhar": "/courses/graphic-design.webp",
+  "digital-marketing-training-in-jalandhar": "/courses/digital-marketing.webp",
 };
 
 export default function HomeFeatured() {
@@ -59,7 +59,7 @@ export default function HomeFeatured() {
                   return (
                     <Link
                       key={course.slug}
-                      href={`/courses/${course.slug}`}
+                      href={`/internship-training/${course.slug}`}
                       className={`fc-card ${tones[course.category]}${photo ? " has-photo" : ""}`}
                     >
                       {photo ? (

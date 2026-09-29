@@ -12,7 +12,7 @@ export default function CourseListing({ groups, examples }: { groups: ListGroup[
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
   // Distinct courses (a course can appear in several groups; format cards aren't courses).
-  const total = new Set(groups.flatMap((g) => g.items.map((i) => i.href)).filter((h) => h.startsWith("/courses/"))).size;
+  const total = new Set(groups.flatMap((g) => g.items.map((i) => i.href)).filter((h) => h.startsWith("/internship-training/"))).size;
   const visible = groups
     .map((g) => ({ ...g, items: q ? g.items.filter((i) => i.search.includes(q)) : g.items }))
     .filter((g) => g.items.length > 0);

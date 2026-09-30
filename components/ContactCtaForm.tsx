@@ -74,7 +74,7 @@ export default function ContactCtaForm() {
   return (
     <section className="section theme-dark contact-cta">
       <div className="container contact-cta-grid">
-        <div className="contact-cta-copy" data-aos="fade-up">
+        <div className="contact-cta-copy" suppressHydrationWarning data-aos="fade-up">
           <h2>
             Take the first step towards <span className="contact-cta-highlight">your IT career</span> with {site.name}{" "}
             {site.city}
@@ -105,7 +105,7 @@ export default function ContactCtaForm() {
           </div>
         </div>
 
-        <div className="contact-cta-panel" data-aos="fade-up">
+        <div className="contact-cta-panel" suppressHydrationWarning data-aos="fade-up">
           {status === "sent" ? (
             <div className="contact-cta-done" role="status">
               <h3>Thank you! 🎉</h3>

@@ -11,7 +11,7 @@ export default function BcSyllabus({ phases }: { phases: Phase[] }) {
   const p = phases[active];
 
   return (
-    <div className="bc-syl" data-aos="fade-up">
+    <div className="bc-syl" suppressHydrationWarning data-aos="fade-up">
       <div className="bc-syl-tabs" role="tablist" aria-label="Course modules">
         {phases.map((ph, i) => (
           <button

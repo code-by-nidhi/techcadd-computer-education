@@ -23,6 +23,8 @@ import SpotlightCard from "./SpotlightCard";
 import DemoButton from "./DemoButton";
 import CountUp from "./CountUp";
 import { LeadCta, CtaStrip } from "./Sections";
+import { Magnetic, MotionCounter, Reveal, RevealHeading, ScaleIn } from "./motion/Reveal";
+import HeroParallax from "./motion/HeroParallax";
 
 // The redesigned /about page (app/about/page.tsx). Fourteen sections, each a small local component —
 // see lib/storyData.ts for the copy that isn't already sourced from lib/courses.ts / lib/content.ts /
@@ -54,26 +56,45 @@ export default function StoryPage() {
 function StoryHero() {
   return (
     <section className="story-hero">
+      <HeroParallax>
+        <div className="story-hero-grid-bg" />
+        <span className="story-hero-glow story-hero-glow-1" />
+        <span className="story-hero-glow story-hero-glow-2" />
+        <span className="story-hero-particle" style={{ top: "20%", left: "8%" }} />
+        <span className="story-hero-particle" style={{ top: "68%", left: "14%", animationDelay: "2s" }} />
+        <span className="story-hero-particle" style={{ top: "30%", left: "92%", animationDelay: "3.6s" }} />
+        <span className="story-hero-particle" style={{ top: "78%", left: "88%", animationDelay: "1s" }} />
+      </HeroParallax>
       <div className="container story-hero-inner">
-        <div data-aos="fade-up">
-          <span className="eyebrow eyebrow-light">{heroCopy.eyebrow}</span>
-          <h1>{heroCopy.headline}</h1>
-          <p>{heroCopy.text}</p>
-          <div className="story-hero-actions">
-            <DemoButton className="btn hero-btn">Book a free demo</DemoButton>
-            <Link href="/courses" className="btn hero-btn-outline story-hero-outline">
-              Explore courses
-            </Link>
-          </div>
+        <div>
+          <ScaleIn className="eyebrow eyebrow-light">{heroCopy.eyebrow}</ScaleIn>
+          <h1>
+            <RevealHeading text={heroCopy.headline} delay={0.1} />
+          </h1>
+          <Reveal delay={0.3}>
+            <p>{heroCopy.text}</p>
+            <div className="story-hero-actions">
+              <Magnetic>
+                <DemoButton className="btn hero-btn">Book a free demo</DemoButton>
+              </Magnetic>
+              <Magnetic>
+                <Link href="/courses" className="btn hero-btn-outline story-hero-outline">
+                  Explore courses
+                </Link>
+              </Magnetic>
+            </div>
+          </Reveal>
         </div>
-        <div className="story-hero-stats" data-aos="fade-up" data-aos-delay="100">
+        <Reveal delay={0.2} className="story-hero-stats">
           {stats.map((s) => (
             <div key={s.label} className="story-stat">
-              <strong>{s.value}</strong>
+              <strong>
+                <MotionCounter value={s.value} />
+              </strong>
               <span>{s.label}</span>
             </div>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -87,7 +108,7 @@ function LearningFlow() {
       <span className="story-flow2-orb story-flow2-orb-1" aria-hidden="true" />
       <span className="story-flow2-orb story-flow2-orb-2" aria-hidden="true" />
       <div className="container">
-        <div className="section-heading story-flow2-heading" data-aos="fade-up">
+        <div className="section-heading story-flow2-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow story-flow2-eyebrow">{learningFlow.eyebrow}</span>
           <h2>
             Learn <span className="story-flow2-hl">→</span> Practice <span className="story-flow2-hl">→</span> Build{" "}
@@ -96,7 +117,7 @@ function LearningFlow() {
         </div>
         <div className="story-flow2-grid">
           {learningFlow.steps.map((s, i) => (
-            <div key={s.num} className="story-flow2-card" data-aos="fade-up" data-aos-delay={i * 100}>
+            <div key={s.num} className="story-flow2-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 100}>
               <span className="story-flow2-num" aria-hidden="true">{s.num}</span>
               <span className="story-flow2-icon">
                 <FlowIcon icon={s.icon} />
@@ -109,7 +130,7 @@ function LearningFlow() {
             </div>
           ))}
         </div>
-        <div className="story-flow2-panel" data-aos="fade-up">
+        <div className="story-flow2-panel" suppressHydrationWarning data-aos="fade-up">
           <span className="story-flow2-badge">{learningFlow.badge}</span>
           <p>{learningFlow.text}</p>
         </div>
@@ -137,7 +158,7 @@ function WhoWeAre() {
   return (
     <section className="section theme-dark story-who">
       <div className="container story-who-inner">
-        <div data-aos="fade-up">
+        <div suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">Who we are</span>
           <h2 className="story-who-heading">
             Empowering Skills. Enabling Careers. <span className="story-who-highlight">Building the Future.</span>
@@ -159,7 +180,7 @@ function WhoWeAre() {
                 const course = getCourse(slug);
                 if (!course) return null;
                 return (
-                  <span key={slug} className="story-chip" data-aos="fade-up" data-aos-delay={(i % 8) * 30}>
+                  <span key={slug} className="story-chip" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 8) * 30}>
                     {course.title}
                   </span>
                 );
@@ -170,7 +191,7 @@ function WhoWeAre() {
           <p className="story-who-hq">Headquartered in {site.city}, Punjab.</p>
         </div>
 
-        <div className="story-collage" data-aos="fade-up" data-aos-delay="120">
+        <div className="story-collage" suppressHydrationWarning data-aos="fade-up" data-aos-delay="120">
           <div className="story-collage-frame story-collage-main">
             <span className="story-collage-img" style={{ backgroundImage: "url(/about-menu/our-team.jpg)" }} />
             <span className="story-collage-caption">Team techcadd</span>
@@ -201,7 +222,7 @@ function SkillEcosystem() {
       <span className="story-ecosystem-orb story-ecosystem-orb-blue" aria-hidden="true" />
       <span className="story-ecosystem-orb story-ecosystem-orb-yellow" aria-hidden="true" />
       <div className="container story-ecosystem-inner">
-        <div className="story-ecosystem-content" data-aos="fade-up">
+        <div className="story-ecosystem-content" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">{skillEcosystem.eyebrow}</span>
           <h2>{skillEcosystem.heading}</h2>
           <p>
@@ -211,7 +232,7 @@ function SkillEcosystem() {
           </p>
           <p>{skillEcosystem.paragraphs[1]}</p>
         </div>
-        <div className="story-ecosystem-images" data-aos="fade-up" data-aos-delay="120">
+        <div className="story-ecosystem-images" suppressHydrationWarning data-aos="fade-up" data-aos-delay="120">
           <div className="story-ecosystem-frame story-ecosystem-main">
             <span className="story-ecosystem-img" style={{ backgroundImage: `url(${skillEcosystem.images[0]})` }} />
           </div>
@@ -233,13 +254,13 @@ function WhyItMatters() {
   return (
     <section className="section theme-dark">
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">Why it matters</span>
           <h2>Future-ready learning, not a one-time certificate</h2>
         </div>
         <div className="about-card-grid about-card-grid-3">
           {whyItMatters.map((c, i) => (
-            <SpotlightCard key={c.title} className="about-feature-card" data-aos="fade-up" data-aos-delay={i * 80}>
+            <SpotlightCard key={c.title} className="about-feature-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 80}>
               <h3>{c.title}</h3>
               <p>{c.text}</p>
             </SpotlightCard>
@@ -255,13 +276,13 @@ function WhoWeTeach() {
   return (
     <section className="section theme-light">
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">Who we teach</span>
           <h2>Built for wherever you're starting from</h2>
         </div>
         <div className="grid grid-5 story-audience-grid">
           {audiences.map((a, i) => (
-            <div key={a.title} className="story-audience-card" data-aos="fade-up" data-aos-delay={i * 60}>
+            <div key={a.title} className="story-audience-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 60}>
               <span aria-hidden="true">{a.icon}</span>
               <strong>{a.title}</strong>
               <p>{a.text}</p>
@@ -280,7 +301,7 @@ function WhyChooseUs() {
   return (
     <section className="section theme-light story-diff">
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow story-diff-eyebrow">{differentiators.eyebrow}</span>
           <h2 className="story-diff-heading">{differentiators.heading}</h2>
         </div>
@@ -289,7 +310,7 @@ function WhyChooseUs() {
             <SpotlightCard
               key={p.title}
               className={`story-diff-card ${(i + 1) % 3 === 0 ? "story-diff-card-dark" : ""}`}
-              data-aos="fade-up"
+              suppressHydrationWarning data-aos="fade-up"
               data-aos-delay={i * 70}
             >
               <span className="story-diff-badge">
@@ -336,12 +357,12 @@ function TechDomains() {
         <span className="story-ecosystem2-ring-core">TECHCADD</span>
       </span>
       <div className="container">
-        <div className="section-heading story-ecosystem2-heading" data-aos="fade-up">
+        <div className="section-heading story-ecosystem2-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow story-ecosystem2-eyebrow">{learningEcosystem.eyebrow}</span>
           <h2>{learningEcosystem.heading}</h2>
           <p>{learningEcosystem.text}</p>
         </div>
-        <div className="story-ecosystem2-stats" data-aos="fade-up">
+        <div className="story-ecosystem2-stats" suppressHydrationWarning data-aos="fade-up">
           {learningEcosystem.statsStrip.map((s) => (
             <div key={s.label} className="story-ecosystem2-stat">
               <strong>{s.value}</strong>
@@ -358,7 +379,7 @@ function TechDomains() {
               <SpotlightCard
                 key={cat.id}
                 className="story-ecosystem2-card"
-                data-aos="fade-up"
+                suppressHydrationWarning data-aos="fade-up"
                 data-aos-delay={i * 80}
               >
                 <span className="story-ecosystem2-icon">
@@ -419,7 +440,7 @@ function OurApproach() {
     <section className="section theme-light story-approach2">
       <span className="story-approach2-orb" aria-hidden="true" />
       <div className="container story-approach2-inner">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow story-approach2-eyebrow">{ourApproach.eyebrow}</span>
           <h2>
             {before}
@@ -430,7 +451,7 @@ function OurApproach() {
         </div>
         <div className="story-approach2-list">
           {ourApproach.pillars.map((p, i) => (
-            <div key={p.title} className="story-approach2-item" data-aos="fade-up" data-aos-delay={i * 80}>
+            <div key={p.title} className="story-approach2-item" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 80}>
               <span className="story-approach2-num">{String(i + 1).padStart(2, "0")}</span>
               <h3>{p.title}</h3>
               <p>{p.text}</p>
@@ -448,10 +469,10 @@ function IndustryEngagement() {
     <section className="section theme-dark story-engage">
       <span className="story-engage-orb" aria-hidden="true" />
       <div className="container story-engage-inner">
-        <div className="story-engage-media" data-aos="fade-up">
+        <div className="story-engage-media" suppressHydrationWarning data-aos="fade-up">
           <span className="story-engage-img" style={{ backgroundImage: `url(${industryEngagement.image})` }} />
         </div>
-        <div data-aos="fade-up" data-aos-delay="100">
+        <div suppressHydrationWarning data-aos="fade-up" data-aos-delay="100">
           <span className="eyebrow">{industryEngagement.eyebrow}</span>
           <h2>{industryEngagement.heading}</h2>
           <p>{industryEngagement.paragraphs[0]}</p>
@@ -473,14 +494,14 @@ function AwardsRecognition() {
   return (
     <section className="section theme-light">
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">{awardsRecognition.eyebrow}</span>
           <h2>{awardsRecognition.heading}</h2>
           <p>{awardsRecognition.text}</p>
         </div>
         <div className="story-awards2-grid">
           {awardsRecognition.cards.map((c, i) => (
-            <SpotlightCard key={c.title} className="story-awards2-card" data-aos="fade-up" data-aos-delay={i * 80}>
+            <SpotlightCard key={c.title} className="story-awards2-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 80}>
               <span className="story-awards2-icon">
                 <AwardIcon icon={c.icon} />
               </span>
@@ -491,7 +512,7 @@ function AwardsRecognition() {
             </SpotlightCard>
           ))}
         </div>
-        <p className="story-awards2-footnote" data-aos="fade-up">
+        <p className="story-awards2-footnote" suppressHydrationWarning data-aos="fade-up">
           {awardsRecognition.footnote}
           <br />
           <Link href="/about/accreditations-awards" className="link-arrow">
@@ -534,7 +555,7 @@ function GrowthJourney() {
       <span className="story-growth-particle" style={{ top: "30%", left: "78%", animationDelay: "2.8s" }} aria-hidden="true" />
       <span className="story-growth-particle" style={{ top: "80%", left: "85%", animationDelay: "0.6s" }} aria-hidden="true" />
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow story-growth-eyebrow">{ourJourneyHeader.eyebrow}</span>
           <h2>{ourJourneyHeader.heading}</h2>
           <p className="story-growth-subheading">{ourJourneyHeader.text}</p>
@@ -549,7 +570,7 @@ function GrowthJourney() {
               <SpotlightCard
                 key={m.year}
                 className={`story-growth-card ${isFeatured ? "story-growth-card-featured" : ""}`}
-                data-aos="fade-up"
+                suppressHydrationWarning data-aos="fade-up"
                 data-aos-delay={(i % 2) * 100}
               >
                 {isFeatured && <span className="story-growth-card-glow" aria-hidden="true" />}
@@ -598,7 +619,7 @@ function OurBelief() {
   return (
     <section className="section theme-light story-belief">
       <div className="container">
-        <div className="story-belief-inner" data-aos="fade-up">
+        <div className="story-belief-inner" suppressHydrationWarning data-aos="fade-up">
           <div className="story-belief-statement">
             <span className="eyebrow">{belief.eyebrow}</span>
             <div className="story-belief-lines">
@@ -613,7 +634,7 @@ function OurBelief() {
           <p className="story-belief-text">{belief.text}</p>
         </div>
 
-        <div className="story-belief-card" data-aos="fade-up" data-aos-delay="120">
+        <div className="story-belief-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay="120">
           <span className="story-belief-card-top" aria-hidden="true" />
           <span className="eyebrow">{belief.today.eyebrow}</span>
           <div className="story-belief-tagline">

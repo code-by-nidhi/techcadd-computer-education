@@ -45,7 +45,7 @@ type P = { d: CourseDetail };
 
 function Heading({ eyebrow, title, text, split, center }: { eyebrow: string; title: string; text?: string; split?: boolean; center?: boolean }) {
   return (
-    <div className={`bc-head${split ? " bc-head-split" : ""}${center ? " bc-head-center" : ""}`} data-aos="fade-up">
+    <div className={`bc-head${split ? " bc-head-split" : ""}${center ? " bc-head-center" : ""}`} suppressHydrationWarning data-aos="fade-up">
       <div>
         <span className="bc-eyebrow">{eyebrow}</span>
         <h2>{title}</h2>
@@ -71,7 +71,7 @@ function Hero({ d }: P) {
           </nav>
 
           <div className="bc-hero-inner">
-            <div className="bc-hero-copy" data-aos="fade-up" suppressHydrationWarning>
+            <div className="bc-hero-copy" suppressHydrationWarning data-aos="fade-up">
               <div className="bc-hero-badges">
                 <span className="bc-hero-logo" aria-hidden="true">
                   <Image src={`/logos/${h.hub.center}`} alt="" width={22} height={22} />
@@ -102,12 +102,12 @@ function Hero({ d }: P) {
               </ul>
             </div>
 
-            <div className="bc-hero-visual" data-aos="fade-left" aria-hidden="true" suppressHydrationWarning>
+            <div className="bc-hero-visual" suppressHydrationWarning data-aos="fade-left" aria-hidden="true">
               <ComputerHub center={h.hub.center} nodes={h.hub.nodes} />
             </div>
           </div>
 
-          <dl className="bc-hero-facts" data-aos="fade-up" suppressHydrationWarning>
+          <dl className="bc-hero-facts" suppressHydrationWarning data-aos="fade-up">
             {h.facts.map((f) => (
               <div key={f.label}>
                 <dt>{f.label}</dt>
@@ -121,7 +121,7 @@ function Hero({ d }: P) {
       <section className="bc-hero-stats">
         <div className="container">
           {h.stats.map((s) => (
-            <div key={s.label} data-aos="fade-up" suppressHydrationWarning>
+            <div key={s.label} suppressHydrationWarning data-aos="fade-up">
               <strong>{s.value}</strong>
               <span>{s.label}</span>
               <small>{s.note}</small>
@@ -184,7 +184,7 @@ function Overview({ d }: P) {
   return (
     <section className="bc-section">
       <div className="container bc-overview">
-        <div className="bc-overview-copy" data-aos="fade-up">
+        <div className="bc-overview-copy" suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">{o.eyebrow}</span>
           <h2>{o.title}</h2>
           {o.paragraphs.map((p) => (
@@ -195,7 +195,7 @@ function Overview({ d }: P) {
             <span className="bc-overview-photo-tag">{o.imageTag}</span>
           </div>
         </div>
-        <aside className="bc-overview-side" data-aos="fade-up" data-aos-delay="100">
+        <aside className="bc-overview-side" suppressHydrationWarning data-aos="fade-up" data-aos-delay="100">
           <div className="bc-get">
             <span className="bc-eyebrow">What you get</span>
             <ul>
@@ -234,7 +234,7 @@ function Audience({ d }: P) {
         <Heading eyebrow={a.eyebrow} title={a.title} text={a.text} split />
         <div className="bc-audience">
           {a.items.map((item, i) => (
-            <article key={item.title} className="bc-card bc-aud-card" data-aos="fade-up" data-aos-delay={(i % 3) * 50}>
+            <article key={item.title} className="bc-card bc-aud-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 3) * 50}>
               <span className="bc-icon">
                 <Icon name={item.icon} />
               </span>
@@ -256,7 +256,7 @@ function CaseForIt({ d }: P) {
       <div className="container">
         <Heading eyebrow={c.eyebrow} title={c.title} center />
         <div className="bc-bento">
-          <article className="bc-card bc-bento-feature" data-aos="fade-up">
+          <article className="bc-card bc-bento-feature" suppressHydrationWarning data-aos="fade-up">
             <span className="bc-tag">{f.tag}</span>
             <h3>{f.title}</h3>
             <p>{f.text}</p>
@@ -267,7 +267,7 @@ function CaseForIt({ d }: P) {
             </div>
           </article>
           {c.cards.map((card, i) => (
-            <article key={card.title} className="bc-card bc-bento-card" data-aos="fade-up" data-aos-delay={(i % 2) * 50 + 50}>
+            <article key={card.title} className="bc-card bc-bento-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 2) * 50 + 50}>
               <span className="bc-tag">{card.tag}</span>
               <h3>{card.title}</h3>
               <p>{card.text}</p>
@@ -284,7 +284,7 @@ function WhyNow({ d }: P) {
   return (
     <section className="bc-band">
       <div className="container bc-whynow">
-        <div data-aos="fade-up">
+        <div suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow bc-eyebrow-light">{w.eyebrow}</span>
           <h2>{w.title}</h2>
           <ul className="bc-whynow-list">
@@ -298,7 +298,7 @@ function WhyNow({ d }: P) {
             Talk to a course advisor <ArrowIcon />
           </a>
         </div>
-        <div className="bc-whynow-panel" data-aos="fade-left" aria-hidden="true">
+        <div className="bc-whynow-panel" suppressHydrationWarning data-aos="fade-left" aria-hidden="true">
           {w.panel.map((r, i) => (
             <div key={r.k} className="bc-whynow-row">
               <span className="bc-whynow-num">0{i + 1}</span>
@@ -320,7 +320,7 @@ function Tools({ d }: P) {
         <Heading eyebrow={t.eyebrow} title={t.title} text={t.text} center />
         <div className="bc-tools">
           {t.tools.map((tool, i) => (
-            <div key={tool.name} className="bc-tool" data-aos="zoom-in" data-aos-delay={i * 50}>
+            <div key={tool.name} className="bc-tool" suppressHydrationWarning data-aos="zoom-in" data-aos-delay={i * 50}>
               <span className="bc-tool-logo">
                 {"logo" in tool ? (
                   <Image src={`/logos/${tool.logo}`} alt="" width={40} height={40} />
@@ -343,7 +343,7 @@ function Certificate({ d }: P) {
   return (
     <section className="bc-section">
       <div className="container bc-cert">
-        <div data-aos="fade-up">
+        <div suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">{c.eyebrow}</span>
           <h2>{c.title}</h2>
           <p className="bc-lead">{c.text}</p>
@@ -364,7 +364,7 @@ function Certificate({ d }: P) {
             Enrol for the next batch <ArrowIcon />
           </DemoButton>
         </div>
-        <div className="bc-cert-visual" data-aos="fade-left" aria-hidden="true">
+        <div className="bc-cert-visual" suppressHydrationWarning data-aos="fade-left" aria-hidden="true">
           <div className="bc-cert-paper">
             <Image src="/techcadd-logo.webp" alt="" width={952} height={262} className="bc-cert-logo" />
             <span className="bc-cert-sub">Computer Education · {site.city}</span>
@@ -394,7 +394,7 @@ function Careers({ d }: P) {
         <Heading eyebrow={c.eyebrow} title={c.title} text={c.text} split />
         <div className="bc-roles">
           {c.roles.map((r, i) => (
-            <article key={r.title} className="bc-card bc-role" data-aos="fade-up" data-aos-delay={i * 50}>
+            <article key={r.title} className="bc-card bc-role" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 50}>
               <span className="bc-role-pay">
                 {r.pay}
                 <small>/month</small>
@@ -404,7 +404,7 @@ function Careers({ d }: P) {
             </article>
           ))}
         </div>
-        <div className="bc-hiring" data-aos="fade-up">
+        <div className="bc-hiring" suppressHydrationWarning data-aos="fade-up">
           <strong>Who hires for these roles</strong>
           <div>
             {c.hiring.map((h) => (
@@ -414,7 +414,7 @@ function Careers({ d }: P) {
         </div>
         <div className="bc-qa">
           {c.qa.map((q, i) => (
-            <article key={q.q} data-aos="fade-up" data-aos-delay={(i % 2) * 50}>
+            <article key={q.q} suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 2) * 50}>
               <span>{String(i + 1).padStart(2, "0")}</span>
               <h3>{q.q}</h3>
               <p>{q.a}</p>
@@ -434,7 +434,7 @@ function Projects({ d }: P) {
         <Heading eyebrow={p.eyebrow} title={p.title} text={p.text} split />
         <div className="bc-projects">
           {p.items.map((item, i) => (
-            <article key={item.n} className="bc-card bc-project" data-aos="fade-up" data-aos-delay={i * 50}>
+            <article key={item.n} className="bc-card bc-project" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 50}>
               <span className="bc-project-n">{item.n}</span>
               <h3>{item.title}</h3>
               <p>{item.text}</p>
@@ -456,14 +456,14 @@ function Loop({ d }: P) {
   return (
     <section className="bc-section bc-alt">
       <div className="container bc-loop">
-        <div data-aos="fade-up">
+        <div suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">{l.eyebrow}</span>
           <h2>{l.title}</h2>
           <p className="bc-lead">{l.text}</p>
         </div>
         <ol className="bc-loop-steps">
           {l.steps.map((s, i) => (
-            <li key={s.title} data-aos="fade-up" data-aos-delay={i * 100}>
+            <li key={s.title} suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 100}>
               <span className="bc-loop-n">{i + 1}</span>
               <h3>{s.title}</h3>
               <p>{s.text}</p>
@@ -484,7 +484,7 @@ function WhyTechcadd({ d }: P) {
         <Heading eyebrow={w.eyebrow} title={w.title} text={w.text} split />
         <div className="bc-why">
           {w.items.map((item, i) => (
-            <article key={item.title} data-aos="fade-up" data-aos-delay={(i % 3) * 50}>
+            <article key={item.title} suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 3) * 50}>
               <span className="bc-why-n">{String(i + 1).padStart(2, "0")}</span>
               <h3>{item.title}</h3>
               <p>{item.text}</p>
@@ -502,7 +502,7 @@ function Compare({ d }: P) {
     <section className="bc-section">
       <div className="container">
         <Heading eyebrow={c.eyebrow} title={c.title} text={c.text} center />
-        <div className="bc-table-wrap" data-aos="fade-up">
+        <div className="bc-table-wrap" suppressHydrationWarning data-aos="fade-up">
           <table className="bc-table">
             <thead>
               <tr>
@@ -580,7 +580,7 @@ function Faq({ d }: P) {
   return (
     <section className="bc-section">
       <div className="container bc-faq">
-        <div className="bc-faq-side" data-aos="fade-up">
+        <div className="bc-faq-side" suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">Got questions?</span>
           <h2>Frequently asked questions</h2>
           <p className="bc-lead">Still unsure? A counsellor can walk you through batches, fees and the syllabus in one short call.</p>
@@ -594,7 +594,7 @@ function Faq({ d }: P) {
         </div>
         <div className="bc-faq-list">
           {d.faqs.map((f, i) => (
-            <details key={f.q} className="bc-faq-item" data-aos="fade-up" data-aos-delay={(i % 4) * 50} open={i === 0}>
+            <details key={f.q} className="bc-faq-item" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 4) * 50} open={i === 0}>
               <summary>{f.q}</summary>
               <p>{f.a}</p>
             </details>

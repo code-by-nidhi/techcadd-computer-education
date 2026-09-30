@@ -1,4 +1,5 @@
 import { teamIntro } from "@/lib/teamIntroData";
+import { Magnetic, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "./motion/Reveal";
 
 // "Meet the Team" — a premium intro section inserted between the Hero and the existing (generic)
 // content sections on /about/our-team (see app/about/[slug]/page.tsx, which renders this only for
@@ -20,31 +21,39 @@ export default function TeamIntro() {
       <span className="team-intro-particle" style={{ top: "22%", left: "92%", animationDelay: "3s" }} aria-hidden="true" />
       <span className="team-intro-particle" style={{ top: "80%", left: "88%", animationDelay: "0.8s" }} aria-hidden="true" />
       <div className="container team-intro-inner">
-        <div className="team-intro-copy" data-aos="fade-up">
-          <span className="eyebrow">{teamIntro.badge}</span>
-          <h2>{teamIntro.heading}</h2>
-          <p>{teamIntro.text}</p>
+        <div className="team-intro-copy">
+          <ScaleIn className="eyebrow">{teamIntro.badge}</ScaleIn>
+          <h2>
+            <RevealHeading text={teamIntro.heading} delay={0.1} />
+          </h2>
+          <Reveal delay={0.3}>
+            <p>{teamIntro.text}</p>
+          </Reveal>
 
-          <div className="team-intro-stats">
+          <Stagger className="team-intro-stats">
             {teamIntro.stats.map((s) => (
-              <div key={s.label} className="team-intro-stat">
+              <StaggerItem key={s.label} className="team-intro-stat">
                 <strong>{s.value}</strong>
                 <span>{s.label}</span>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
 
-          <div className="team-intro-actions">
-            <a href={teamIntro.primaryCta.href} className="btn btn-primary">
-              {teamIntro.primaryCta.label}
-            </a>
-            <a href={teamIntro.secondaryCta.href} className="btn team-intro-btn-glass">
-              {teamIntro.secondaryCta.label}
-            </a>
-          </div>
+          <Reveal delay={0.45} className="team-intro-actions">
+            <Magnetic>
+              <a href={teamIntro.primaryCta.href} className="btn btn-primary">
+                {teamIntro.primaryCta.label}
+              </a>
+            </Magnetic>
+            <Magnetic>
+              <a href={teamIntro.secondaryCta.href} className="btn team-intro-btn-glass">
+                {teamIntro.secondaryCta.label}
+              </a>
+            </Magnetic>
+          </Reveal>
         </div>
 
-        <div className="team-intro-visual" data-aos="fade-left">
+        <Reveal delay={0.2} y={30} className="team-intro-visual">
           {/* Infinite marquee carousel: the card list is rendered twice back to back and the track
               animates from 0 to -50%, so the seam between the first and second copy is invisible and
               it loops forever without any JS. Hovering the row pauses it so a card can be read. */}
@@ -63,7 +72,7 @@ export default function TeamIntro() {
               ))}
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

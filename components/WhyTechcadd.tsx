@@ -13,7 +13,7 @@ export default function WhyTechcadd() {
   return (
     <section className="section why-tc">
       <div className="container">
-        <div className="section-heading" data-aos="fade-up">
+        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
           <span className="eyebrow">Why techcadd</span>
           <h2>Built for real careers, not just classroom learning.</h2>
           <p>
@@ -23,7 +23,7 @@ export default function WhyTechcadd() {
         </div>
 
         <div className="why-tc-grid">
-          <div className="why-tc-card why-tc-card-outcomes" data-aos="fade-up">
+          <div className="why-tc-card why-tc-card-outcomes" suppressHydrationWarning data-aos="fade-up">
             <h3>Real Results</h3>
             <p>Students learn through live projects, practical assignments and career-focused training.</p>
             <div className="why-tc-stats">
@@ -42,7 +42,7 @@ export default function WhyTechcadd() {
             </div>
           </div>
 
-          <div className="why-tc-card why-tc-card-build" data-aos="fade-up" data-aos-delay="100">
+          <div className="why-tc-card why-tc-card-build" suppressHydrationWarning data-aos="fade-up" data-aos-delay="100">
             <div className="why-tc-build-icons" aria-hidden="true">
               {categories.map((c, i) => (
                 <span key={c.id} className={`why-tc-float-icon why-tc-float-icon-${i}`}>
@@ -57,7 +57,7 @@ export default function WhyTechcadd() {
             </p>
           </div>
 
-          <div className="why-tc-card why-tc-card-career" data-aos="fade-up" data-aos-delay="200">
+          <div className="why-tc-card why-tc-card-career" suppressHydrationWarning data-aos="fade-up" data-aos-delay="200">
             <h3>Career Growth Support</h3>
             <p>Resume building, interview preparation, internship guidance and placement assistance.</p>
             <ul className="why-tc-checklist">

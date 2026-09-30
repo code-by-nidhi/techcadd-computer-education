@@ -5,6 +5,7 @@ import { site } from "@/lib/site";
 import CourseDetailTemplate, { CategoryDetailTemplate } from "@/components/CourseDetailTemplate";
 import CoursePage from "@/components/CoursePage";
 import { getCourseDetail } from "@/lib/courseDetails";
+import { getProgramDetail } from "@/lib/programDetails";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -31,6 +32,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
   const cat = getCategoryBySlug(slug);
+  const program = getProgramDetail(slug);
+  if (cat && program) {
+    return {
+      title: program.seo.title,
+      description: program.seo.description,
+      alternates: { canonical: `/internship-training/${slug}` },
+      openGraph: { title: program.seo.title, description: program.seo.description, url: `/internship-training/${slug}`, type: "website" },
+    };
+  }
   if (cat) {
     return {
       title: `${cat.name} Courses`,
@@ -55,6 +65,10 @@ export default async function InternshipTrainingPage({ params }: Props) {
     return <CourseDetailTemplate course={course} cat={cat} related={related} />;
   }
   const cat = getCategoryBySlug(slug);
+  // Certificate program categories get the full program page; any other category (Punjabi Typing)
+  // keeps the simple category landing.
+  const program = getProgramDetail(slug);
+  if (cat && program) return <CoursePage d={program} />;
   if (cat) return <CategoryDetailTemplate cat={cat} courses={coursesIn(cat.id)} />;
   notFound();
 }

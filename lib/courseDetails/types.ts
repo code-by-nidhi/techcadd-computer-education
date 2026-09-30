@@ -1,3 +1,5 @@
+import type { CategoryId } from "../courses";
+
 // Shape of one course detail page (components/CoursePage.tsx, rendered by app/courses/[slug]).
 // Every course fills in the same sections, so all course pages share one layout; only the copy,
 // logos and numbers differ. Data files: lib/courseDetails/<category>.ts, collected in ./index.ts.
@@ -155,4 +157,19 @@ export type CourseDetail = {
   // Placeholder reviews until real Google reviews are added (TODO before going live).
   reviews: { name: string; role: string; text: string }[]; // exactly 6
   faqs: { q: string; a: string }[]; // 6–8
+  // Certificate program pages only (lib/programDetails): the category landing pages at
+  // /internship-training/<category>-courses-in-jalandhar. Adds the "choose your track" cards under
+  // the hero, learning modes, the "right fit?" banner and related courses (see CoursePage.tsx).
+  program?: ProgramExtras;
+};
+
+export type ProgramExtras = {
+  category: CategoryId;
+  // Course slug whose fee tiers in lib/referenceContent.ts (real fees from techcadd's live site)
+  // price the tracks; a track whose duration has no matching tier shows "ask a counsellor".
+  feeSource: string;
+  tracksTitle: string; // e.g. "Choose your Digital Marketing track"
+  tracksText: string;
+  tracks: { kind: string; duration: string; text: string }[]; // exactly 3: "3 Months", "6 Months", "9 Months"
+  fit: { title: string; text: string }; // "Not sure if … is the right fit?" banner
 };

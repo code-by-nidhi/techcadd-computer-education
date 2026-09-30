@@ -4,6 +4,8 @@ import ArrowIcon from "./ArrowIcon";
 import DemoButton from "./DemoButton";
 import BcSyllabus from "./BcSyllabus";
 import { CtaStrip, LeadCta } from "./Sections";
+import { FitBanner, LearningModes, ProgramTracks, RelatedCourses } from "./ProgramSections";
+import { referenceContent } from "@/lib/referenceContent";
 import { site } from "@/lib/site";
 import type { AudienceIcon, CourseDetail, HubNode } from "@/lib/courseDetails/types";
 
@@ -12,10 +14,14 @@ import type { AudienceIcon, CourseDetail, HubNode } from "@/lib/courseDetails/ty
 // "case for it", why-now band, tabbed syllabus, tools band, certificate, careers, projects, class
 // loop, why-techcadd band, comparison table, reviews marquee and FAQ. All copy comes from the
 // course's entry in lib/courseDetails; styles are the ".bc-" block in app/globals.css.
+// Certificate program pages (entries with `program`, from lib/programDetails) reuse this layout and
+// add the track cards, learning modes, "right fit?" banner and related courses (ProgramSections.tsx).
 export default function CoursePage({ d }: { d: CourseDetail }) {
+  const p = d.program;
   return (
     <>
       <Hero d={d} />
+      {p && <ProgramTracks p={p} />}
       <Overview d={d} />
       <Audience d={d} />
       <CaseForIt d={d} />
@@ -34,8 +40,16 @@ export default function CoursePage({ d }: { d: CourseDetail }) {
       <WhyTechcadd d={d} />
       <Compare d={d} />
       <Reviews d={d} />
+      {p && <LearningModes />}
       <Faq d={d} />
-      <LeadCta />
+      {p ? (
+        <>
+          <FitBanner p={p} />
+          <RelatedCourses p={p} />
+        </>
+      ) : (
+        <LeadCta />
+      )}
       <CtaStrip />
     </>
   );
@@ -65,7 +79,7 @@ function Hero({ d }: P) {
           <nav className="bc-crumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span>/</span>
-            <Link href="/courses">Courses</Link>
+            {d.program ? <Link href="/certificate-programs">Certificate Programs</Link> : <Link href="/courses">Courses</Link>}
             <span>/</span>
             <strong>{h.crumb}</strong>
           </nav>
@@ -538,7 +552,15 @@ function Compare({ d }: P) {
   );
 }
 
+// Real testimonials (lib/referenceContent.ts, quoted from techcadd's live site) replace the
+// placeholder reviews on program pages whose fee source has them.
+function reviewsFor(d: CourseDetail) {
+  const real = d.program ? referenceContent[d.program.feeSource]?.testimonials : undefined;
+  return real && real.length >= 3 ? real.map((t) => ({ name: t.name, role: t.role, text: t.quote })) : d.reviews;
+}
+
 function Reviews({ d }: P) {
+  const reviews = reviewsFor(d);
   const initials = (n: string) =>
     n
       .split(" ")
@@ -568,8 +590,8 @@ function Reviews({ d }: P) {
       </div>
       <div className="bc-marquee">
         <div className="bc-marquee-track">
-          {d.reviews.map((r) => card(r))}
-          {d.reviews.map((r) => card(r, true))}
+          {reviews.map((r) => card(r))}
+          {reviews.map((r) => card(r, true))}
         </div>
       </div>
     </section>

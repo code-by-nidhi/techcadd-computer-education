@@ -3,7 +3,7 @@ import { site } from "../site";
 import type { CourseDetail } from "./types";
 
 const tallyPrimeGst: CourseDetail = {
-  slug: "tally-prime-gst",
+  slug: "tally-prime-training-in-jalandhar",
   seo: {
     title: `Tally Prime with GST Course in ${site.city} | 3-Month Practical Program`,
     description: `Learn Tally Prime at ${site.name} ${site.city}: vouchers, inventory, GST invoicing and returns, TDS, payroll, bank reconciliation and final accounts on real company data, with a certificate and placement support.`,
@@ -360,7 +360,7 @@ const tallyPrimeGst: CourseDetail = {
 };
 
 const busyAccounting: CourseDetail = {
-  slug: "busy-accounting",
+  slug: "busy-accounting-training-in-jalandhar",
   seo: {
     title: `BUSY Accounting Software Course in ${site.city} | 2-Month Program`,
     description: `Learn BUSY accounting software at ${site.name} ${site.city}: masters, GST billing, batches, godowns, outstanding and reports — practised on trading and distribution data, with a certificate and placement support.`,
@@ -690,7 +690,7 @@ const busyAccounting: CourseDetail = {
 };
 
 const computerisedAccountingDiploma: CourseDetail = {
-  slug: "computerised-accounting-diploma",
+  slug: "computerised-accounting-course-in-jalandhar",
   seo: {
     title: `Diploma in Computerised Accounting in ${site.city} | 6-Month Career Program`,
     description: `A 6-month accounting career track at ${site.name} ${site.city}: Tally Prime, BUSY, GST returns, income tax and TDS basics, Advanced Excel and a live accounting project, with a diploma, internship letter and placement support.`,
@@ -1035,7 +1035,7 @@ const computerisedAccountingDiploma: CourseDetail = {
 };
 
 const gstTaxation: CourseDetail = {
-  slug: "gst-taxation",
+  slug: "gst-taxation-training-in-jalandhar",
   seo: {
     title: `GST & Taxation Course in ${site.city} | 2-Month Practical Program`,
     description: `Practical GST and income tax training at ${site.name} ${site.city}: registration, input tax credit, GSTR-1, GSTR-3B, e-way bills, e-invoicing, ITR and TDS returns, with portal walkthroughs and a certificate.`,

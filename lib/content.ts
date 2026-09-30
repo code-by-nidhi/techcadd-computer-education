@@ -81,8 +81,8 @@ export const faqs = [
 ];
 
 export const after12th = [
-  { stream: "Commerce Students", courses: ["tally-prime-gst", "computerised-accounting-diploma", "gst-taxation", "ms-office-advanced-excel"] },
-  { stream: "Non-Medical / Diploma Engineering", courses: ["autocad", "solidworks", "revit-architecture", "cnc-programming-cam"] },
-  { stream: "Arts & Any Stream", courses: ["dca", "adca", "graphic-design", "digital-marketing"] },
-  { stream: "Government Job Aspirants", courses: ["punjabi-typing", "english-punjabi-typing", "basic-computer-course", "ms-office-advanced-excel"] },
+  { stream: "Commerce Students", courses: ["tally-prime-training-in-jalandhar", "computerised-accounting-course-in-jalandhar", "gst-taxation-training-in-jalandhar", "advanced-excel-training-in-jalandhar"] },
+  { stream: "Non-Medical / Diploma Engineering", courses: ["autocad-training-in-jalandhar", "solidworks-training-in-jalandhar", "revit-architecture-training-in-jalandhar", "cnc-programming-cam-training-in-jalandhar"] },
+  { stream: "Arts & Any Stream", courses: ["dca-course-in-jalandhar", "adca-course-in-jalandhar", "graphic-design-course-in-jalandhar", "digital-marketing-training-in-jalandhar"] },
+  { stream: "Government Job Aspirants", courses: ["punjabi-typing", "english-punjabi-typing", "basic-computer-course-in-jalandhar", "advanced-excel-training-in-jalandhar"] },
 ];

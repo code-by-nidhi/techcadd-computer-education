@@ -6,8 +6,9 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navLinks, site } from "@/lib/site";
 import { aboutMenuItems } from "@/lib/aboutData";
-import { categories, coursesIn } from "@/lib/courses";
+import { categories, categorySlug, coursesIn } from "@/lib/courses";
 import DemoModal from "./DemoModal";
+import CertificateProgramsMenu from "./CertificateProgramsMenu";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -56,7 +57,9 @@ export default function Header() {
           <nav className={`nav ${open ? "nav-open" : ""}`} aria-label="Main">
             {navLinks.map((link) =>
               link.dropdown ? (
-                // Courses is the highlighted pill (the reference site's "AI" slot).
+                // Courses is the highlighted pill (the reference site's "AI" slot). Certificate
+                // Programs (below) gets its own, visually distinct card-grid dropdown instead of this
+                // text-column one — see components/CertificateProgramsMenu.tsx.
                 <div className="nav-item has-dropdown" key={link.href}>
                   <Link href={link.href} className="nav-glow">
                     <span>
@@ -67,17 +70,27 @@ export default function Header() {
                   <div className="dropdown">
                     {categories.map((cat) => (
                       <div key={cat.id} className="dropdown-col">
-                        <Link href={`/courses#${cat.id}`} className="dropdown-head">
+                        <Link href={`/internship-training/${categorySlug(cat.id)}`} className="dropdown-head">
                           {cat.icon} {cat.name}
                         </Link>
                         {coursesIn(cat.id).map((c) => (
-                          <Link key={c.slug} href={`/courses/${c.slug}`}>
+                          <Link key={c.slug} href={`/internship-training/${c.slug}`}>
                             {c.title}
                           </Link>
                         ))}
                       </div>
                     ))}
                   </div>
+                </div>
+              ) : link.cardMenu ? (
+                <div className="nav-item has-dropdown" key={link.href}>
+                  <Link href={link.href} className={`nav-link ${isActive(link.href) ? "active" : ""}`}>
+                    <span>
+                      {link.label}
+                      <Chevron />
+                    </span>
+                  </Link>
+                  <CertificateProgramsMenu />
                 </div>
               ) : link.aboutMega ? (
                 <div className="nav-item has-dropdown" key={link.href}>

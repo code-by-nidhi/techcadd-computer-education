@@ -14,6 +14,13 @@ export const heroCopy = {
 
 // "What Makes techcadd Different" — a separate, richer 9-point set for the About page, distinct from
 // the 4-point `whyUs` in lib/content.ts (which the homepage's WhyUs.tsx still uses as-is).
+// Trimmed from an earlier 9-point list to the 6 features a redesign explicitly named by title
+// (components/WhyDifferent.tsx) — titles matched or shortened to that spec ("Placement Assistance" ->
+// "Placement Support", "Experienced Trainers & Mentors" -> "Expert Trainers", "Projects & Industrial
+// Exposure" -> "Real Projects"), keeping each point's real underlying text. The 3 dropped points
+// ("Emerging Technology Programs", "Modern Learning Infrastructure", "Industry & Academic
+// Engagement") aren't deleted from the repo's knowledge, just no longer featured in this specific
+// 6-card section — see git history for their original text if they need to resurface elsewhere.
 export const differentiators = {
   eyebrow: "The difference",
   heading: "What makes techcadd different?",
@@ -29,41 +36,24 @@ export const differentiators = {
       text: "Students get opportunities to apply concepts rather than relying solely on theoretical instruction.",
     },
     {
-      icon: "cpu",
-      title: "Emerging Technology Programs",
-      // Tech list adapted to techcadd's real, currently-taught tracks rather than the AI/cloud list
-      // this repo doesn't teach — same substitution made elsewhere on this page.
-      text: "Learners can explore domains including Tally & GST accounting, AutoCAD-based CAD/CAM design, graphic design and digital marketing.",
-    },
-    {
       icon: "layers",
-      title: "Projects & Industrial Exposure",
+      title: "Real Projects",
       text: "Project-based learning and industrial training help students connect classroom concepts with practical applications.",
     },
     {
+      icon: "rocket",
+      title: "Placement Support",
+      text: "techcadd provides placement assistance and career support to eligible learners; actual employment decisions remain with recruiting organizations.",
+    },
+    {
       icon: "users",
-      title: "Experienced Trainers & Mentors",
+      title: "Expert Trainers",
       text: "Guidance from trainers and mentors helps learners understand technical concepts and their real-world applications.",
     },
     {
       icon: "compass",
       title: "Career Guidance",
       text: "Students can receive guidance related to course selection, skill development, resumes, interviews and career pathways.",
-    },
-    {
-      icon: "rocket",
-      title: "Placement Assistance",
-      text: "techcadd provides placement assistance and career support to eligible learners; actual employment decisions remain with recruiting organizations.",
-    },
-    {
-      icon: "building",
-      title: "Modern Learning Infrastructure",
-      text: "Technology-focused learning environments are designed to support practical training and hands-on work.",
-    },
-    {
-      icon: "network",
-      title: "Industry & Academic Engagement",
-      text: "techcadd has participated in workshops, training initiatives and placement activities with educational institutions, strengthening the connection between academic learning and industry-oriented skills.",
     },
   ],
 };
@@ -111,22 +101,22 @@ export const whoWeAre = {
   // A representative spread across all 5 real categories, capped at 16 for a compact pill row —
   // see lib/courses.ts for the full catalog (linked from the "Technology domains" section below).
   featuredCourseSlugs: [
-    "basic-computer-course",
-    "tally-prime-gst",
-    "gst-taxation",
-    "ms-office-advanced-excel",
+    "basic-computer-course-in-jalandhar",
+    "tally-prime-training-in-jalandhar",
+    "gst-taxation-training-in-jalandhar",
+    "advanced-excel-training-in-jalandhar",
     "punjabi-typing",
-    "autocad",
-    "solidworks",
-    "catia",
-    "revit-architecture",
-    "cnc-programming-cam",
-    "graphic-design",
-    "adobe-photoshop",
-    "coreldraw",
-    "digital-marketing",
-    "seo",
-    "google-ads-ppc",
+    "autocad-training-in-jalandhar",
+    "solidworks-training-in-jalandhar",
+    "catia-training-in-jalandhar",
+    "revit-architecture-training-in-jalandhar",
+    "cnc-programming-cam-training-in-jalandhar",
+    "graphic-design-course-in-jalandhar",
+    "adobe-photoshop-training-in-jalandhar",
+    "coreldraw-training-in-jalandhar",
+    "digital-marketing-training-in-jalandhar",
+    "seo-training-in-jalandhar",
+    "google-ads-ppc-training-in-jalandhar",
   ],
 };
 

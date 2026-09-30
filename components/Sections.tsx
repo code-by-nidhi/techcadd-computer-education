@@ -5,6 +5,7 @@ import { site } from "@/lib/site";
 import DemoButton from "./DemoButton";
 import ArrowIcon from "./ArrowIcon";
 import LeadForm from "./LeadForm";
+import { Magnetic } from "./motion/Reveal";
 
 export function SectionHeading({ eyebrow, title, text }: { eyebrow?: string; title: string; text?: string }) {
   return (
@@ -65,10 +66,14 @@ export function CtaStrip({ dark }: { dark?: boolean } = {}) {
           <p>Book a free demo class and see the lab before you decide.</p>
         </div>
         <div className="lx-cta-actions">
-          <DemoButton className="lx-cta-primary">Book Free Demo</DemoButton>
-          <a href={site.phoneHref} className="lx-cta-phone">
-            📞 {site.phone}
-          </a>
+          <Magnetic>
+            <DemoButton className="lx-cta-primary">Book Free Demo</DemoButton>
+          </Magnetic>
+          <Magnetic>
+            <a href={site.phoneHref} className="lx-cta-phone">
+              📞 {site.phone}
+            </a>
+          </Magnetic>
         </div>
       </div>
     </section>
@@ -78,7 +83,7 @@ export function CtaStrip({ dark }: { dark?: boolean } = {}) {
 export function CourseCard({ course }: { course: Course }) {
   const cat = getCategory(course.category);
   return (
-    <Link href={`/courses/${course.slug}`} className="card course-card" suppressHydrationWarning data-aos="fade-up">
+    <Link href={`/internship-training/${course.slug}`} className="card course-card" suppressHydrationWarning data-aos="fade-up">
       <span className="chip">
         {cat.icon} {cat.name}
       </span>
@@ -111,6 +116,8 @@ export function FaqList({ items = allFaqs }: { items?: { q: string; a: string }[
 export function LeadCta({ dark }: { dark?: boolean } = {}) {
   return (
     <section className={`section lead-cta ${dark ? "theme-dark" : ""}`}>
+      <span className="lead-cta-ring lead-cta-ring-1" aria-hidden="true" />
+      <span className="lead-cta-ring lead-cta-ring-2" aria-hidden="true" />
       <div className="container lead-cta-inner" suppressHydrationWarning data-aos="fade-up">
         <span className="eyebrow">Ready to get started?</span>
         <h2>Start building your career today.</h2>
@@ -121,13 +128,15 @@ export function LeadCta({ dark }: { dark?: boolean } = {}) {
         <div className="lead-form-row">
           <LeadForm />
         </div>
-        <a href={site.phoneHref} className="lead-call-btn">
-          <span className="lead-call-icon" aria-hidden="true">📞</span>
-          <span>
-            <small>Call now</small>
-            <strong>{site.phone}</strong>
-          </span>
-        </a>
+        <Magnetic>
+          <a href={site.phoneHref} className="lead-call-btn">
+            <span className="lead-call-icon" aria-hidden="true">📞</span>
+            <span>
+              <small>Call now</small>
+              <strong>{site.phone}</strong>
+            </span>
+          </a>
+        </Magnetic>
         <ul className="lead-ticks">
           <li>Free career counselling</li>
           <li>No registration fee</li>

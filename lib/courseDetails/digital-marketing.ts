@@ -3,7 +3,7 @@ import { site } from "../site";
 import type { CourseDetail } from "./types";
 
 const digitalMarketingCourse: CourseDetail = {
-  slug: "digital-marketing",
+  slug: "digital-marketing-training-in-jalandhar",
   seo: {
     title: `Digital Marketing Course in ${site.city} | 4-Month Practical Program`,
     description: `Learn SEO, Google Ads, Meta Ads, social media, email, WhatsApp marketing and GA4 at ${site.name} ${site.city}, with live campaigns, a WordPress website of your own, a certificate and placement support.`,
@@ -375,7 +375,7 @@ const digitalMarketingCourse: CourseDetail = {
 };
 
 const seoCourse: CourseDetail = {
-  slug: "seo",
+  slug: "seo-training-in-jalandhar",
   seo: {
     title: `SEO Course in ${site.city} | 2-Month Practical SEO Training`,
     description: `Learn keyword research, on-page, technical, off-page and local SEO at ${site.name} ${site.city}, practised on live websites with Search Console, GA4 and SEMrush — plus a certificate and placement support.`,
@@ -719,7 +719,7 @@ const seoCourse: CourseDetail = {
 };
 
 const socialMediaMarketing: CourseDetail = {
-  slug: "social-media-marketing",
+  slug: "social-media-marketing-training-in-jalandhar",
   seo: {
     title: `Social Media Marketing Course in ${site.city} | 2-Month Program`,
     description: `Learn Instagram, Facebook, YouTube and LinkedIn marketing at ${site.name} ${site.city}: content calendars, reels, Canva, CapCut, Meta Ads basics and insights reporting, with a certificate and placement support.`,
@@ -1062,7 +1062,7 @@ const socialMediaMarketing: CourseDetail = {
 };
 
 const googleAdsPpc: CourseDetail = {
-  slug: "google-ads-ppc",
+  slug: "google-ads-ppc-training-in-jalandhar",
   seo: {
     title: `Google Ads & PPC Course in ${site.city} | 6-Week Practical Training`,
     description: `Learn Google Ads Search, Display, YouTube, Shopping and Performance Max at ${site.name} ${site.city}, with conversion tracking in Tag Manager and GA4, live account practice, certificate and placement support.`,

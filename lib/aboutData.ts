@@ -59,6 +59,43 @@ export type AboutPageData = {
   finalCta?: "banner" | "lead";
 };
 
+// "Why accreditation matters for your career" — real content, previously the first entry in
+// accreditations-awards' generic `sections` array, pulled out so it can render as its own bespoke
+// component (components/AccreditationHub.tsx) instead of a plain feature-card grid. Card titles kept
+// exactly as originally written ("Loan & Education Finance", "Government & Institutional
+// Recognition") rather than the shorter labels a later redesign brief suggested for them.
+export const accreditationWhyMatters = {
+  eyebrow: "Why it matters",
+  heading: "Why accreditation matters for your career",
+  text: "Not all certificates are equal. Here's why TechCadd's accreditation gives your certificate real weight.",
+  cards: [
+    {
+      title: "Employer Trust",
+      metric: "Verified by recruiters",
+      text: "Recruiters and established IT companies verify an institute's credentials before treating its certificate as a hiring signal. TechCadd's certifications and registrations strengthen employer confidence.",
+      icon: "shield",
+    },
+    {
+      title: "Loan & Education Finance",
+      metric: "Financing-friendly institution",
+      text: "Recognized institutions are often preferred by banks and financial organizations when evaluating education financing and training-related support.",
+      icon: "landmark",
+    },
+    {
+      title: "Quality Assurance",
+      metric: "Continuous curriculum review",
+      text: "Accreditation reflects a commitment to maintaining quality standards, updated curriculum, instructor excellence, and continuous improvement.",
+      icon: "award",
+    },
+    {
+      title: "Government & Institutional Recognition",
+      metric: "Industry-accepted credentials",
+      text: "Industry-recognized certifications can improve acceptance in training, employment, and professional development opportunities.",
+      icon: "globe",
+    },
+  ],
+};
+
 // Centralized content for every /about/[slug] page, and the source the About mega menu is generated
 // from (see components/Header.tsx). Add a new entry here and it shows up in the menu automatically —
 // no new page files or menu wiring required.
@@ -212,29 +249,7 @@ export const aboutData: Record<string, AboutPageData> = {
     heroImage: "/about-menu/iso-certified.jpg",
     sections: [
       {
-        eyebrow: "Why it matters",
-        heading: "Why accreditation matters for your career",
-        body: ["Not all certificates are equal. Here's why TechCadd's accreditation gives your certificate real weight."],
-        cards: [
-          {
-            title: "Employer Trust",
-            text: "Recruiters and established IT companies verify an institute's credentials before treating its certificate as a hiring signal. TechCadd's certifications and registrations strengthen employer confidence.",
-          },
-          {
-            title: "Loan & Education Finance",
-            text: "Recognized institutions are often preferred by banks and financial organizations when evaluating education financing and training-related support.",
-          },
-          {
-            title: "Quality Assurance",
-            text: "Accreditation reflects a commitment to maintaining quality standards, updated curriculum, instructor excellence, and continuous improvement.",
-          },
-          {
-            title: "Government & Institutional Recognition",
-            text: "Industry-recognized certifications can improve acceptance in training, employment, and professional development opportunities.",
-          },
-        ],
-      },
-      {
+        id: "certifications",
         eyebrow: "Our Certifications",
         heading: "Three credentials, verifiable against their issuers",
         body: ["All accreditations below are current and verifiable through their respective issuing authorities."],

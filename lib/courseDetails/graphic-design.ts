@@ -3,7 +3,7 @@ import { site } from "../site";
 import type { CourseDetail } from "./types";
 
 const graphicDesignCourse: CourseDetail = {
-  slug: "graphic-design",
+  slug: "graphic-design-course-in-jalandhar",
   seo: {
     title: `Graphic Design Course in ${site.city} | 4-Month Photoshop, Illustrator, CorelDRAW & InDesign`,
     description: `Become a job-ready graphic designer at ${site.name} ${site.city}: design principles, Photoshop, Illustrator, CorelDRAW, InDesign, logos, print, packaging and social media creatives, with a portfolio, certificate and placement support.`,
@@ -370,7 +370,7 @@ const graphicDesignCourse: CourseDetail = {
 };
 
 const photoshop: CourseDetail = {
-  slug: "adobe-photoshop",
+  slug: "adobe-photoshop-training-in-jalandhar",
   seo: {
     title: `Adobe Photoshop Course in ${site.city} | 1.5-Month Photo Editing & Design`,
     description: `Learn Adobe Photoshop at ${site.name} ${site.city}: layers, selections, masks, photo retouching, compositing, posters, banners and social media creatives, with a certificate and placement support.`,
@@ -700,7 +700,7 @@ const photoshop: CourseDetail = {
 };
 
 const coreldraw: CourseDetail = {
-  slug: "coreldraw",
+  slug: "coreldraw-training-in-jalandhar",
   seo: {
     title: `CorelDRAW Course in ${site.city} | 1.5-Month Print, Flex & Logo Design`,
     description: `Learn CorelDRAW at ${site.name} ${site.city}: drawing tools, curves, typography, visiting cards, letterheads, brochures, flex banners, signage and print preparation, with a certificate and placement support.`,
@@ -1030,7 +1030,7 @@ const coreldraw: CourseDetail = {
 };
 
 const illustrator: CourseDetail = {
-  slug: "adobe-illustrator",
+  slug: "adobe-illustrator-training-in-jalandhar",
   seo: {
     title: `Adobe Illustrator Course in ${site.city} | 1.5-Month Logo & Vector Design`,
     description: `Learn Adobe Illustrator at ${site.name} ${site.city}: vector basics, the Pen tool, Shape Builder, typography, logo design, icons, illustration and exporting for print and web, with a certificate and placement support.`,

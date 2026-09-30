@@ -3,7 +3,7 @@ import { site } from "../site";
 import type { CourseDetail } from "./types";
 
 const msOfficeAdvancedExcel: CourseDetail = {
-  slug: "ms-office-advanced-excel",
+  slug: "advanced-excel-training-in-jalandhar",
   seo: {
     title: `MS Office & Advanced Excel Course in ${site.city} | 2-Month MIS Program`,
     description: `Learn Word, PowerPoint and Advanced Excel at ${site.name} ${site.city}: XLOOKUP, INDEX-MATCH, pivot tables, dashboards, MIS reports and macro basics, with a certificate and placement support.`,
@@ -360,7 +360,7 @@ const msOfficeAdvancedExcel: CourseDetail = {
 };
 
 const dca: CourseDetail = {
-  slug: "dca",
+  slug: "dca-course-in-jalandhar",
   seo: {
     title: `DCA Course in ${site.city} | 6-Month Diploma in Computer Applications`,
     description: `Diploma in Computer Applications at ${site.name} ${site.city}: computer fundamentals, MS Office, internet, Tally Prime basics, English/Punjabi typing and basic Photoshop, with a diploma certificate and placement support.`,
@@ -731,7 +731,7 @@ const dca: CourseDetail = {
 };
 
 const adca: CourseDetail = {
-  slug: "adca",
+  slug: "adca-course-in-jalandhar",
   seo: {
     title: `ADCA Course in ${site.city} | 1-Year Advanced Diploma in Computer Applications`,
     description: `Advanced Diploma in Computer Applications at ${site.name} ${site.city}: MS Office, Advanced Excel & MIS, Tally Prime with GST, Photoshop, CorelDRAW and HTML basics, with an internship letter and placement support.`,

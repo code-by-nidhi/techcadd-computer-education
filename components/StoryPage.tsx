@@ -1,30 +1,23 @@
 import Link from "next/link";
-import { categories, coursesIn, getCourse } from "@/lib/courses";
-import { stats } from "@/lib/content";
+import { categories, coursesIn } from "@/lib/courses";
 import { site } from "@/lib/site";
-import {
-  audiences,
-  awardsRecognition,
-  belief,
-  differentiators,
-  heroCopy,
-  industryEngagement,
-  industryPartners,
-  journey,
-  learningEcosystem,
-  learningFlow,
-  ourApproach,
-  ourJourneyHeader,
-  skillEcosystem,
-  whoWeAre,
-  whyItMatters,
-} from "@/lib/storyData";
+import { belief, heroCopy, industryEngagement, industryPartners, learningEcosystem } from "@/lib/storyData";
 import SpotlightCard from "./SpotlightCard";
 import DemoButton from "./DemoButton";
-import CountUp from "./CountUp";
 import { LeadCta, CtaStrip } from "./Sections";
-import { Magnetic, MotionCounter, Reveal, RevealHeading, ScaleIn } from "./motion/Reveal";
+import { Magnetic, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "./motion/Reveal";
 import HeroParallax from "./motion/HeroParallax";
+import MouseSpotlight from "./motion/MouseSpotlight";
+import WhoWeAreSection from "./WhoWeAreSection";
+import EcosystemDiagramSection from "./EcosystemDiagramSection";
+import WhoWeTeach from "./WhoWeTeach";
+import LearningJourney from "./LearningJourney";
+import WhyDifferent from "./WhyDifferent";
+import OurApproachSection from "./OurApproachSection";
+import AwardsRecognitionSection from "./AwardsRecognitionSection";
+import OurJourneySection from "./OurJourneySection";
+import HeroStats from "./HeroStats";
+import WhyItMattersSection from "./WhyItMattersSection";
 
 // The redesigned /about page (app/about/page.tsx). Fourteen sections, each a small local component —
 // see lib/storyData.ts for the copy that isn't already sourced from lib/courses.ts / lib/content.ts /
@@ -33,17 +26,17 @@ export default function StoryPage() {
   return (
     <>
       <StoryHero />
-      <WhoWeAre />
-      <SkillEcosystem />
-      <WhyItMatters />
+      <WhoWeAreSection />
+      <EcosystemDiagramSection />
+      <WhyItMattersSection />
       <WhoWeTeach />
-      <LearningFlow />
-      <WhyChooseUs />
+      <LearningJourney />
+      <WhyDifferent />
       <TechDomains />
-      <OurApproach />
+      <OurApproachSection />
       <IndustryEngagement />
-      <AwardsRecognition />
-      <GrowthJourney />
+      <AwardsRecognitionSection />
+      <OurJourneySection />
       <OurBelief />
       <LeadCta />
       <CtaStrip />
@@ -65,6 +58,7 @@ function StoryHero() {
         <span className="story-hero-particle" style={{ top: "30%", left: "92%", animationDelay: "3.6s" }} />
         <span className="story-hero-particle" style={{ top: "78%", left: "88%", animationDelay: "1s" }} />
       </HeroParallax>
+      <MouseSpotlight className="story-hero-spotlight" />
       <div className="container story-hero-inner">
         <div>
           <ScaleIn className="eyebrow eyebrow-light">{heroCopy.eyebrow}</ScaleIn>
@@ -85,266 +79,31 @@ function StoryHero() {
             </div>
           </Reveal>
         </div>
-        <Reveal delay={0.2} className="story-hero-stats">
-          {stats.map((s) => (
-            <div key={s.label} className="story-stat">
-              <strong>
-                <MotionCounter value={s.value} />
-              </strong>
-              <span>{s.label}</span>
-            </div>
-          ))}
-        </Reveal>
+        <HeroStats />
       </div>
     </section>
   );
 }
 
-// Learning Flow — Learn/Practice/Build/Grow as 4 premium glass cards with connecting arrows, over the
-// same dark-navy gradient family as the rest of the page (own cyan accent — see globals.css).
-function LearningFlow() {
-  return (
-    <section className="section theme-dark story-flow2">
-      <span className="story-flow2-orb story-flow2-orb-1" aria-hidden="true" />
-      <span className="story-flow2-orb story-flow2-orb-2" aria-hidden="true" />
-      <div className="container">
-        <div className="section-heading story-flow2-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow story-flow2-eyebrow">{learningFlow.eyebrow}</span>
-          <h2>
-            Learn <span className="story-flow2-hl">→</span> Practice <span className="story-flow2-hl">→</span> Build{" "}
-            <span className="story-flow2-hl">→</span> Grow
-          </h2>
-        </div>
-        <div className="story-flow2-grid">
-          {learningFlow.steps.map((s, i) => (
-            <div key={s.num} className="story-flow2-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 100}>
-              <span className="story-flow2-num" aria-hidden="true">{s.num}</span>
-              <span className="story-flow2-icon">
-                <FlowIcon icon={s.icon} />
-              </span>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-              {i < learningFlow.steps.length - 1 && (
-                <span className="story-flow2-arrow" aria-hidden="true">→</span>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="story-flow2-panel" suppressHydrationWarning data-aos="fade-up">
-          <span className="story-flow2-badge">{learningFlow.badge}</span>
-          <p>{learningFlow.text}</p>
-        </div>
-      </div>
-    </section>
-  );
-}
+// Learning Flow — redesigned in its own file, components/LearningJourney.tsx, as a connected
+// roadmap (needs client-side hover state for the per-card spotlight).
 
-function FlowIcon({ icon }: { icon: string }) {
-  const paths: Record<string, string> = {
-    learn: "M2 8 12 3l10 5-10 5L2 8Zm5 3v5c0 1.7 2.2 3 5 3s5-1.3 5-3v-5",
-    practice: "M4 5h16v10H4z M2 19h20 M9 8l-2 2 2 2 M15 8l2 2-2 2",
-    build: "M12 3 3 8l9 5 9-5-9-5Z M3 13l9 5 9-5 M3 16l9 5 9-5",
-    grow: "M5 21c3-9 8-14 14-16-2 6-7 11-16 14Z M8 15l-3 6",
-  };
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d={paths[icon]} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-// 2. Who We Are — two-column: story + real course chips on the left, a photo collage on the right.
-function WhoWeAre() {
-  return (
-    <section className="section theme-dark story-who">
-      <div className="container story-who-inner">
-        <div suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">Who we are</span>
-          <h2 className="story-who-heading">
-            Empowering Skills. Enabling Careers. <span className="story-who-highlight">Building the Future.</span>
-          </h2>
-          <p>
-            Founded in {site.since} by{" "}
-            <Link href="/about/founder" className="story-who-founder">
-              Mr. Gourav Gupta
-            </Link>
-            , {whoWeAre.paragraphs[0]}
-          </p>
-          <p>{whoWeAre.paragraphs[1]}</p>
-
-          <div className="story-who-teach">
-            <h3>What we teach</h3>
-            <p>{whoWeAre.teachIntro}</p>
-            <div className="story-chip-cloud">
-              {whoWeAre.featuredCourseSlugs.map((slug, i) => {
-                const course = getCourse(slug);
-                if (!course) return null;
-                return (
-                  <span key={slug} className="story-chip" suppressHydrationWarning data-aos="fade-up" data-aos-delay={(i % 8) * 30}>
-                    {course.title}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-
-          <p className="story-who-hq">Headquartered in {site.city}, Punjab.</p>
-        </div>
-
-        <div className="story-collage" suppressHydrationWarning data-aos="fade-up" data-aos-delay="120">
-          <div className="story-collage-frame story-collage-main">
-            <span className="story-collage-img" style={{ backgroundImage: "url(/about-menu/our-team.jpg)" }} />
-            <span className="story-collage-caption">Team techcadd</span>
-          </div>
-          <div className="story-collage-row">
-            <div className="story-collage-frame">
-              <span className="story-collage-img" style={{ backgroundImage: "url(/about-menu/about-techcadd.jpg)" }} />
-            </div>
-            <div className="story-collage-frame">
-              <span className="story-collage-img" style={{ backgroundImage: "url(/about-menu/mission-vision.jpg)" }} />
-            </div>
-          </div>
-          <span className="story-collage-badge">
-            <strong>Since {site.since}</strong>
-          </span>
-        </div>
-      </div>
-    </section>
-  );
-}
+// Who We Are — redesigned in its own file, components/WhoWeAreSection.tsx, as a brand-story panel
+// paired with an interactive "techcadd ecosystem" hub (needs client-side hover state).
 
 // 4. Skill Building Ecosystem — reading column on the left, an asymmetrical 3-image composition on
 // the right, over a decorative dark-navy backdrop (glow orbs + faint grid — see globals.css).
-function SkillEcosystem() {
-  const [before, after] = skillEcosystem.paragraphs[0].split(skillEcosystem.highlight);
-  return (
-    <section className="section theme-light story-ecosystem">
-      <span className="story-ecosystem-orb story-ecosystem-orb-blue" aria-hidden="true" />
-      <span className="story-ecosystem-orb story-ecosystem-orb-yellow" aria-hidden="true" />
-      <div className="container story-ecosystem-inner">
-        <div className="story-ecosystem-content" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">{skillEcosystem.eyebrow}</span>
-          <h2>{skillEcosystem.heading}</h2>
-          <p>
-            {before}
-            <strong>{skillEcosystem.highlight}</strong>
-            {after}
-          </p>
-          <p>{skillEcosystem.paragraphs[1]}</p>
-        </div>
-        <div className="story-ecosystem-images" suppressHydrationWarning data-aos="fade-up" data-aos-delay="120">
-          <div className="story-ecosystem-frame story-ecosystem-main">
-            <span className="story-ecosystem-img" style={{ backgroundImage: `url(${skillEcosystem.images[0]})` }} />
-          </div>
-          <div className="story-ecosystem-frame story-ecosystem-float story-ecosystem-float-1">
-            <span className="story-ecosystem-img" style={{ backgroundImage: `url(${skillEcosystem.images[1]})` }} />
-          </div>
-          <div className="story-ecosystem-frame story-ecosystem-float story-ecosystem-float-2">
-            <span className="story-ecosystem-img" style={{ backgroundImage: `url(${skillEcosystem.images[2]})` }} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+// "A skill-building ecosystem" — redesigned in its own file, components/EcosystemDiagramSection.tsx,
+// as a hub-and-network visualization (needs client-side hover state + mouse-parallax).
 
-// 5. Why It Matters — future-ready framing, reusing the same feature-card treatment as the
-// accreditations page's "Why Accreditation Matters" (components/AboutBlocks.tsx).
-function WhyItMatters() {
-  return (
-    <section className="section theme-dark">
-      <div className="container">
-        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">Why it matters</span>
-          <h2>Future-ready learning, not a one-time certificate</h2>
-        </div>
-        <div className="about-card-grid about-card-grid-3">
-          {whyItMatters.map((c, i) => (
-            <SpotlightCard key={c.title} className="about-feature-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 80}>
-              <h3>{c.title}</h3>
-              <p>{c.text}</p>
-            </SpotlightCard>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+// 5. Why It Matters — redesigned in its own file, components/WhyItMattersSection.tsx, as a connected
+// horizontal story flow (needs client-side hover state for the per-card spotlight).
 
-// 6. Who We Teach — five audience segments.
-function WhoWeTeach() {
-  return (
-    <section className="section theme-light">
-      <div className="container">
-        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">Who we teach</span>
-          <h2>Built for wherever you're starting from</h2>
-        </div>
-        <div className="grid grid-5 story-audience-grid">
-          {audiences.map((a, i) => (
-            <div key={a.title} className="story-audience-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 60}>
-              <span aria-hidden="true">{a.icon}</span>
-              <strong>{a.title}</strong>
-              <p>{a.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+// 6. Who We Teach — five audience segments (redesigned in its own file, components/WhoWeTeach.tsx,
+// since it needs client-side hover state for the "active card dims its siblings" effect).
 
-// 7. What Makes techcadd Different — a 9-card premium feature showcase (own light background, distinct
-// from the shared .theme-dark/.theme-light system: every 3rd card and the closing banner go dark on
-// purpose, as isolated accents within an otherwise light section — see globals.css for .story-diff-*).
-function WhyChooseUs() {
-  return (
-    <section className="section theme-light story-diff">
-      <div className="container">
-        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow story-diff-eyebrow">{differentiators.eyebrow}</span>
-          <h2 className="story-diff-heading">{differentiators.heading}</h2>
-        </div>
-        <div className="story-diff-grid">
-          {differentiators.points.map((p, i) => (
-            <SpotlightCard
-              key={p.title}
-              className={`story-diff-card ${(i + 1) % 3 === 0 ? "story-diff-card-dark" : ""}`}
-              suppressHydrationWarning data-aos="fade-up"
-              data-aos-delay={i * 70}
-            >
-              <span className="story-diff-badge">
-                <DiffIcon icon={p.icon} />
-              </span>
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
-              <span className="story-diff-num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-            </SpotlightCard>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function DiffIcon({ icon }: { icon: string }) {
-  const paths: Record<string, string> = {
-    briefcase: "M4 8h16v11H4z M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2 M4 13h16",
-    laptop: "M5 5h14v9H5z M2 19h20 M9 8l-2 2 2 2 M15 8l2 2-2 2",
-    cpu: "M8 3v3M12 3v3M16 3v3M8 18v3M12 18v3M16 18v3M3 8h3M3 12h3M3 16h3M18 8h3M18 12h3M18 16h3M7 7h10v10H7z",
-    layers: "M12 3 3 8l9 5 9-5-9-5Z M3 13l9 5 9-5 M3 16l9 5 9-5",
-    users: "M8 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM17 12a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2ZM2.5 20c.7-3 2.9-5 5.5-5s4.8 2 5.5 5M14.5 20c.5-2.3 2.1-4 4.4-4.4",
-    compass: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z M15 9l-2 6-6 2 2-6 6-2Z",
-    rocket: "M5 21c3-9 8-14 14-16-2 6-7 11-16 14Z M8 15l-3 6",
-    building: "M4 21V5l8-3 8 3v16M9 21v-6h6v6M8 9h.01M12 9h.01M16 9h.01M8 13h.01M12 13h.01M16 13h.01",
-    network: "M12 3v6M6 21v-5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5M4 21h4v-3H4zM10 21h4v-3h-4zM16 21h4v-3h-4zM9 9h6l3 3M6 12l3-3",
-  };
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d={paths[icon]} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+// 7. What Makes techcadd Different — redesigned in its own file, components/WhyDifferent.tsx, as a
+// bento grid (needs client-side hover state for the per-card spotlight + icon-active effect).
 
 // 9. Technology Domains — the same real categories as "What We Teach", presented as a denser tag
 // cloud of actual course names grouped by track.
@@ -390,7 +149,7 @@ function TechDomains() {
                 <p className="story-ecosystem2-desc">{cat.blurb}</p>
                 <div className="story-ecosystem2-pills">
                   {shown.map((c) => (
-                    <Link key={c.slug} href={`/courses/${c.slug}`} className="story-ecosystem2-pill">
+                    <Link key={c.slug} href={`/internship-training/${c.slug}`} className="story-ecosystem2-pill">
                       {c.title}
                     </Link>
                   ))}
@@ -402,7 +161,7 @@ function TechDomains() {
                     </summary>
                     <div className="story-ecosystem2-pills story-ecosystem2-pills-extra">
                       {rest.map((c) => (
-                        <Link key={c.slug} href={`/courses/${c.slug}`} className="story-ecosystem2-pill">
+                        <Link key={c.slug} href={`/internship-training/${c.slug}`} className="story-ecosystem2-pill">
                           {c.title}
                         </Link>
                       ))}
@@ -433,35 +192,8 @@ function DomainIcon({ icon }: { icon: string }) {
   );
 }
 
-// 10. Our Approach — Relevance, Application, Growth.
-function OurApproach() {
-  const [before, after] = ourApproach.heading.split(ourApproach.highlight);
-  return (
-    <section className="section theme-light story-approach2">
-      <span className="story-approach2-orb" aria-hidden="true" />
-      <div className="container story-approach2-inner">
-        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow story-approach2-eyebrow">{ourApproach.eyebrow}</span>
-          <h2>
-            {before}
-            <span className="story-approach2-highlight">{ourApproach.highlight}</span>
-            {after}
-          </h2>
-          <p>{ourApproach.text}</p>
-        </div>
-        <div className="story-approach2-list">
-          {ourApproach.pillars.map((p, i) => (
-            <div key={p.title} className="story-approach2-item" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 80}>
-              <span className="story-approach2-num">{String(i + 1).padStart(2, "0")}</span>
-              <h3>{p.title}</h3>
-              <p>{p.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+// 10. Our Approach — redesigned in its own file, components/OurApproachSection.tsx, as a zig-zag
+// connected timeline (needs client-side hover state for the per-card spotlight).
 
 // 11. Industry Engagement — real, named partnerships.
 function IndustryEngagement() {
@@ -488,131 +220,11 @@ function IndustryEngagement() {
   );
 }
 
-// 12. Awards & Recognition — condensed recap of the real certification cards, linking to the full page
-// (see app/about/accreditations-awards) instead of duplicating all that detail here.
-function AwardsRecognition() {
-  return (
-    <section className="section theme-light">
-      <div className="container">
-        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">{awardsRecognition.eyebrow}</span>
-          <h2>{awardsRecognition.heading}</h2>
-          <p>{awardsRecognition.text}</p>
-        </div>
-        <div className="story-awards2-grid">
-          {awardsRecognition.cards.map((c, i) => (
-            <SpotlightCard key={c.title} className="story-awards2-card" suppressHydrationWarning data-aos="fade-up" data-aos-delay={i * 80}>
-              <span className="story-awards2-icon">
-                <AwardIcon icon={c.icon} />
-              </span>
-              <div>
-                <h3>{c.title}</h3>
-                <p>{c.text}</p>
-              </div>
-            </SpotlightCard>
-          ))}
-        </div>
-        <p className="story-awards2-footnote" suppressHydrationWarning data-aos="fade-up">
-          {awardsRecognition.footnote}
-          <br />
-          <Link href="/about/accreditations-awards" className="link-arrow">
-            See all accreditations & awards →
-          </Link>
-        </p>
-      </div>
-    </section>
-  );
-}
+// 12. Awards & Recognition — redesigned in its own file, components/AwardsRecognitionSection.tsx, as
+// a hub-and-spoke trust ecosystem (needs client-side hover state for the node/orb interactions).
 
-function AwardIcon({ icon }: { icon: string }) {
-  const paths: Record<string, string> = {
-    shield: "M12 3 4 6.5V12c0 4.8 3.4 8.6 8 9.9 4.6-1.3 8-5.1 8-9.9V6.5L12 3ZM8.5 12l2.5 2.5L16 9",
-    link: "M9 15 15 9M10 6l1.5-1.5a3.5 3.5 0 0 1 5 5L15 11M14 18l-1.5 1.5a3.5 3.5 0 0 1-5-5L9 13",
-    cap: "M2 8 12 3l10 5-10 5L2 8Zm5 3v5c0 1.7 2.2 3 5 3s5-1.3 5-3v-5",
-    spark: "M12 2 15 9 22 12 15 15 12 22 9 15 2 12 9 9Z",
-  };
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d={paths[icon]} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-// 13. Our Journey — a premium "Growth Journey" card story: every year 2016-2026 as a glassmorphism
-// card in a staggered 2-column layout (no timeline/line/stepper/connectors at all, per the redesign
-// brief). The three real cumulative stats (2024/2025/2026) render larger, with an animated CountUp
-// on their number, everything else is a standard card.
-const MILESTONE_FEATURED_YEARS = new Set(["2024", "2025", "2026"]);
-
-function GrowthJourney() {
-  return (
-    <section className="section theme-dark story-growth">
-      <span className="story-growth-orb story-growth-orb-1" aria-hidden="true" />
-      <span className="story-growth-orb story-growth-orb-2" aria-hidden="true" />
-      <div className="story-growth-grid-bg" aria-hidden="true" />
-      <span className="story-growth-particle" style={{ top: "18%", left: "12%" }} aria-hidden="true" />
-      <span className="story-growth-particle" style={{ top: "70%", left: "22%", animationDelay: "1.4s" }} aria-hidden="true" />
-      <span className="story-growth-particle" style={{ top: "30%", left: "78%", animationDelay: "2.8s" }} aria-hidden="true" />
-      <span className="story-growth-particle" style={{ top: "80%", left: "85%", animationDelay: "0.6s" }} aria-hidden="true" />
-      <div className="container">
-        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow story-growth-eyebrow">{ourJourneyHeader.eyebrow}</span>
-          <h2>{ourJourneyHeader.heading}</h2>
-          <p className="story-growth-subheading">{ourJourneyHeader.text}</p>
-        </div>
-
-        <div className="story-growth-grid">
-          {journey.map((m, i) => {
-            const isFeatured = MILESTONE_FEATURED_YEARS.has(m.year);
-            const stat = isFeatured ? m.title.match(/^([\d,]+\+?)\s+(.*)$/) : null;
-
-            return (
-              <SpotlightCard
-                key={m.year}
-                className={`story-growth-card ${isFeatured ? "story-growth-card-featured" : ""}`}
-                suppressHydrationWarning data-aos="fade-up"
-                data-aos-delay={(i % 2) * 100}
-              >
-                {isFeatured && <span className="story-growth-card-glow" aria-hidden="true" />}
-                <span className="story-growth-year">{m.year}</span>
-                {stat ? (
-                  <>
-                    <strong className="story-growth-count">
-                      <CountUp value={stat[1]} />
-                    </strong>
-                    <span className="story-growth-count-label">{stat[2]}</span>
-                  </>
-                ) : (
-                  <h3>{m.title}</h3>
-                )}
-                <p>{m.text}</p>
-                <span className="story-growth-icon">
-                  <MilestoneIcon icon={m.icon} />
-                </span>
-              </SpotlightCard>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function MilestoneIcon({ icon }: { icon: string }) {
-  const paths: Record<string, string> = {
-    foundation: "M4 21V9l8-6 8 6v12M9 21v-6h6v6M4 12h16",
-    growth: "M12 3 4 6.5V12c0 4.8 3.4 8.6 8 9.9 4.6-1.3 8-5.1 8-9.9V6.5L12 3ZM8.5 12l2.5 2.5L16 9",
-    innovation: "M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z",
-    training: "M9 15 15 9M10 6l1.5-1.5a3.5 3.5 0 0 1 5 5L15 11M14 18l-1.5 1.5a3.5 3.5 0 0 1-5-5L9 13",
-    expansion: "M12 3v6M6 21v-5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5M4 21h4v-3H4zM10 21h4v-3h-4zM16 21h4v-3h-4zM9 9h6l3 3M6 12l3-3",
-    certificate: "M12 3 5 6v5c0 5 3 8.5 7 10 4-1.5 7-5 7-10V6l-7-3Z M9 12l2 2 4-4",
-  };
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d={paths[icon] ?? paths.growth} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+// 13. Our Journey — redesigned in its own file, components/OurJourneySection.tsx, as a horizontal
+// glowing roadmap with a click-to-open milestone panel (needs client-side state).
 
 // 14. Our Belief — brand philosophy.
 function OurBelief() {

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CategoryId, coursesIn } from "@/lib/courses";
+import { CategoryId, categorySlug, coursesIn } from "@/lib/courses";
 import ArrowIcon from "./ArrowIcon";
 
 // Home "Categories" row, after techcaddjalandhar.com: square cards that widen on hover to reveal a
@@ -57,7 +57,7 @@ export default function HomeCategories() {
 
         <div className="cat-row">
           {cards.map((c) => (
-            <Link key={c.id} href={`/courses#${c.id}`} className={`cat-card ${c.tone}`}>
+            <Link key={c.id} href={`/internship-training/${categorySlug(c.id)}`} className={`cat-card ${c.tone}`}>
               <div className="cat-tiles" aria-hidden="true">
                 {c.tiles.map((t, i) => (
                   <span key={i} className="cat-tile">

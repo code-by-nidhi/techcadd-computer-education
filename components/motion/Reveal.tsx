@@ -9,23 +9,29 @@ import { animate, motion, useInView, useMotionValue, useSpring, type Variants } 
 // of each file reinventing slightly different numbers.
 export const EASE = [0.22, 1, 0.36, 1] as const;
 
-// Baseline section reveal: opacity 0 -> 1, y 50 -> 0, once, on scroll into view.
+// Baseline section reveal: opacity 0 -> 1, plus an optional y (up) and/or x (left/right) offset and
+// a "blur in" — once, on scroll into view. Pass x negative to slide in from the left, positive from
+// the right; most callers just want the default fade-up.
 export function Reveal({
   children,
   delay = 0,
   y = 50,
+  x = 0,
+  blur = false,
   className,
 }: {
   children: ReactNode;
   delay?: number;
   y?: number;
+  x?: number;
+  blur?: boolean;
   className?: string;
 }) {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y, x, filter: blur ? "blur(8px)" : "blur(0px)" }}
+      whileInView={{ opacity: 1, y: 0, x: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay, ease: EASE }}
     >
@@ -34,26 +40,35 @@ export function Reveal({
   );
 }
 
-const staggerContainer: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
-};
-const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
-};
-
-// A card grid that reveals once, each child following 0.1s after the last — pair with StaggerItem.
-export function Stagger({ children, className }: { children: ReactNode; className?: string }) {
+// A card grid that reveals once, each child following `stagger` seconds after the last — pair with
+// StaggerItem, which can add a blur-in on top of its default fade-up.
+export function Stagger({ children, className, stagger = 0.1 }: { children: ReactNode; className?: string; stagger?: number }) {
+  const container: Variants = { hidden: {}, show: { transition: { staggerChildren: stagger } } };
   return (
-    <motion.div className={className} variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}>
+    <motion.div className={className} variants={container} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}>
       {children}
     </motion.div>
   );
 }
-export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
+export function StaggerItem({
+  children,
+  className,
+  y = 40,
+  blur = false,
+  scale,
+}: {
+  children: ReactNode;
+  className?: string;
+  y?: number;
+  blur?: boolean;
+  scale?: number;
+}) {
+  const item: Variants = {
+    hidden: { opacity: 0, y, scale: scale ?? 1, filter: blur ? "blur(10px)" : "blur(0px)" },
+    show: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", transition: { duration: 0.6, ease: EASE } },
+  };
   return (
-    <motion.div className={className} variants={staggerItem}>
+    <motion.div className={className} variants={item}>
       {children}
     </motion.div>
   );
@@ -173,6 +188,9 @@ export function MotionCounter({ value, duration = 1.4 }: { value: string; durati
   const numeral = match ? match[1].replace(/,/g, "") : "";
   const target = numeral ? parseFloat(numeral) : 0;
   const decimals = numeral.includes(".") ? numeral.split(".")[1].length : 0;
+  // Only group into "25,000" if the source value itself was written with a comma — otherwise a plain
+  // 4-digit number like a year ("2016") would otherwise get turned into "2,016" by toLocaleString.
+  const grouped = match ? match[1].includes(",") : false;
   const suffix = match ? match[2] : "";
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -183,10 +201,10 @@ export function MotionCounter({ value, duration = 1.4 }: { value: string; durati
     const controls = animate(0, target, {
       duration,
       ease: EASE,
-      onUpdate: (v) => setDisplay(decimals ? v.toFixed(decimals) : Math.round(v).toLocaleString()),
+      onUpdate: (v) => setDisplay(decimals ? v.toFixed(decimals) : grouped ? Math.round(v).toLocaleString() : String(Math.round(v))),
     });
     return () => controls.stop();
-  }, [inView, target, duration, decimals]);
+  }, [inView, target, duration, decimals, grouped]);
 
   return (
     <span ref={ref}>

@@ -3,7 +3,7 @@ import { site } from "../site";
 import type { CourseDetail } from "./types";
 
 const autocad: CourseDetail = {
-  slug: "autocad",
+  slug: "autocad-training-in-jalandhar",
   seo: {
     title: `AutoCAD Course in ${site.city} | 2-Month 2D & 3D Drafting Program`,
     description: `Learn AutoCAD at ${site.name} ${site.city}: drawing setup, draw & modify commands, layers, blocks, dimensioning, layouts, plotting, isometric and 3D basics, with a certificate and placement support.`,
@@ -347,7 +347,7 @@ const autocad: CourseDetail = {
 };
 
 const solidworks: CourseDetail = {
-  slug: "solidworks",
+  slug: "solidworks-training-in-jalandhar",
   seo: {
     title: `SolidWorks Course in ${site.city} | 2-Month 3D Mechanical Design Program`,
     description: `Learn SolidWorks at ${site.name} ${site.city}: sketching, part modelling, assemblies, sheet metal, weldments, surfaces and manufacturing drawings, with a certificate and placement support.`,
@@ -691,7 +691,7 @@ const solidworks: CourseDetail = {
 };
 
 const catia: CourseDetail = {
-  slug: "catia",
+  slug: "catia-training-in-jalandhar",
   seo: {
     title: `CATIA Course in ${site.city} | 2-Month CATIA V5 Design Program`,
     description: `Learn CATIA V5 at ${site.name} ${site.city}: sketcher, part design, generative shape design, assembly, drafting and sheet metal with automotive-style projects, a certificate and placement support.`,
@@ -1023,7 +1023,7 @@ const catia: CourseDetail = {
 };
 
 const revitArchitecture: CourseDetail = {
-  slug: "revit-architecture",
+  slug: "revit-architecture-training-in-jalandhar",
   seo: {
     title: `Revit Architecture Course in ${site.city} | 2-Month BIM Program`,
     description: `Learn Revit Architecture at ${site.name} ${site.city}: BIM concepts, levels, walls, floors, doors, windows, roofs, stairs, families, rendering, sheets and schedules, with a certificate and placement support.`,
@@ -1367,7 +1367,7 @@ const revitArchitecture: CourseDetail = {
 };
 
 const threeDsMax: CourseDetail = {
-  slug: "3ds-max",
+  slug: "3ds-max-training-in-jalandhar",
   seo: {
     title: `3ds Max Course in ${site.city} | 3-Month Interior & Exterior Rendering Program`,
     description: `Learn 3ds Max with V-Ray at ${site.name} ${site.city}: interior and exterior modelling, materials, lighting, cameras, photo-realistic rendering and walkthroughs, with a certificate and placement support.`,
@@ -1711,7 +1711,7 @@ const threeDsMax: CourseDetail = {
 };
 
 const cncProgrammingCam: CourseDetail = {
-  slug: "cnc-programming-cam",
+  slug: "cnc-programming-cam-training-in-jalandhar",
   seo: {
     title: `CNC Programming & CAM Course in ${site.city} | 2-Month G-Code Program`,
     description: `Learn CNC programming at ${site.name} ${site.city}: G & M codes, CNC turning and milling programs, tooling and cutting parameters, CAM toolpaths in Mastercam and Fusion 360, simulation and post-processing.`,

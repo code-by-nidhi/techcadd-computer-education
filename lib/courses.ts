@@ -56,7 +56,7 @@ export const categories: Category[] = [
 export const courses: Course[] = [
   // Basic & Accounting
   {
-    slug: "basic-computer-course",
+    slug: "basic-computer-course-in-jalandhar",
     title: "Basic Computer Course",
     category: "basic-accounting",
     duration: "2 Months",
@@ -77,7 +77,7 @@ export const courses: Course[] = [
     careers: ["Office Assistant", "Data Entry Operator", "Receptionist", "Computer Operator"],
   },
   {
-    slug: "ms-office-advanced-excel",
+    slug: "advanced-excel-training-in-jalandhar",
     title: "MS Office & Advanced Excel",
     category: "basic-accounting",
     duration: "2 Months",
@@ -99,7 +99,7 @@ export const courses: Course[] = [
     careers: ["MIS Executive", "Back Office Executive", "Office Coordinator", "Data Entry Operator"],
   },
   {
-    slug: "dca",
+    slug: "dca-course-in-jalandhar",
     title: "Diploma in Computer Applications (DCA)",
     category: "basic-accounting",
     duration: "6 Months",
@@ -120,7 +120,7 @@ export const courses: Course[] = [
     careers: ["Computer Operator", "Office Assistant", "Data Entry Operator", "Billing Executive"],
   },
   {
-    slug: "adca",
+    slug: "adca-course-in-jalandhar",
     title: "Advanced Diploma in Computer Applications (ADCA)",
     category: "basic-accounting",
     duration: "12 Months",
@@ -142,7 +142,7 @@ export const courses: Course[] = [
 
   // Basic & Accounting: accounting courses
   {
-    slug: "tally-prime-gst",
+    slug: "tally-prime-training-in-jalandhar",
     title: "Tally Prime with GST",
     category: "basic-accounting",
     duration: "3 Months",
@@ -164,7 +164,7 @@ export const courses: Course[] = [
     careers: ["Accountant", "Accounts Executive", "GST Assistant", "Billing Executive"],
   },
   {
-    slug: "busy-accounting",
+    slug: "busy-accounting-training-in-jalandhar",
     title: "BUSY Accounting Software",
     category: "basic-accounting",
     duration: "2 Months",
@@ -184,7 +184,7 @@ export const courses: Course[] = [
     careers: ["Billing Executive", "Accounts Assistant", "Store Accountant"],
   },
   {
-    slug: "computerised-accounting-diploma",
+    slug: "computerised-accounting-course-in-jalandhar",
     title: "Diploma in Computerised Accounting",
     category: "basic-accounting",
     duration: "6 Months",
@@ -205,7 +205,7 @@ export const courses: Course[] = [
     careers: ["Accountant", "Tax Assistant", "Accounts Executive", "Audit Assistant"],
   },
   {
-    slug: "gst-taxation",
+    slug: "gst-taxation-training-in-jalandhar",
     title: "GST & Taxation",
     category: "basic-accounting",
     duration: "2 Months",
@@ -269,7 +269,7 @@ export const courses: Course[] = [
 
   // Civil / Mechanical
   {
-    slug: "autocad",
+    slug: "autocad-training-in-jalandhar",
     title: "AutoCAD",
     category: "civil-mechanical",
     duration: "2 Months",
@@ -290,7 +290,7 @@ export const courses: Course[] = [
     careers: ["CAD Draughtsman", "Design Assistant", "Site Draughtsman"],
   },
   {
-    slug: "solidworks",
+    slug: "solidworks-training-in-jalandhar",
     title: "SolidWorks",
     category: "civil-mechanical",
     duration: "2 Months",
@@ -311,7 +311,7 @@ export const courses: Course[] = [
     careers: ["Mechanical Design Engineer", "CAD Engineer", "Product Designer"],
   },
   {
-    slug: "catia",
+    slug: "catia-training-in-jalandhar",
     title: "CATIA",
     category: "civil-mechanical",
     duration: "2 Months",
@@ -331,7 +331,7 @@ export const courses: Course[] = [
     careers: ["Design Engineer", "CAD Engineer", "Automotive Designer"],
   },
   {
-    slug: "revit-architecture",
+    slug: "revit-architecture-training-in-jalandhar",
     title: "Revit Architecture",
     category: "civil-mechanical",
     duration: "2 Months",
@@ -352,7 +352,7 @@ export const courses: Course[] = [
     careers: ["BIM Modeller", "Architectural Draughtsman", "Civil CAD Designer"],
   },
   {
-    slug: "3ds-max",
+    slug: "3ds-max-training-in-jalandhar",
     title: "3ds Max (Interior & Exterior)",
     category: "civil-mechanical",
     duration: "3 Months",
@@ -373,7 +373,7 @@ export const courses: Course[] = [
     careers: ["3D Visualiser", "Interior Designer", "Architectural Renderer"],
   },
   {
-    slug: "cnc-programming-cam",
+    slug: "cnc-programming-cam-training-in-jalandhar",
     title: "CNC Programming & CAM",
     category: "civil-mechanical",
     duration: "2 Months",
@@ -396,7 +396,7 @@ export const courses: Course[] = [
 
   // Digital Marketing
   {
-    slug: "digital-marketing",
+    slug: "digital-marketing-training-in-jalandhar",
     title: "Digital Marketing",
     category: "digital-marketing",
     duration: "4 Months",
@@ -419,7 +419,7 @@ export const courses: Course[] = [
     careers: ["Digital Marketing Executive", "SEO Executive", "Social Media Manager", "PPC Specialist", "Freelancer"],
   },
   {
-    slug: "seo",
+    slug: "seo-training-in-jalandhar",
     title: "Search Engine Optimisation (SEO)",
     category: "digital-marketing",
     duration: "2 Months",
@@ -440,7 +440,7 @@ export const courses: Course[] = [
     careers: ["SEO Executive", "SEO Analyst", "Content Strategist"],
   },
   {
-    slug: "social-media-marketing",
+    slug: "social-media-marketing-training-in-jalandhar",
     title: "Social Media Marketing",
     category: "digital-marketing",
     duration: "2 Months",
@@ -461,7 +461,7 @@ export const courses: Course[] = [
     careers: ["Social Media Executive", "Content Creator", "Community Manager"],
   },
   {
-    slug: "google-ads-ppc",
+    slug: "google-ads-ppc-training-in-jalandhar",
     title: "Google Ads & PPC",
     category: "digital-marketing",
     duration: "1.5 Months",
@@ -483,7 +483,7 @@ export const courses: Course[] = [
 
   // Graphic Design
   {
-    slug: "graphic-design",
+    slug: "graphic-design-course-in-jalandhar",
     title: "Graphic Design",
     category: "graphic-design",
     duration: "4 Months",
@@ -506,7 +506,7 @@ export const courses: Course[] = [
     careers: ["Graphic Designer", "Brand Designer", "DTP Operator", "Freelance Designer"],
   },
   {
-    slug: "adobe-photoshop",
+    slug: "adobe-photoshop-training-in-jalandhar",
     title: "Adobe Photoshop",
     category: "graphic-design",
     duration: "1.5 Months",
@@ -526,7 +526,7 @@ export const courses: Course[] = [
     careers: ["Photo Editor", "Graphic Designer", "Studio Designer"],
   },
   {
-    slug: "coreldraw",
+    slug: "coreldraw-training-in-jalandhar",
     title: "CorelDRAW",
     category: "graphic-design",
     duration: "1.5 Months",
@@ -547,7 +547,7 @@ export const courses: Course[] = [
     careers: ["DTP Operator", "Print Designer", "Flex Designer"],
   },
   {
-    slug: "adobe-illustrator",
+    slug: "adobe-illustrator-training-in-jalandhar",
     title: "Adobe Illustrator",
     category: "graphic-design",
     duration: "1.5 Months",
@@ -573,16 +573,23 @@ export const getCategory = (id: CategoryId) => categories.find((c) => c.id === i
 export const getCourse = (slug: string) => courses.find((c) => c.slug === slug);
 export const coursesIn = (id: CategoryId) => courses.filter((c) => c.category === id);
 
+// Category landing pages (app/internship-training/[slug]/page.tsx's CategoryLanding branch) use this
+// same "-courses-in-jalandhar" SEO slug style as every individual course, instead of the bare category
+// id — bare ids like "graphic-design"/"digital-marketing" used to collide with those categories'
+// pre-rename course slugs (redirects from the old course URL would hijack the category page too).
+export const categorySlug = (id: CategoryId) => `${id}-courses-in-jalandhar`;
+export const getCategoryBySlug = (slug: string) => categories.find((c) => categorySlug(c.id) === slug);
+
 // Flagship course per category, shown in the "Featured Courses" section.
 export const featuredSlugs = [
-  "basic-computer-course",
-  "ms-office-advanced-excel",
-  "tally-prime-gst",
+  "basic-computer-course-in-jalandhar",
+  "advanced-excel-training-in-jalandhar",
+  "tally-prime-training-in-jalandhar",
   "punjabi-typing",
-  "autocad",
-  "3ds-max",
-  "graphic-design",
-  "digital-marketing",
+  "autocad-training-in-jalandhar",
+  "3ds-max-training-in-jalandhar",
+  "graphic-design-course-in-jalandhar",
+  "digital-marketing-training-in-jalandhar",
 ];
 
 // Months as a number ("1.5 Months" → 1.5), for grouping courses by length.

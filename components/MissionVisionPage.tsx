@@ -1,9 +1,7 @@
-import SpotlightCard from "./SpotlightCard";
 import { CtaStrip, LeadCta } from "./Sections";
-import { MotionCounter, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "./motion/Reveal";
+import { MotionCounter, Reveal, RevealHeading, ScaleIn } from "./motion/Reveal";
+import MissionFramework from "./MissionFramework";
 import {
-  missionPillars,
-  missionPillarsHeader,
   missionVisionHero,
   ourFuture,
   visionFootnote,
@@ -29,7 +27,7 @@ export default function MissionVisionPage() {
     <>
       <MissionVisionHero />
       <div className="mv-hero-divider" aria-hidden="true" />
-      <MissionPillars />
+      <MissionFramework />
       <VisionRadial />
       <OurFuture />
       <LeadCta />
@@ -82,36 +80,8 @@ function MissionVisionHero() {
   );
 }
 
-function MissionPillars() {
-  return (
-    <section className="section theme-dark mv-pillars">
-      <div className="mv-pillars-grid-bg" aria-hidden="true" />
-      <span className="mv-pillars-glow" aria-hidden="true" />
-      <div className="container">
-        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">{missionPillarsHeader.badge}</span>
-          <h2>{missionPillarsHeader.heading}</h2>
-          <p className="mv-pillars-subheading">{missionPillarsHeader.text}</p>
-        </div>
-
-        <Stagger className="mv-pillars-grid">
-          {missionPillars.map((p) => (
-            <StaggerItem key={p.title}>
-              <SpotlightCard className="mv-pillar-card">
-                <span className="mv-pillar-icon">
-                  <MvIcon icon={p.icon} />
-                </span>
-                <h3>{p.title}</h3>
-                <p>{p.text}</p>
-                <span className="mv-pillar-accent" aria-hidden="true" />
-              </SpotlightCard>
-            </StaggerItem>
-          ))}
-        </Stagger>
-      </div>
-    </section>
-  );
-}
+// "Our Mission" — redesigned in its own file, components/MissionFramework.tsx, as a statement panel
+// + staggered pillar cards (needs client-side hover state for the per-card spotlight).
 
 function VisionRadial() {
   return (

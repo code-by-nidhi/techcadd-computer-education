@@ -3,7 +3,7 @@ import { site } from "../site";
 import type { CourseDetail } from "./types";
 
 const basicComputer: CourseDetail = {
-  slug: "basic-computer-course",
+  slug: "basic-computer-course-in-jalandhar",
   seo: {
     title: `Basic Computer Course in ${site.city} | 2-Month Beginner Program`,
     description: `Learn computers from zero at ${site.name} ${site.city}: Windows, internet, email, MS Word, Excel, PowerPoint and English/Punjabi typing, with a certificate and placement support.`,

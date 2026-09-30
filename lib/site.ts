@@ -24,7 +24,9 @@ export const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about", aboutMega: true },
   { label: "Courses", href: "/courses", dropdown: true },
-  { label: "Certificate Programs", href: "/certificate-programs" },
+  // Its own independent mega-menu, visually distinct from Courses above (a 2x2 category-card grid,
+  // not the text-column layout) — see components/CertificateProgramsMenu.tsx.
+  { label: "Certificate Programs", href: "/certificate-programs", cardMenu: true },
   { label: "After 12th", href: "/after-12th" },
   { label: "FAQs", href: "/faq" },
   { label: "Contact", href: "/contact" },

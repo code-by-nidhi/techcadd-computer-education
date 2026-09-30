@@ -4,6 +4,8 @@ import { aboutData, getAboutEntry } from "@/lib/aboutData";
 import { AboutGallery, AboutHero, AboutSections, AboutStats } from "@/components/AboutBlocks";
 import { CtaBanner, CtaStrip, LeadCta } from "@/components/Sections";
 import TeamIntro from "@/components/TeamIntro";
+import AccreditationHub from "@/components/AccreditationHub";
+import AccreditationHero from "@/components/AccreditationHero";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -35,7 +37,13 @@ export default async function AboutSlugPage({ params }: Props) {
   // and is treated as one exempt unit, same as everywhere else this pair is used — see the note
   // below), so everything after them shifts by 2 slots instead of TeamIntro's 1.
   const hasTeamIntro = slug === "our-team";
-  const aboutSectionsOffset = hasTeamIntro ? 2 : 0;
+  // /about/accreditations-awards gets AccreditationHub (always dark) right after the hero — it
+  // replaces what used to be the first entry in this page's own `sections` array (see
+  // lib/aboutData.ts's `accreditationWhyMatters`), sitting in that exact same alternation slot, so
+  // the remaining 2 generic sections after it need their own startIndex shifted by exactly 1 to
+  // keep reading the same light/dark sequence they always have.
+  const hasAccreditationHub = slug === "accreditations-awards";
+  const aboutSectionsOffset = hasTeamIntro ? 2 : hasAccreditationHub ? 1 : 0;
 
   // Strict light/dark alternation continuing on from AboutSections (which always starts light,
   // right after the fixed-dark AboutHero, or 2 slots later on our-team): each block below only
@@ -54,10 +62,17 @@ export default async function AboutSlugPage({ params }: Props) {
 
   return (
     <>
-      <AboutHero
-        data={entry}
-        crumbs={[{ label: "Home", href: "/" }, { label: "About", href: "/about" }, { label: entry.title }]}
-      />
+      {hasAccreditationHub ? (
+        <AccreditationHero
+          crumbs={[{ label: "Home", href: "/" }, { label: "About", href: "/about" }, { label: entry.title }]}
+        />
+      ) : (
+        <AboutHero
+          data={entry}
+          crumbs={[{ label: "Home", href: "/" }, { label: "About", href: "/about" }, { label: entry.title }]}
+        />
+      )}
+      {hasAccreditationHub && <AccreditationHub />}
       {hasTeamIntro && (
         <>
           <TeamIntro />

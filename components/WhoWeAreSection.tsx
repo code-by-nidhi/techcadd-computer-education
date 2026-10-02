@@ -1,15 +1,31 @@
 "use client";
 
-import { useState } from "react";
-import type { ComponentType } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Briefcase, Cpu, FolderKanban, GraduationCap, Rocket, Sparkles } from "lucide-react";
+import { GraduationCap, Handshake, Laptop } from "lucide-react";
 import { getCourse } from "@/lib/courses";
 import { site } from "@/lib/site";
 import { whoWeAre } from "@/lib/storyData";
-import { EASE, MotionCounter, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "./motion/Reveal";
+import { MotionCounter, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "./motion/Reveal";
 import MouseSpotlight from "./motion/MouseSpotlight";
+
+// Real, floating trust badges over the photo composition (same figures as IMPACT_STATS below).
+const BADGES = [
+  { label: `Since ${site.since}`, pos: "wwa-badge-0" },
+  { label: "25,000+ Students Trained", pos: "wwa-badge-1" },
+  { label: "500+ Hiring Partners", pos: "wwa-badge-2" },
+  { label: "4.9★ Google Rating", pos: "wwa-badge-3" },
+];
+
+// No real classroom/founder/student photography exists anywhere in this repo (confirmed — only 8
+// small software-topic thumbnails in public/courses, nothing matching these three shots) — per the
+// user's explicit choice, these render as styled placeholder panels instead of fake/mismatched
+// photos. Swap each `<div className="wwa-photo-fill">` below for a real `<Image src="..." fill ... />`
+// the moment real photography is available; the masonry layout and badges don't need to change.
+const PHOTO_SLOTS = [
+  { icon: GraduationCap, label: "Classroom", className: "wwa-photo-main" },
+  { icon: Handshake, label: "Founder & Mentors", className: "wwa-photo-sub" },
+  { icon: Laptop, label: "Live Projects", className: "wwa-photo-sub" },
+];
 
 // Real, already-established figures used identically elsewhere this session (see
 // components/AccreditationHero.tsx / lib/teamIntroData.ts) — "Cities Served" is an accurate
@@ -20,20 +36,6 @@ const IMPACT_STATS = [
   { value: "500+", label: "Hiring Partners" },
   { value: "7", label: "Cities Served" },
   { value: "4.9★", label: "Google Rating" },
-];
-
-// The six real pillars of what techcadd actually runs — technology training, hands-on projects,
-// employer/industry ties and the careers those lead to — framed as an ecosystem instead of the old
-// three broken /about-menu/*.jpg placeholder photos (that folder doesn't exist anywhere in this
-// repo). Same hub-and-spoke technique used for components/AwardsRecognitionSection.tsx and
-// components/AccreditationHub.tsx, restyled for this section's dark palette.
-const ECOSYSTEM_NODES: { label: string; icon: ComponentType<{ className?: string; strokeWidth?: number }>; pos: string }[] = [
-  { label: "Technology", icon: Cpu, pos: "wwa-node-0" },
-  { label: "Training", icon: GraduationCap, pos: "wwa-node-1" },
-  { label: "Projects", icon: FolderKanban, pos: "wwa-node-2" },
-  { label: "Industry", icon: Briefcase, pos: "wwa-node-3" },
-  { label: "Careers", icon: Rocket, pos: "wwa-node-4" },
-  { label: "Innovation", icon: Sparkles, pos: "wwa-node-5" },
 ];
 
 // techcadd's real, industry-standard-tools phrasing already highlights itself — bold the same
@@ -51,13 +53,9 @@ function highlight(text: string, phrase: string) {
 }
 
 // 2. Who We Are — brand-story panel (headline, founder line, real paragraphs with inline-highlighted
-// phrases, real course chip cloud) paired with an interactive "techcadd ecosystem" hub instead of the
-// old two-column photo collage, over a floating "Since {site.since}" trust badge and a real impact-
-// stats row with animated counters.
+// phrases, real course chip cloud) paired with a masonry photo composition and floating real-stat
+// badges, over a real impact-stats row with animated counters.
 export default function WhoWeAreSection() {
-  const [hovered, setHovered] = useState<number | null>(null);
-  const [hubHover, setHubHover] = useState(false);
-
   return (
     <section className="section theme-dark wwa">
       <div className="wwa-grid-bg" aria-hidden="true" />
@@ -125,52 +123,36 @@ export default function WhoWeAreSection() {
         </div>
 
         <Reveal delay={0.3} y={30} className="wwa-showcase">
-          <div className="wwa-showcase-panel">
-            <span className="wwa-since-badge">
-              <span className="wwa-since-pulse" aria-hidden="true" />
-              Since {site.since}
-            </span>
-
-            <svg className="wwa-showcase-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              <line x1="50" y1="50" x2="50" y2="5" />
-              <line x1="50" y1="50" x2="90" y2="30" />
-              <line x1="50" y1="50" x2="90" y2="70" />
-              <line x1="50" y1="50" x2="50" y2="95" />
-              <line x1="50" y1="50" x2="10" y2="70" />
-              <line x1="50" y1="50" x2="10" y2="30" />
-            </svg>
-
-            <motion.div
-              className="wwa-hub"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: EASE }}
-              onMouseEnter={() => setHubHover(true)}
-              onMouseLeave={() => setHubHover(false)}
-            >
-              <span className={`wwa-hub-ring wwa-hub-ring-1 ${hubHover ? "wwa-hub-fast" : ""}`} aria-hidden="true" />
-              <span className={`wwa-hub-ring wwa-hub-ring-2 ${hubHover ? "wwa-hub-fast" : ""}`} aria-hidden="true" />
-              <div className="wwa-hub-core">
-                <strong>techcadd</strong>
-                <span>Ecosystem</span>
+          <div className="wwa-gallery">
+            <div className={`wwa-photo ${PHOTO_SLOTS[0].className}`}>
+              <div className="wwa-photo-fill">
+                <GraduationCap strokeWidth={1.5} />
+                <span>{PHOTO_SLOTS[0].label}</span>
               </div>
-            </motion.div>
-
-            {ECOSYSTEM_NODES.map((n, i) => {
-              const Icon = n.icon;
-              return (
-                <div
-                  key={n.label}
-                  className={`wwa-node ${n.pos} ${hovered === i ? "wwa-node-active" : ""}`}
-                  onMouseEnter={() => setHovered(i)}
-                  onMouseLeave={() => setHovered(null)}
-                >
-                  <Icon className="wwa-node-icon" strokeWidth={1.75} />
-                  <span>{n.label}</span>
+            </div>
+            <div className="wwa-gallery-row">
+              <div className={`wwa-photo ${PHOTO_SLOTS[1].className}`}>
+                <div className="wwa-photo-fill">
+                  <Handshake strokeWidth={1.5} />
+                  <span>{PHOTO_SLOTS[1].label}</span>
                 </div>
-              );
-            })}
+              </div>
+              <div className={`wwa-photo ${PHOTO_SLOTS[2].className}`}>
+                <div className="wwa-photo-fill">
+                  <Laptop strokeWidth={1.5} />
+                  <span>{PHOTO_SLOTS[2].label}</span>
+                </div>
+              </div>
+            </div>
+
+            <Stagger className="wwa-badge-layer" stagger={0.1}>
+              {BADGES.map((b) => (
+                <StaggerItem key={b.label} className={`wwa-badge ${b.pos}`} y={14} scale={0.9}>
+                  <span className="wwa-badge-dot" aria-hidden="true" />
+                  {b.label}
+                </StaggerItem>
+              ))}
+            </Stagger>
           </div>
         </Reveal>
       </div>

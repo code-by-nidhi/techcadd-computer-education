@@ -4245,8 +4245,24 @@ html:has(.demo-modal[open]) { overflow: hidden; }
    the deep-navy treatment lives on .eco-panel instead, as a dark canvas embedded in the light
    section, same resolution used for components/OurApproachSection.tsx. */
 .eco-container { display: flex; flex-direction: column; gap: 3.5rem; }
-.eco-heading { max-width: 760px; }
-.eco-heading p { margin: 0 0 0.6rem; }
+.eco-grid { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 48px; align-items: center; }
+.eco-content p { margin: 0 0 0.6rem; }
+.eco-content h2 { max-width: 20ch; }
+
+.eco-benefits { margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+.eco-benefits h3, .eco-learning h3 { margin: 0 0 0.7rem; font-size: 0.98rem; color: var(--navy); }
+.eco-benefits ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+.eco-benefits li { position: relative; padding-left: 1.5rem; font-size: 0.9rem; color: var(--muted); }
+.eco-benefits li::before { content: "✓"; position: absolute; left: 0; color: var(--brand); font-weight: 700; }
+
+.eco-learning { margin-top: 1.4rem; }
+.eco-learning-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.eco-learning-chip {
+  padding: 6px 13px; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+  background: var(--bg-alt); border: 1px solid var(--line); color: var(--navy);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.eco-learning-chip:hover { border-color: rgba(var(--brand-rgb), 0.4); transform: translateY(-2px); }
 
 .eco-panel {
   position: relative; overflow: hidden; border-radius: 32px; background: #050b1d;
@@ -4266,39 +4282,51 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 .eco-particle { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #00d4ff; opacity: 0.5; filter: blur(0.5px); animation: story-hero-float 7s ease-in-out infinite; pointer-events: none; transition: transform 0.2s ease-out; }
 .eco-spotlight { position: absolute; inset: 0; pointer-events: none; opacity: 0.7; background: radial-gradient(circle 420px at var(--mx, 50%) var(--my, 50%), rgba(0, 212, 255, 0.1), transparent 70%); }
 
-.eco-diagram { position: relative; z-index: 1; width: 100%; max-width: 620px; aspect-ratio: 1 / 1; margin: 0 auto; transition: transform 0.2s ease-out; }
+.eco-diagram { position: relative; z-index: 1; width: 100%; max-width: 660px; aspect-ratio: 1 / 1; margin: 0 auto; transition: transform 0.2s ease-out; }
 .eco-links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.eco-spoke { animation: oa-path-pulse 3s ease-in-out infinite; transition: stroke-width 0.3s ease, opacity 0.3s ease; }
-.eco-link { transition: stroke-width 0.3s ease, opacity 0.3s ease; }
+.eco-spoke { animation: oa-path-pulse 3s ease-in-out infinite; transition: stroke-width 0.3s ease, opacity 0.3s ease; filter: drop-shadow(0 0 6px rgba(0, 212, 255, 0.5)); }
 
-.eco-hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; }
+.eco-hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; width: 212px; height: 212px; display: flex; align-items: center; justify-content: center; }
 .eco-hub-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px dashed rgba(255, 210, 0, 0.4); animation: awd-ring-spin 14s linear infinite; }
-.eco-hub-ring-2 { inset: -22px; border-color: rgba(0, 212, 255, 0.3); animation-duration: 22s; animation-direction: reverse; }
+.eco-hub-ring-2 { inset: -24px; border-color: rgba(0, 212, 255, 0.3); animation-duration: 22s; animation-direction: reverse; }
 .eco-hub-fast { animation-duration: 4s !important; }
-.eco-hub-glow { position: absolute; inset: -30px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 210, 0, 0.35), transparent 70%); filter: blur(20px); pointer-events: none; }
+.eco-hub-glow { position: absolute; inset: -36px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 210, 0, 0.4), transparent 70%); filter: blur(26px); pointer-events: none; }
 .eco-hub-core {
-  position: relative; z-index: 1; width: 150px; height: 150px; border-radius: 50%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center; padding: 0 14px;
-  background: linear-gradient(135deg, #ffd200, #ffb700); box-shadow: 0 30px 60px -20px rgba(255, 210, 0, 0.55);
+  position: relative; z-index: 1; width: 176px; height: 176px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-align: center; padding: 0 16px;
+  background: linear-gradient(135deg, #ffd400, #ffb800); box-shadow: 0 34px 70px -20px rgba(255, 210, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.4);
+  animation: eco-hub-breathe 4.5s ease-in-out infinite;
 }
-.eco-hub-core strong { font-size: 1.05rem; font-weight: 800; letter-spacing: 0.02em; color: #0f2e6d; }
-.eco-hub-core span { font-size: 0.62rem; font-weight: 700; color: rgba(15, 46, 109, 0.75); line-height: 1.3; }
+.eco-hub-core strong { font-size: 1.2rem; font-weight: 800; letter-spacing: 0.02em; color: #0f2e6d; }
+.eco-hub-core span { font-size: 0.68rem; font-weight: 700; color: rgba(15, 46, 109, 0.75); line-height: 1.3; }
+@keyframes eco-hub-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
+
+.eco-hub-orbit { position: absolute; inset: -50px; border-radius: 50%; animation: awd-ring-spin 9s linear infinite; pointer-events: none; }
+.eco-hub-orbit-rev { inset: -70px; animation-duration: 13s; animation-direction: reverse; }
+.eco-hub-orbit-dot { position: absolute; top: 0; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #00d4ff; box-shadow: 0 0 10px 2px rgba(0, 212, 255, 0.7); }
+.eco-hub-orbit-rev .eco-hub-orbit-dot { background: #ffd400; box-shadow: 0 0 10px 2px rgba(255, 212, 0, 0.6); }
 
 .eco-node {
-  position: absolute; transform: translate(-50%, -50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
-  padding: 12px 14px; width: 108px; text-align: center; border-radius: 20px; cursor: default;
-  background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 212, 255, 0.28); box-shadow: 0 16px 34px -20px rgba(0, 0, 0, 0.55);
+  position: absolute; transform: translate(-50%, -50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 7px;
+  padding: 16px 16px; width: 118px; text-align: center; border-radius: 24px; cursor: default;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(0, 212, 255, 0.3); box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
   font-size: 0.72rem; font-weight: 700; color: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.eco-node-icon-badge {
+  display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 12px;
+  background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.28), rgba(0, 212, 255, 0.08));
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 .eco-node-icon { width: 20px; height: 20px; color: #00d4ff; transition: transform 0.3s ease, color 0.3s ease; }
 .eco-node:hover, .eco-node-active {
   transform: translate(-50%, -50%) translateY(-6px) scale(1.08);
-  background: rgba(255, 255, 255, 0.12); border-color: rgba(0, 212, 255, 0.65);
-  box-shadow: 0 24px 48px -20px rgba(0, 212, 255, 0.45);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05)); border-color: rgba(0, 212, 255, 0.65);
+  box-shadow: 0 26px 52px -20px rgba(0, 212, 255, 0.5);
 }
-.eco-node:hover .eco-node-icon, .eco-node-active .eco-node-icon { color: #ffd200; transform: scale(1.15) rotate(-6deg); }
+.eco-node:hover .eco-node-icon-badge, .eco-node-active .eco-node-icon-badge { transform: scale(1.1) rotate(-6deg); background: radial-gradient(circle at 30% 30%, rgba(255, 210, 0, 0.35), rgba(255, 210, 0, 0.1)); }
+.eco-node:hover .eco-node-icon, .eco-node-active .eco-node-icon { color: #ffd200; }
 
 .eco-metric {
   position: absolute; z-index: 3; display: flex; flex-direction: column; gap: 2px; padding: 10px 16px; border-radius: 16px;
@@ -4314,6 +4342,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 .eco-metric-3 { bottom: 6%; right: 3%; }
 
 @media (max-width: 960px) {
+  .eco-grid { grid-template-columns: 1fr; }
   .eco-panel { min-height: 0; padding: 40px 24px; }
   .eco-diagram { max-width: 460px; }
   .eco-hub { width: 140px; height: 140px; }
@@ -4342,7 +4371,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   .eco-metric-3 { bottom: 2%; right: 1%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .eco-glow, .eco-particle, .eco-hub-ring, .eco-spoke, .eco-node, .eco-metric { animation: none; transition: none; }
+  .eco-glow, .eco-particle, .eco-hub-ring, .eco-hub-core, .eco-hub-orbit, .eco-spoke, .eco-node, .eco-metric { animation: none; transition: none; }
   .eco-grid-bg, .eco-glow, .eco-particle, .eco-diagram { transform: none !important; }
 }
 
@@ -4574,4 +4603,85 @@ html:has(.demo-modal[open]) { overflow: hidden; }
   .bp-tracks-grid, .bp-related, .bp-modes-grid { grid-template-columns: 1fr; }
   .bp-fit-actions, .bp-fit-call, .bp-fit-demo { width: 100%; }
   .bp-fit-call { justify-content: space-between; }
+}
+
+/* "Our Ecosystem" Bento grid — components/EcosystemDiagramSection.tsx. Replaces the earlier
+   hub-and-spoke/orbit diagram entirely per an explicit "no circular/orbit/diagram" direction; the old
+   .eco-hub/.eco-node/.eco-diagram/.eco-spoke/.eco-metric rules above are now unused (left in place,
+   same pattern as every other superseded block this session) — this section only uses the .eco-bento-*
+   classes below plus the shared .eco-container/.story-ecosystem-orb-* rules already in place. */
+.eco-bento { display: grid; grid-template-columns: 0.9fr 1.3fr; gap: 24px; align-items: stretch; }
+
+.eco-bento-hero {
+  position: relative; overflow: hidden; border-radius: 32px; background: linear-gradient(165deg, #081b3a, #050b1d);
+  padding: 44px 36px; box-shadow: 0 50px 110px -40px rgba(0, 8, 30, 0.55); border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex; flex-direction: column; justify-content: center; min-height: 480px;
+}
+.eco-bento-grid-bg {
+  position: absolute; inset: -20px; opacity: 0.3; pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 85% 70% at 50% 40%, #000 40%, transparent 90%);
+}
+/* A non-scaling breathing glow (the shared story-hero-pulse keyframe scales 1 -> 1.12, which this
+   section's "no scaling animation" direction rules out) and slow, low-opacity particle drift —
+   deliberately calmer than the shared story-hero-float keyframe (16px/7s) per the "extremely slowly,
+   opacity 10-20%" brief. transform still carries the <=10px mouse-parallax offset set in JS. */
+.eco-bento-glow { position: absolute; top: -100px; right: -80px; width: 420px; height: 420px; border-radius: 50%; background: rgba(255, 210, 0, 0.18); filter: blur(120px); animation: eco-bento-breathe 5s ease-in-out infinite; pointer-events: none; transition: transform 0.6s ease-out; }
+@keyframes eco-bento-breathe { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+.eco-bento-particle { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #00d4ff; opacity: 0.16; filter: blur(0.5px); animation: eco-bento-drift 16s ease-in-out infinite; pointer-events: none; }
+@keyframes eco-bento-drift { 0%, 100% { transform: translateY(0); opacity: 0.1; } 50% { transform: translateY(-10px); opacity: 0.2; } }
+
+.eco-bento-hero-content { position: relative; z-index: 1; }
+.eco-bento-hero-content > strong { display: block; font-size: 1.7rem; font-weight: 800; letter-spacing: 0.02em; color: #fff; }
+.eco-bento-hero-content > span { display: block; margin: 4px 0 28px; font-size: 0.9rem; font-weight: 600; color: #00d4ff; }
+
+.eco-bento-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.eco-bento-stat {
+  padding: 16px 18px; border-radius: 18px; background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.14); transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.eco-bento-stat:hover { transform: translateY(-3px); border-color: rgba(255, 210, 0, 0.4); }
+.eco-bento-stat strong { display: block; font-size: 1.3rem; font-weight: 800; color: #ffd400; }
+.eco-bento-stat span { font-size: 0.72rem; font-weight: 600; color: rgba(255, 255, 255, 0.65); }
+
+.eco-bento-right { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.eco-bento-innovation { grid-column: 1 / -1; }
+/* A calm spring-ish hover (0.25s, slight overshoot curve, capped at a 6px lift — no card scale, no
+   icon rotation): approximates Framer Motion's spring feel in plain CSS without restructuring the
+   shared StaggerItem primitive other components rely on. */
+.eco-bento-card-inner {
+  position: relative; overflow: hidden; padding: 28px; border-radius: 24px; height: 100%;
+  background: linear-gradient(160deg, rgba(10, 50, 184, 0.06), rgba(10, 50, 184, 0.015));
+  border: 1px solid var(--line); box-shadow: 0 20px 44px -30px rgba(10, 50, 184, 0.3);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+.eco-bento-card-inner:hover { transform: translateY(-6px); border-color: rgba(var(--brand-rgb), 0.4); box-shadow: 0 32px 60px -28px rgba(0, 212, 255, 0.3); filter: brightness(1.05); }
+.eco-bento-card-spotlight {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  background: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), rgba(0, 212, 255, 0.1), transparent 70%);
+}
+.eco-bento-card-inner:hover .eco-bento-card-spotlight { opacity: 1; }
+.eco-bento-icon {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 16px; margin-bottom: 16px;
+  background: var(--brand-soft); color: var(--brand); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, color 0.25s ease;
+}
+.eco-bento-icon svg { width: 24px; height: 24px; }
+.eco-bento-card-inner:hover .eco-bento-icon { transform: scale(1.05); background: linear-gradient(135deg, #00d4ff, #0a32b8); color: #fff; }
+.eco-bento-card-inner h3 { position: relative; margin: 0 0 8px; font-size: 1.08rem; color: var(--navy); }
+.eco-bento-card-inner p { position: relative; margin: 0; font-size: 0.88rem; line-height: 1.55; color: var(--muted); }
+
+@media (max-width: 960px) {
+  .eco-bento { grid-template-columns: 1fr; }
+  .eco-bento-hero { min-height: 0; }
+}
+@media (max-width: 640px) {
+  .eco-bento-right { grid-template-columns: 1fr; }
+  .eco-bento-innovation { grid-column: auto; }
+  .eco-bento-stats { grid-template-columns: 1fr 1fr; }
+  .eco-bento-hero { padding: 32px 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eco-bento-glow, .eco-bento-particle, .eco-bento-card-inner, .eco-bento-icon, .eco-bento-stat, .eco-bento-card-spotlight { animation: none; transition: none; }
+  .eco-bento-glow, .eco-bento-grid-bg { transform: none !important; }
 }

@@ -149,7 +149,7 @@ function TechDomains() {
                 <p className="story-ecosystem2-desc">{cat.blurb}</p>
                 <div className="story-ecosystem2-pills">
                   {shown.map((c) => (
-                    <Link key={c.slug} href={`/internship-training/${c.slug}`} className="story-ecosystem2-pill">
+                    <Link key={c.slug} href={`/courses/${c.slug}`} className="story-ecosystem2-pill">
                       {c.title}
                     </Link>
                   ))}
@@ -161,7 +161,7 @@ function TechDomains() {
                     </summary>
                     <div className="story-ecosystem2-pills story-ecosystem2-pills-extra">
                       {rest.map((c) => (
-                        <Link key={c.slug} href={`/internship-training/${c.slug}`} className="story-ecosystem2-pill">
+                        <Link key={c.slug} href={`/courses/${c.slug}`} className="story-ecosystem2-pill">
                           {c.title}
                         </Link>
                       ))}

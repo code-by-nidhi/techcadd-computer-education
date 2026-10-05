@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title,
       description,
-      alternates: { canonical: `/internship-training/${slug}` },
-      openGraph: { title, description, url: `/internship-training/${slug}`, type: "website" },
+      alternates: { canonical: `/courses/${slug}` },
+      openGraph: { title, description, url: `/courses/${slug}`, type: "website" },
     };
   }
   const cat = getCategoryBySlug(slug);
@@ -37,22 +37,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: program.seo.title,
       description: program.seo.description,
-      alternates: { canonical: `/internship-training/${slug}` },
-      openGraph: { title: program.seo.title, description: program.seo.description, url: `/internship-training/${slug}`, type: "website" },
+      alternates: { canonical: `/courses/${slug}` },
+      openGraph: { title: program.seo.title, description: program.seo.description, url: `/courses/${slug}`, type: "website" },
     };
   }
   if (cat) {
     return {
       title: `${cat.name} Courses`,
       description: cat.blurb,
-      alternates: { canonical: `/internship-training/${slug}` },
-      openGraph: { title: `${cat.name} Courses`, description: cat.blurb, url: `/internship-training/${slug}`, type: "website" },
+      alternates: { canonical: `/courses/${slug}` },
+      openGraph: { title: `${cat.name} Courses`, description: cat.blurb, url: `/courses/${slug}`, type: "website" },
     };
   }
   return {};
 }
 
-export default async function InternshipTrainingPage({ params }: Props) {
+export default async function CourseDetailPage({ params }: Props) {
   const { slug } = await params;
   const course = getCourse(slug);
   if (course) {

@@ -27,7 +27,7 @@ export default function Footer() {
         <div>
           <h4>Courses</h4>
           {categories.map((c) => (
-            <Link key={c.id} href={`/internship-training/${categorySlug(c.id)}`}>
+            <Link key={c.id} href={`/courses/${categorySlug(c.id)}`}>
               {c.name}
             </Link>
           ))}

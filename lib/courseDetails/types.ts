@@ -158,7 +158,7 @@ export type CourseDetail = {
   reviews: { name: string; role: string; text: string }[]; // exactly 6
   faqs: { q: string; a: string }[]; // 6–8
   // Certificate program pages only (lib/programDetails): the category landing pages at
-  // /internship-training/<category>-courses-in-jalandhar. Adds the "choose your track" cards under
+  // /courses/<category>-courses-in-jalandhar. Adds the "choose your track" cards under
   // the hero, learning modes, the "right fit?" banner and related courses (see CoursePage.tsx).
   program?: ProgramExtras;
 };

@@ -28,8 +28,8 @@ const ORIGINAL_TO_FINAL = {
   "adobe-illustrator": "adobe-illustrator-training-in-jalandhar",
 };
 
-// /internship-training/[slug] briefly used an intermediate slug scheme for these 5 courses (before
-// this final rename) — those URLs were live for part of this session and need their own redirect too.
+// /internship-training/[slug] (the route before /courses/[slug]) briefly used an intermediate slug scheme for these 5 courses (before
+// this final rename) — those URLs were live for a while and need their own redirect too.
 const INTERMEDIATE_TO_FINAL = {
   "dca-course": "dca-course-in-jalandhar",
   "adca-course": "adca-course-in-jalandhar",
@@ -53,37 +53,26 @@ const CATEGORY_TO_SLUG = {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
+    // Every slug a course or category page has ever been served under, mapped to its current slug.
+    const OLD_TO_CURRENT = Object.entries({ ...ORIGINAL_TO_FINAL, ...INTERMEDIATE_TO_FINAL, ...CATEGORY_TO_SLUG }).filter(
+      ([original, current]) => original !== current,
+    );
+
     return [
       // Founder content moved into the /about/[slug] system (lib/aboutData.ts); this keeps the old URL working.
       { source: "/founder", destination: "/about/founder", permanent: true },
 
-      // Course detail pages originally lived at /courses/[slug]; every one of those old URLs must land
-      // on the course's CURRENT slug directly (a wildcard rule can't do this since most slugs changed
+      // Course and category pages live at /courses/[slug]. They spent a while at
+      // /internship-training/[slug], and under older slugs on both prefixes, so every old slug must
+      // land on the CURRENT slug directly (a wildcard rule can't do this since most slugs changed
       // name, not just prefix).
-      ...Object.entries(ORIGINAL_TO_FINAL)
-        .filter(([original, current]) => original !== current)
-        .map(([original, current]) => ({
-          source: `/courses/${original}`,
-          destination: `/internship-training/${current}`,
-          permanent: true,
-        })),
+      ...OLD_TO_CURRENT.flatMap(([original, current]) => [
+        { source: `/courses/${original}`, destination: `/courses/${current}`, permanent: true },
+        { source: `/internship-training/${original}`, destination: `/courses/${current}`, permanent: true },
+      ]),
 
-      // /internship-training/[slug] itself used the original slugs, then an intermediate scheme,
-      // before landing on the current one — keep both of those working too.
-      ...Object.entries({ ...ORIGINAL_TO_FINAL, ...INTERMEDIATE_TO_FINAL })
-        .filter(([original, current]) => original !== current)
-        .map(([original, current]) => ({
-          source: `/internship-training/${original}`,
-          destination: `/internship-training/${current}`,
-          permanent: true,
-        })),
-
-      // Category landing pages' bare-id URLs → their current "-courses-in-jalandhar" slug.
-      ...Object.entries(CATEGORY_TO_SLUG).map(([original, current]) => ({
-        source: `/internship-training/${original}`,
-        destination: `/internship-training/${current}`,
-        permanent: true,
-      })),
+      // Any other /internship-training URL already uses a current slug — only the prefix changes.
+      { source: "/internship-training/:slug", destination: "/courses/:slug", permanent: true },
     ];
   },
 };

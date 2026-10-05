@@ -57,7 +57,7 @@ export default function HomeCategories() {
 
         <div className="cat-row">
           {cards.map((c) => (
-            <Link key={c.id} href={`/internship-training/${categorySlug(c.id)}`} className={`cat-card ${c.tone}`}>
+            <Link key={c.id} href={`/courses/${categorySlug(c.id)}`} className={`cat-card ${c.tone}`}>
               <div className="cat-tiles" aria-hidden="true">
                 {c.tiles.map((t, i) => (
                   <span key={i} className="cat-tile">

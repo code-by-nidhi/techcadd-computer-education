@@ -4,7 +4,7 @@ import { civilMechanicalProgram } from "./civil-mechanical";
 import { graphicDesignProgram } from "./graphic-design";
 import { digitalMarketingProgram } from "./digital-marketing";
 
-// Certificate program pages — the category landing pages at /internship-training/<categorySlug>
+// Certificate program pages — the category landing pages at /courses/<categorySlug>
 // for the four categories in the Certificate Programs menu (components/CertificateProgramsMenu.tsx).
 // Same shape as a course detail plus `program` (tracks, fit banner); rendered by CoursePage.tsx.
 const all: CourseDetail[] = [basicAccountingProgram, civilMechanicalProgram, graphicDesignProgram, digitalMarketingProgram];

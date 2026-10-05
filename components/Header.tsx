@@ -70,11 +70,11 @@ export default function Header() {
                   <div className="dropdown">
                     {categories.map((cat) => (
                       <div key={cat.id} className="dropdown-col">
-                        <Link href={`/internship-training/${categorySlug(cat.id)}`} className="dropdown-head">
+                        <Link href={`/courses/${categorySlug(cat.id)}`} className="dropdown-head">
                           {cat.icon} {cat.name}
                         </Link>
                         {coursesIn(cat.id).map((c) => (
-                          <Link key={c.slug} href={`/internship-training/${c.slug}`}>
+                          <Link key={c.slug} href={`/courses/${c.slug}`}>
                             {c.title}
                           </Link>
                         ))}

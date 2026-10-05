@@ -4429,7 +4429,7 @@ html:has(.demo-modal[open]) { overflow: hidden; }
 }
 
 /* Course detail template — components/CourseDetailTemplate.tsx, the one shared page for every real
-   course (app/internship-training/[slug]/page.tsx). Extends the site's existing .page-hero/.section
+   course (app/courses/[slug]/page.tsx). Extends the site's existing .page-hero/.section
    conventions rather than introducing a separate dark-navy visual language, so course pages stay
    consistent with the /courses, /certificate-programs and /after-12th pages that link into them. */
 .cdt-hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: center; }

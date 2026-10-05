@@ -16,7 +16,7 @@ import DemoButton from "./DemoButton";
 import WhyUs from "./WhyUs";
 import { Magnetic, MotionCounter, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "./motion/Reveal";
 
-// One shared template for every course detail page — see app/internship-training/[slug]/page.tsx.
+// One shared template for every course detail page — see app/courses/[slug]/page.tsx.
 // Built from this repo's REAL course data (lib/courses.ts) plus the same real site-wide facts used
 // elsewhere (lib/content.ts's stats/steps/included/testimonials, lib/storyData.ts's whyItMatters).
 // 12 of the 24 courses additionally get real pricing/salary/projects/testimonials sourced straight
@@ -75,7 +75,7 @@ function Hero({
           <Reveal>
             <nav className="crumbs">
               <Link href="/">Home</Link> / <Link href="/courses">Courses</Link> /{" "}
-              <Link href={`/internship-training/${cat.id}-courses-in-jalandhar`}>{cat.name}</Link> /{" "}
+              <Link href={`/courses/${cat.id}-courses-in-jalandhar`}>{cat.name}</Link> /{" "}
               <span>{course.title}</span>
             </nav>
           </Reveal>
@@ -389,7 +389,7 @@ export function FaqSection() {
   );
 }
 
-// Category landing pages (e.g. /internship-training/basic-accounting-courses-in-jalandhar) get the
+// Category landing pages (e.g. /courses/basic-accounting-courses-in-jalandhar) get the
 // same premium hero/trust-stats/why-us/FAQ treatment as an individual course page — just without the
 // course-specific sections (pricing/tools/salary/certification) that vary per course within the
 // category, since a category groups several different real courses rather than describing one.

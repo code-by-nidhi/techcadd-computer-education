@@ -1,5 +1,5 @@
 // Certificate program page for the "Digital Marketing" category, served at
-// /internship-training/digital-marketing-courses-in-jalandhar. Same shape as a course detail page
+// /courses/digital-marketing-courses-in-jalandhar. Same shape as a course detail page
 // (see ../courseDetails/types.ts) plus `program` (tracks and the "right fit?" banner). Track fees are
 // read from lib/referenceContent.ts via program.feeSource, so no fees are written here.
 import { site } from "../site";

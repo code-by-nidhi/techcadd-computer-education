@@ -59,7 +59,7 @@ export default function HomeFeatured() {
                   return (
                     <Link
                       key={course.slug}
-                      href={`/internship-training/${course.slug}`}
+                      href={`/courses/${course.slug}`}
                       className={`fc-card ${tones[course.category]}${photo ? " has-photo" : ""}`}
                     >
                       {photo ? (

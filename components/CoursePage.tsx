@@ -9,7 +9,7 @@ import { referenceContent } from "@/lib/referenceContent";
 import { site } from "@/lib/site";
 import type { AudienceIcon, CourseDetail, HubNode } from "@/lib/courseDetails/types";
 
-// Course detail page, shared by every course (app/internship-training/[slug]/page.tsx). Section order follows the
+// Course detail page, shared by every course (app/courses/[slug]/page.tsx). Section order follows the
 // course-page reference: dark hero with a "computer hub" illustration, overview, audience, bento
 // "case for it", why-now band, tabbed syllabus, tools band, certificate, careers, projects, class
 // loop, why-techcadd band, comparison table, reviews marquee and FAQ. All copy comes from the

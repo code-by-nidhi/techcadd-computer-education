@@ -573,7 +573,7 @@ export const getCategory = (id: CategoryId) => categories.find((c) => c.id === i
 export const getCourse = (slug: string) => courses.find((c) => c.slug === slug);
 export const coursesIn = (id: CategoryId) => courses.filter((c) => c.category === id);
 
-// Category landing pages (app/internship-training/[slug]/page.tsx's CategoryLanding branch) use this
+// Category landing pages (app/courses/[slug]/page.tsx's CategoryLanding branch) use this
 // same "-courses-in-jalandhar" SEO slug style as every individual course, instead of the bare category
 // id — bare ids like "graphic-design"/"digital-marketing" used to collide with those categories'
 // pre-rename course slugs (redirects from the old course URL would hijack the category page too).

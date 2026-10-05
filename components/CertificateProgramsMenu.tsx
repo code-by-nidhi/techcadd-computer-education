@@ -29,7 +29,7 @@ const CARD_ORDER: CategoryId[] = ["basic-accounting", "civil-mechanical", "graph
 // this repo doesn't teach) — deliberately built from scratch as cards instead of reusing the Courses
 // dropdown's text-column layout, so the two menus read as visually distinct at a glance. Each card
 // links to that category's real landing page at its own SEO slug (lib/courses.ts's categorySlug —
-// see app/internship-training/[slug]/page.tsx's CategoryLanding branch), not a #anchor.
+// see app/courses/[slug]/page.tsx's CategoryLanding branch), not a #anchor.
 export default function CertificateProgramsMenu() {
   const cards = CARD_ORDER.map((id) => categories.find((c) => c.id === id)!);
 
@@ -40,7 +40,7 @@ export default function CertificateProgramsMenu() {
           const Icon = CARD_ICONS[cat.id];
           const count = coursesIn(cat.id).length;
           return (
-            <Link key={cat.id} href={`/internship-training/${categorySlug(cat.id)}`} className="cpm-card">
+            <Link key={cat.id} href={`/courses/${categorySlug(cat.id)}`} className="cpm-card">
               <span className="cpm-card-icon">
                 <Icon strokeWidth={1.75} />
               </span>

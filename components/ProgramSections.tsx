@@ -154,7 +154,7 @@ export function RelatedCourses({ p }: { p: ProgramExtras }) {
         </div>
         <div className="bp-related">
           {coursesIn(p.category).map((c, i) => (
-            <Link key={c.slug} href={`/internship-training/${c.slug}`} className="bc-card bp-related-card" data-aos="fade-up" data-aos-delay={(i % 3) * 50} suppressHydrationWarning>
+            <Link key={c.slug} href={`/courses/${c.slug}`} className="bc-card bp-related-card" data-aos="fade-up" data-aos-delay={(i % 3) * 50} suppressHydrationWarning>
               <span className="bp-related-kind">
                 {termLabel(durationMonths(c))} · {c.duration}
               </span>

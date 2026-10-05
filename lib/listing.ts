@@ -49,7 +49,7 @@ function initials(title: string) {
 export function courseItem(course: Course): ListItem {
   const cat = getCategory(course.category);
   return {
-    href: `/internship-training/${course.slug}`,
+    href: `/courses/${course.slug}`,
     title: course.title,
     meta: `${course.duration} · Live projects`,
     search: [course.title, cat.name, ...course.tools].join(" ").toLowerCase(),

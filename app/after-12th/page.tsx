@@ -12,7 +12,7 @@ export default function After12thPage() {
   const groups = after12th.map((g) => ({
     id: g.stream.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
     title: g.stream,
-    items: g.courses.map((slug) => courseItem(getCourse(slug)!)),
+    items: g.courses.map((slug) => courseItem(getCourse(slug)!, "/after-12th-course")),
   }));
 
   return (

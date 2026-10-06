@@ -580,6 +580,10 @@ export const coursesIn = (id: CategoryId) => courses.filter((c) => c.category ==
 export const categorySlug = (id: CategoryId) => `${id}-courses-in-jalandhar`;
 export const getCategoryBySlug = (slug: string) => categories.find((c) => categorySlug(c.id) === slug);
 
+// The categories shown as cards in the Certificate Programs menu (components/CertificateProgramsMenu.tsx),
+// in display order. Each has a course listing page at /certificate-programs/<categorySlug>.
+export const certificateCategoryIds: CategoryId[] = ["basic-accounting", "civil-mechanical", "graphic-design", "digital-marketing"];
+
 // Flagship course per category, shown in the "Featured Courses" section.
 export const featuredSlugs = [
   "basic-computer-course-in-jalandhar",

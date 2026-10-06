@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Calculator, Megaphone, Palette, Ruler } from "lucide-react";
-import { categories, categorySlug, coursesIn, type CategoryId } from "@/lib/courses";
+import { categories, categorySlug, certificateCategoryIds, coursesIn } from "@/lib/courses";
 
 // Its own data source, independent of the Courses mega-menu (components/Header.tsx's other
 // dropdown): only the 4 categories that are genuinely certificate/diploma-style programs. Course
@@ -22,16 +22,14 @@ const CARD_COPY: Record<string, string> = {
   "digital-marketing": "SEO, social media & Google Ads",
 };
 
-const CARD_ORDER: CategoryId[] = ["basic-accounting", "civil-mechanical", "graphic-design", "digital-marketing"];
-
 // Certificate Programs' mega-menu: a 2x2 grid of category cards (Basic & Accounting, Civil /
 // Mechanical, Graphic Designing, Digital Marketing only — no Punjabi Typing, no IT/software tracks
 // this repo doesn't teach) — deliberately built from scratch as cards instead of reusing the Courses
 // dropdown's text-column layout, so the two menus read as visually distinct at a glance. Each card
-// links to that category's real landing page at its own SEO slug (lib/courses.ts's categorySlug —
-// see app/courses/[slug]/page.tsx's CategoryLanding branch), not a #anchor.
+// links to that category's course listing page (app/certificate-programs/[slug]/page.tsx), whose
+// cards then open the individual course pages.
 export default function CertificateProgramsMenu() {
-  const cards = CARD_ORDER.map((id) => categories.find((c) => c.id === id)!);
+  const cards = certificateCategoryIds.map((id) => categories.find((c) => c.id === id)!);
 
   return (
     <div className="cpm-dropdown">
@@ -40,7 +38,7 @@ export default function CertificateProgramsMenu() {
           const Icon = CARD_ICONS[cat.id];
           const count = coursesIn(cat.id).length;
           return (
-            <Link key={cat.id} href={`/courses/${categorySlug(cat.id)}`} className="cpm-card">
+            <Link key={cat.id} href={`/certificate-programs/${categorySlug(cat.id)}`} className="cpm-card">
               <span className="cpm-card-icon">
                 <Icon strokeWidth={1.75} />
               </span>

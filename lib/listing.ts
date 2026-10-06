@@ -46,10 +46,11 @@ function initials(title: string) {
     .join("");
 }
 
-export function courseItem(course: Course): ListItem {
+// base is the path the card links under: /courses by default, /after-12th-course on the After 12th page.
+export function courseItem(course: Course, base = "/courses"): ListItem {
   const cat = getCategory(course.category);
   return {
-    href: `/courses/${course.slug}`,
+    href: `${base}/${course.slug}`,
     title: course.title,
     meta: `${course.duration} · Live projects`,
     search: [course.title, cat.name, ...course.tools].join(" ").toLowerCase(),

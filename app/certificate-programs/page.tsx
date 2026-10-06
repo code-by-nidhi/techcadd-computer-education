@@ -31,7 +31,7 @@ export default function CertificateProgramsPage() {
     ...terms.map((t) => ({
       id: t.id,
       title: t.title,
-      items: courses.filter((c) => durationMonths(c) >= t.min && durationMonths(c) <= t.max).map(courseItem),
+      items: courses.filter((c) => durationMonths(c) >= t.min && durationMonths(c) <= t.max).map((c) => courseItem(c)),
     })),
     { id: "durations", title: "Training Formats", items: formats }, // footer links target #durations
   ];

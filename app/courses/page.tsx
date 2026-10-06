@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function CoursesPage() {
-  const groups = categories.map((c) => ({ id: c.id, title: c.name, items: coursesIn(c.id).map(courseItem) }));
+  const groups = categories.map((c) => ({ id: c.id, title: c.name, items: coursesIn(c.id).map((course) => courseItem(course)) }));
 
   return (
     <>

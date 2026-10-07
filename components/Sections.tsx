@@ -6,6 +6,7 @@ import DemoButton from "./DemoButton";
 import ArrowIcon from "./ArrowIcon";
 import LeadForm from "./LeadForm";
 import { Magnetic } from "./motion/Reveal";
+import HeroPattern, { type HeroPatternVariant } from "./HeroPattern";
 
 export function SectionHeading({ eyebrow, title, text }: { eyebrow?: string; title: string; text?: string }) {
   return (
@@ -18,15 +19,34 @@ export function SectionHeading({ eyebrow, title, text }: { eyebrow?: string; tit
   );
 }
 
-export function PageHero({ title, text, crumb, className }: { title: string; text?: string; crumb: string; className?: string }) {
+export function PageHero({
+  title,
+  text,
+  crumb,
+  className,
+  pattern = "dots",
+  art,
+}: {
+  title: string;
+  text?: string;
+  crumb: string;
+  className?: string;
+  pattern?: HeroPatternVariant;
+  /** Optional illustration (public/illustrations) shown to the right of the copy. */
+  art?: { src: string; alt: string };
+}) {
   return (
     <section className={`page-hero${className ? ` ${className}` : ""}`}>
-      <div className="container">
-        <nav className="crumbs">
-          <Link href="/">Home</Link> / <span>{crumb}</span>
-        </nav>
-        <h1>{title}</h1>
-        {text && <p>{text}</p>}
+      <HeroPattern variant={pattern} />
+      <div className={`container ${art ? "page-hero-split" : ""}`}>
+        <div>
+          <nav className="crumbs">
+            <Link href="/">Home</Link> / <span>{crumb}</span>
+          </nav>
+          <h1>{title}</h1>
+          {text && <p>{text}</p>}
+        </div>
+        {art && <span className="hero-art" role="img" aria-label={art.alt} style={{ backgroundImage: `url(${art.src})` }} />}
       </div>
     </section>
   );
@@ -34,10 +54,22 @@ export function PageHero({ title, text, crumb, className }: { title: string; tex
 
 // Dark hero for the course listing pages (Courses, Certificate Programs, After 12th).
 // `highlight` is shown in yellow after the title, like the poster's "Advanced IT Skills".
-export function ListingHero({ badge, title, highlight, text }: { badge: string; title: string; highlight?: string; text: string }) {
+export function ListingHero({
+  badge,
+  title,
+  highlight,
+  text,
+  pattern = "dots",
+}: {
+  badge: string;
+  title: string;
+  highlight?: string;
+  text: string;
+  pattern?: HeroPatternVariant;
+}) {
   return (
     <section className="lx-hero">
-      <div className="lx-hero-dots" aria-hidden="true" />
+      <HeroPattern variant={pattern} />
       <div className="container lx-hero-inner">
         <span className="lx-badge">{badge}</span>
         <h1>
@@ -122,8 +154,8 @@ export function LeadCta({ dark }: { dark?: boolean } = {}) {
         <span className="eyebrow">Ready to get started?</span>
         <h2>Start building your career today.</h2>
         <p>
-          Talk to a counsellor today. One conversation is usually enough to identify the right learning path,
-          career direction, and training roadmap.
+          Talk to a counsellor today. One call is usually enough to know which track fits your degree, your
+          schedule and the job you want.
         </p>
         <div className="lead-form-row">
           <LeadForm />

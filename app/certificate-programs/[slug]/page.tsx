@@ -41,6 +41,7 @@ export default async function CertificateCategoryPage({ params }: Props) {
   return (
     <>
       <ListingHero
+        pattern="diamond"
         badge="Certificate Programs"
         title={cat.name}
         highlight={`Courses in ${site.city}`}

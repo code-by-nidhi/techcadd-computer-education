@@ -5,8 +5,15 @@
 import { site } from "@/lib/site";
 
 export const heroCopy = {
-  eyebrow: "About techcadd",
-  headline: "Practical tech skills, built for the jobs employers are actually hiring for.",
+  eyebrow: "About us",
+  headline: "Learn about our people, our story and how we turn skills into careers.",
+  // Same sentence, split so the hero can dim the connecting words and brighten the key phrases.
+  headlineParts: [
+    { text: "Learn about ", strong: false },
+    { text: "our people,", strong: true },
+    { text: " our story and ", strong: false },
+    { text: "how we turn skills into careers.", strong: true },
+  ],
   text:
     "Since 2016, techcadd has trained students across Punjab in the software local offices, studios and " +
     "agencies use every day — not simplified classroom versions of it.",
@@ -167,12 +174,32 @@ export const whyItMatters = [
   },
 ];
 
+// "Why it matters" on /about — the reference page's two paragraphs and closing callout.
+// `whyItMatters` above stays as-is: course pages still use it.
+export const preparingLearners = {
+  eyebrow: "Why it matters",
+  heading: "Preparing learners for a changing digital world",
+  paragraphs: [
+    "Technology is evolving rapidly. Artificial Intelligence, automation, cloud platforms, cybersecurity, data and software development are continuously changing the way businesses operate.",
+    "techcadd aims to keep its learning ecosystem aligned with this changing environment by introducing learners to emerging technologies and industry-relevant tools, helping them develop the adaptability required to continue learning throughout their careers.",
+  ],
+  callout:
+    "The objective is not simply to teach a technology, but to develop the ability to understand problems, build solutions, use technology effectively and keep upgrading one's skills.",
+};
+
+export const whoWeTeach = {
+  eyebrow: "Who we teach",
+  heading: "Learning for every stage of the career journey",
+  text: "techcadd's training ecosystem is designed to serve a diverse learner base, including:",
+};
+
 export const audiences = [
-  { icon: "🎓", title: "Students", text: "After 10th or 12th, building a practical skill alongside school." },
-  { icon: "📜", title: "Graduates", text: "Job-ready skills the degree alone didn't cover." },
-  { icon: "💼", title: "Working Professionals", text: "Upskilling on evenings and weekends without quitting the day job." },
-  { icon: "🔄", title: "Career Switchers", text: "A structured, practical route into a new field." },
-  { icon: "🚀", title: "Entrepreneurs", text: "Skills to run accounts, design and marketing in-house." },
+  { icon: "students", title: "School & College Students", text: "Looking to develop technology skills early." },
+  { icon: "graduates", title: "Graduates & Job Seekers", text: "Preparing for technology careers." },
+  { icon: "engineering", title: "Engineering & IT Students", text: "Seeking practical exposure and industrial training." },
+  { icon: "professionals", title: "Working Professionals", text: "Looking to upgrade or diversify their skills." },
+  { icon: "switchers", title: "Career Switchers", text: "Exploring opportunities in the technology sector." },
+  { icon: "entrepreneurs", title: "Entrepreneurs & Freelancers", text: "Seeking digital and technology capabilities." },
 ];
 
 export const ourApproach = {
@@ -295,5 +322,35 @@ export const belief = {
       "technology professionals.",
     signatureLabel: site.tagline,
     signatureTagline: "Where Your Tech Journey Begins.",
+  },
+};
+
+// "How we teach" on /about — copy taken from the same section of techcaddamritsar.com/about.
+export const howWeTeach = {
+  eyebrow: "How we teach",
+  heading: "Every class is a",
+  headingAccent: "working session",
+  text:
+    "A techcadd session is not a lecture with an exercise stapled on. Concepts are introduced, worked in the lab " +
+    "under supervision, then folded straight into the project you are already building.",
+  steps: [
+    { title: "Concept, briefly", text: "The idea, why it exists and where it breaks — in the first twenty minutes, not the first three classes." },
+    { title: "Guided build", text: "You implement it while the trainer moves through the lab. Mistakes get caught at the moment they are made." },
+    { title: "Independent work", text: "The same skill against a harder, less tidy input, so it becomes something you can do without prompting." },
+    { title: "Line-by-line review", text: "Your work is read and commented on — the standard is what a team lead would send back, not a tick mark." },
+    { title: "Into the project", text: "The module output ships into your running project, so nothing you learn is parked and forgotten." },
+  ],
+  card: {
+    image: "/illustrations/classroom.svg",
+    imageAlt: "Illustration of a trainer teaching a classroom of learners",
+    tag: "A live lab session",
+    heading: "What a batch looks like",
+    facts: [
+      { label: "Batch size", value: "Small, mentor-reviewable" },
+      { label: "Lab access", value: "Beyond class hours" },
+      { label: "Timings", value: "Morning, evening & weekend" },
+      { label: "Mode", value: "Classroom and live online" },
+    ],
+    note: "Sit in on a live class before you enrol — ask the front desk for a demo session in the batch you are considering.",
   },
 };

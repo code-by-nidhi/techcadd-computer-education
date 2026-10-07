@@ -39,6 +39,7 @@ export default function CertificateProgramsPage() {
   return (
     <>
       <ListingHero
+        pattern="diamond"
         badge="Certificate Programs"
         title="Certificate & Diploma"
         highlight={`Programs in ${site.city}`}

@@ -1,88 +1,72 @@
+import Link from "next/link";
 import { teamIntro } from "@/lib/teamIntroData";
-import { Magnetic, Reveal, RevealHeading, ScaleIn, Stagger, StaggerItem } from "./motion/Reveal";
 
-// "Meet the Team" — a premium intro section inserted between the Hero and the existing (generic)
-// content sections on /about/our-team (see app/about/[slug]/page.tsx, which renders this only for
-// that one slug and shifts the rest of the page's light/dark alternation to account for it).
-//
-// This repo has no real staff photos anywhere (confirmed by search — public/about-menu doesn't
-// exist), so these arch cards use a generic silhouette + large faded role text instead of a real
-// photo, and are labelled by role (Trainer/Mentor/...) rather than an invented person's name — see
-// lib/teamIntroData.ts. Swap in real photos (replace TeamSilhouette with next/image) once they exist.
-// Runs as an infinite auto-scrolling carousel — see the track-duplication note below.
+// "Meet the Team" — /about/our-team, right after the hero (see app/about/[slug]/page.tsx). A light
+// section with a centred heading over an automatic slider of background-free team photos: name and
+// role sit above each person with a dashed arrow pointing down at them, and the person's area shows
+// as a pill on hover. Pure CSS marquee — the list is rendered twice back to back and the track slides
+// from 0 to -50%, so the loop point is invisible; hovering the rail pauses it.
 export default function TeamIntro() {
+  const { members } = teamIntro;
+
   return (
-    <section className="section theme-dark team-intro">
-      <div className="team-intro-grid-bg" aria-hidden="true" />
-      <span className="team-intro-glow team-intro-glow-1" aria-hidden="true" />
-      <span className="team-intro-glow team-intro-glow-2" aria-hidden="true" />
-      <span className="team-intro-particle" style={{ top: "16%", left: "8%" }} aria-hidden="true" />
-      <span className="team-intro-particle" style={{ top: "72%", left: "14%", animationDelay: "1.6s" }} aria-hidden="true" />
-      <span className="team-intro-particle" style={{ top: "22%", left: "92%", animationDelay: "3s" }} aria-hidden="true" />
-      <span className="team-intro-particle" style={{ top: "80%", left: "88%", animationDelay: "0.8s" }} aria-hidden="true" />
-      <div className="container team-intro-inner">
-        <div className="team-intro-copy">
-          <ScaleIn className="eyebrow">{teamIntro.badge}</ScaleIn>
-          <h2>
-            <RevealHeading text={teamIntro.heading} delay={0.1} />
-          </h2>
-          <Reveal delay={0.3}>
-            <p>{teamIntro.text}</p>
-          </Reveal>
-
-          <Stagger className="team-intro-stats">
-            {teamIntro.stats.map((s) => (
-              <StaggerItem key={s.label} className="team-intro-stat">
-                <strong>{s.value}</strong>
-                <span>{s.label}</span>
-              </StaggerItem>
-            ))}
-          </Stagger>
-
-          <Reveal delay={0.45} className="team-intro-actions">
-            <Magnetic>
-              <a href={teamIntro.primaryCta.href} className="btn btn-primary">
-                {teamIntro.primaryCta.label}
-              </a>
-            </Magnetic>
-            <Magnetic>
-              <a href={teamIntro.secondaryCta.href} className="btn team-intro-btn-glass">
-                {teamIntro.secondaryCta.label}
-              </a>
-            </Magnetic>
-          </Reveal>
+    <section className="tm">
+      <span className="tm-glow" aria-hidden="true" />
+      <div className="container">
+        <div className="tm-head">
+          <p className="rf-eyebrow">{teamIntro.badge}</p>
+          <h2 className="rf-title">{teamIntro.heading}</h2>
+          <p className="rf-lead">{teamIntro.text}</p>
+          <Link href={teamIntro.cta.href} className="btn btn-primary tm-cta">
+            {teamIntro.cta.label}
+          </Link>
         </div>
+      </div>
 
-        <Reveal delay={0.2} y={30} className="team-intro-visual">
-          {/* Infinite marquee carousel: the card list is rendered twice back to back and the track
-              animates from 0 to -50%, so the seam between the first and second copy is invisible and
-              it loops forever without any JS. Hovering the row pauses it so a card can be read. */}
-          <div className="team-preview-row">
-            <div className="team-preview-track">
-              {[...teamIntro.previewCards, ...teamIntro.previewCards].map((card, i) => (
-                <div key={`${card.role}-${i}`} className={`team-preview-card ${i % 2 === 1 ? "team-preview-card-alt" : ""}`}>
-                  <span className="team-preview-bg-text" aria-hidden="true">
-                    {card.role}
-                  </span>
-                  <span className="team-preview-photo" aria-hidden="true">
-                    <TeamSilhouette />
-                  </span>
-                  <span className="team-preview-name">{card.role}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+      <div className="tm-rail">
+        <ul className="tm-track">
+          {[...members, ...members].map((member, i) => {
+            const copy = i >= members.length;
+            return (
+              <li key={`${member.name}-${i}`} aria-hidden={copy || undefined}>
+                <figure className="tm-person">
+                  <figcaption>
+                    <strong>{member.name}</strong>
+                    <span>{member.role}</span>
+                    <TeamArrow flipped={i % 2 === 1} />
+                  </figcaption>
+                  <em className="tm-area">{member.area}</em>
+                  {/* Plain <img>: the cutouts are already resized WebP with alpha, and the rail sizes
+                      each one by height at its natural width, which next/image's fill can't do. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={member.image}
+                    alt={copy ? "" : `${member.name}, ${member.role}`}
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                  />
+                </figure>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );
 }
 
-function TeamSilhouette() {
+function TeamArrow({ flipped }: { flipped: boolean }) {
   return (
-    <svg viewBox="0 0 120 160" fill="none" aria-hidden="true">
-      <circle cx="60" cy="48" r="34" fill="currentColor" opacity="0.9" />
-      <path d="M6 158c0-40 24-64 54-64s54 24 54 64" fill="currentColor" opacity="0.9" />
+    <svg className={`tm-arrow ${flipped ? "is-flipped" : ""}`} viewBox="0 0 40 34" fill="none" aria-hidden="true">
+      <path
+        d="M31 2c1.5 9-1 18-9 23.5-3.6 2.4-7.6 3.6-12 3.9"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeDasharray="3.2 3.6"
+      />
+      <path d="M13.5 24.6 8 29.6l6.8 2.6" fill="currentColor" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
     </svg>
   );
 }

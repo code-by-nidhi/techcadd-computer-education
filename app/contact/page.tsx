@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/Sections";
+import { site } from "@/lib/site";
 import ContactSupport from "@/components/ContactSupport";
 import ContactSchedule from "@/components/ContactSchedule";
 import ContactCtaForm from "@/components/ContactCtaForm";
@@ -13,9 +14,11 @@ export default function ContactPage() {
     <>
       <PageHero
         crumb="Contact"
-        title="Contact Us"
-        text="Talk to a counsellor today — free career counselling, no registration fee."
+        title={`Talk to a counsellor in ${site.city}`}
+        text="Tell us where you are: 12th pass, mid-degree, working, or running a business. We will tell you honestly which track fits and which does not."
         className="contact-hero"
+        pattern="waves"
+        art={{ src: "/illustrations/contact.svg", alt: "Illustration of a phone with chat messages and a map pin" }}
       />
 
       <ContactSupport />

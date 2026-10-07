@@ -46,6 +46,8 @@ export default function Footer() {
           <h4>Company</h4>
           <Link href="/about">About techcadd</Link>
           <Link href="/about/founder">Our Founder</Link>
+          <Link href="/about/our-team">Our Team</Link>
+          <Link href="/resources">Free Tools &amp; Resources</Link>
           <Link href="/faq">FAQs</Link>
           <Link href="/about#placements">Placement Support</Link>
           <Link href="/contact">Enquire Now</Link>

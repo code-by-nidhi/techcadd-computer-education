@@ -25,7 +25,7 @@ export default function ContactSchedule() {
       </span>
       <div className="schedule-body">
         <h3>Schedule Virtual Counselling</h3>
-        <p>Book a free 1:1 virtual counselling session. Share your preferred date and time — a techcadd advisor will call you personally.</p>
+        <p>Book a free 1:1 virtual counselling session. Pick your date and time slot — a techcadd advisor will call you personally.</p>
       </div>
       <a
         href={`https://wa.me/${site.whatsapp}?text=${message}`}

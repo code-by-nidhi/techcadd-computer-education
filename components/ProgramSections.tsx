@@ -78,7 +78,7 @@ const modes = [
 
 export function LearningModes() {
   return (
-    <section className="bc-section bc-alt bp-modes">
+    <section className="bc-section bc-blue bp-modes">
       <div className="container">
         <div className="bc-head bc-head-center" data-aos="fade-up" suppressHydrationWarning>
           <div>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { included, testimonials, faqs } from "@/lib/content";
-import { CtaBanner, FaqList, SectionHeading } from "@/components/Sections";
+import { CtaStrip, FaqList, LeadCta, SectionHeading } from "@/components/Sections";
 import HeroDashboard from "@/components/HeroDashboard";
 import HomeAbout from "@/components/HomeAbout";
 import HomeCategories from "@/components/HomeCategories";
@@ -32,15 +32,15 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Order: About, Categories, How it works, then the courses. After the blue hero the themes
+          alternate: About white, Categories blue, How it works white, courses blue, and so on. */}
       <HomeAbout />
 
       <HomeCategories />
 
-      <HomeFeatured />
-
       <HowItWorks />
 
-      <WhyUs />
+      <HomeFeatured />
 
       {/* Testimonials */}
       <section className="section">
@@ -67,6 +67,16 @@ export default function Home() {
         </div>
       </section>
 
+      <WhyUs />
+
+      {/* Tools */}
+      <section className="section">
+        <div className="container">
+          <SectionHeading eyebrow="Software you'll learn" title="Industry tools across every track" />
+          <ToolsOrbit />
+        </div>
+      </section>
+
       {/* Included */}
       <section className="section section-blue included">
         <div className="container">
@@ -84,26 +94,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tools */}
-      <section className="section">
-        <div className="container">
-          <SectionHeading eyebrow="Software you'll learn" title="Industry tools across every track" />
-          <ToolsOrbit />
-        </div>
-      </section>
-
       {/* FAQ */}
-      <section className="section section-blue">
+      <section className="section">
         <div className="container narrow">
           <SectionHeading eyebrow="FAQs" title="Frequently asked questions" />
           <FaqList items={faqs.slice(0, 5)} />
           <div className="center">
-            <Link href="/faq" className="btn btn-outline-light">See all questions</Link>
+            <Link href="/faq" className="btn btn-outline">See all questions</Link>
           </div>
         </div>
       </section>
 
-      <CtaBanner />
+      <LeadCta dark />
+      <CtaStrip />
     </>
   );
 }

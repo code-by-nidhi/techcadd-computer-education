@@ -7,6 +7,10 @@ import { CtaStrip, LeadCta } from "./Sections";
 import { FitBanner, LearningModes, ProgramTracks, RelatedCourses } from "./ProgramSections";
 import { referenceContent } from "@/lib/referenceContent";
 import { site } from "@/lib/site";
+import HeroPattern from "./HeroPattern";
+import { courseHeroImages } from "@/lib/courseHeroImages";
+import { getCourse, NOT_SURE_COURSE } from "@/lib/courses";
+import CourseEnquiryForm from "./CourseEnquiryForm";
 import type { AudienceIcon, CourseDetail, HubNode } from "@/lib/courseDetails/types";
 
 // Course detail page, shared by every course (app/courses/[slug]/page.tsx). Section order follows the
@@ -18,38 +22,74 @@ import type { AudienceIcon, CourseDetail, HubNode } from "@/lib/courseDetails/ty
 // add the track cards, learning modes, "right fit?" banner and related courses (ProgramSections.tsx).
 export default function CoursePage({ d }: { d: CourseDetail }) {
   const p = d.program;
+  const course = p ? undefined : getCourse(d.slug);
+  const syllabus = (
+    <section className="bc-section" id="syllabus">
+      <div className="container">
+        <Heading eyebrow={d.syllabus.eyebrow} title={d.syllabus.title} text={d.syllabus.text} split />
+        <BcSyllabus phases={d.syllabus.phases} />
+      </div>
+    </section>
+  );
   return (
     <>
       <Hero d={d} />
-      {p && <ProgramTracks p={p} />}
-      <Overview d={d} />
-      <Audience d={d} />
-      <CaseForIt d={d} />
-      <WhyNow d={d} />
-      <section className="bc-section bc-alt" id="syllabus">
-        <div className="container">
-          <Heading eyebrow={d.syllabus.eyebrow} title={d.syllabus.title} text={d.syllabus.text} split />
-          <BcSyllabus phases={d.syllabus.phases} />
-        </div>
-      </section>
-      <Tools d={d} />
-      <Certificate d={d} />
-      <Careers d={d} />
-      <Projects d={d} />
-      <Loop d={d} />
-      <WhyTechcadd d={d} />
-      <Compare d={d} />
-      <Reviews d={d} />
-      {p && <LearningModes />}
-      <Faq d={d} />
+      {/* Sitewide scheme: after the blue hero, sections alternate white / blue. Each section's theme
+          is fixed (white: Overview, CaseForIt, Syllabus, Certificate, Projects, Compare, Reviews;
+          blue: Audience, WhyNow, Tools, Careers, Loop, WhyTechcadd, Faq), so the order below is what
+          keeps the rhythm — program pages start with the (white) track picker, so their first few
+          sections are sequenced differently. */}
+      {/* Body: the sections scroll in the left column while the enquiry form stays pinned on the
+          right. Below 1100px the form drops under the content as an ordinary block. */}
+      <div className="bc-body">
+        <div className="container bc-body-grid">
+          <div className="bc-main">
       {p ? (
         <>
-          <FitBanner p={p} />
+          <ProgramTracks p={p} />
+          <Audience d={d} />
+          <Overview d={d} />
+          <WhyNow d={d} />
+          <CaseForIt d={d} />
+          <Tools d={d} />
+          {syllabus}
+          <Careers d={d} />
+          <Certificate d={d} />
+          <Loop d={d} />
+          <Projects d={d} />
+          <WhyTechcadd d={d} />
+          <Compare d={d} />
+          <LearningModes />
+          <Reviews d={d} />
+          <Faq d={d} />
           <RelatedCourses p={p} />
+          <FitBanner p={p} />
         </>
       ) : (
-        <LeadCta />
+        <>
+          <Overview d={d} />
+          <Audience d={d} />
+          <CaseForIt d={d} />
+          <WhyNow d={d} />
+          {syllabus}
+          <Tools d={d} />
+          <Certificate d={d} />
+          <Careers d={d} />
+          <Projects d={d} />
+          <Loop d={d} />
+          <Compare d={d} />
+          <WhyTechcadd d={d} />
+          <Reviews d={d} />
+          <Faq d={d} />
+        </>
       )}
+          </div>
+          <aside className="bc-side" aria-label="Course enquiry">
+            <CourseEnquiryForm course={course?.title ?? NOT_SURE_COURSE} label={course?.title ?? d.hero.crumb} />
+          </aside>
+        </div>
+      </div>
+      {!p && <LeadCta />}
       <CtaStrip />
     </>
   );
@@ -74,7 +114,7 @@ function Hero({ d }: P) {
   return (
     <>
       <section className="bc-hero">
-        <div className="bc-hero-dots" aria-hidden="true" />
+        <HeroPattern variant="blueprint" />
         <div className="container">
           <nav className="bc-crumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
@@ -117,7 +157,19 @@ function Hero({ d }: P) {
             </div>
 
             <div className="bc-hero-visual" suppressHydrationWarning data-aos="fade-left" aria-hidden="true">
-              <ComputerHub center={h.hub.center} nodes={h.hub.nodes} />
+              {courseHeroImages.has(d.slug) ? (
+                <Image
+                  src={`/courses/hero/${d.slug}.webp`}
+                  alt=""
+                  width={1000}
+                  height={750}
+                  priority
+                  sizes="(max-width: 960px) 90vw, 560px"
+                  className="bc-hero-art"
+                />
+              ) : (
+                <ComputerHub center={h.hub.center} nodes={h.hub.nodes} />
+              )}
             </div>
           </div>
 
@@ -243,7 +295,7 @@ function Overview({ d }: P) {
 function Audience({ d }: P) {
   const a = d.audience;
   return (
-    <section className="bc-section bc-alt">
+    <section className="bc-section bc-blue">
       <div className="container">
         <Heading eyebrow={a.eyebrow} title={a.title} text={a.text} split />
         <div className="bc-audience">
@@ -332,7 +384,11 @@ function Tools({ d }: P) {
     <section className="bc-band bc-band-tools">
       <div className="container">
         <Heading eyebrow={t.eyebrow} title={t.title} text={t.text} center />
-        <div className="bc-tools">
+        {/* Up to 6 tools share one row; more than that split into two even rows. */}
+        <div
+          className="bc-tools"
+          style={{ "--cols": t.tools.length <= 6 ? t.tools.length : Math.ceil(t.tools.length / 2) } as React.CSSProperties}
+        >
           {t.tools.map((tool, i) => (
             <div key={tool.name} className="bc-tool" suppressHydrationWarning data-aos="zoom-in" data-aos-delay={i * 50}>
               <span className="bc-tool-logo">
@@ -403,7 +459,7 @@ function Certificate({ d }: P) {
 function Careers({ d }: P) {
   const c = d.careers;
   return (
-    <section className="bc-section bc-alt">
+    <section className="bc-section bc-blue">
       <div className="container">
         <Heading eyebrow={c.eyebrow} title={c.title} text={c.text} split />
         <div className="bc-roles">
@@ -468,7 +524,7 @@ function Projects({ d }: P) {
 function Loop({ d }: P) {
   const l = d.loop;
   return (
-    <section className="bc-section bc-alt">
+    <section className="bc-section bc-blue">
       <div className="container bc-loop">
         <div suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">{l.eyebrow}</span>
@@ -584,7 +640,7 @@ function Reviews({ d }: P) {
     </article>
   );
   return (
-    <section className="bc-section bc-alt bc-reviews-section">
+    <section className="bc-section bc-reviews-section">
       <div className="container">
         <Heading eyebrow="Student reviews" title={`What our students in ${site.city} say`} split text="Rated 4.9★ on Google by students of every age and background." />
       </div>
@@ -600,7 +656,7 @@ function Reviews({ d }: P) {
 
 function Faq({ d }: P) {
   return (
-    <section className="bc-section">
+    <section className="bc-section bc-blue">
       <div className="container bc-faq">
         <div className="bc-faq-side" suppressHydrationWarning data-aos="fade-up">
           <span className="bc-eyebrow">Got questions?</span>

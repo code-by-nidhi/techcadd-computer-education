@@ -28,6 +28,8 @@ export type AboutSection = {
    *  "feature" (default) is a simple title+text card; "certification" adds an icon, badge, authority and benefits. */
   cards?: AboutCard[];
   cardStyle?: "feature" | "certification";
+  /** External buttons under body/points (e.g. the founder's social profiles). */
+  links?: { label: string; href: string }[];
   /** Renders a single centered trust/review card instead of body/points/cards. */
   trustCard?: AboutTrustCard;
 };
@@ -46,6 +48,8 @@ export type AboutPageData = {
   navImage: string;
   inMenu: boolean; // whether this entry appears in the About mega menu
   title: string;
+  /** Hero h1 when it should differ from `title` (which still names the page in breadcrumbs/SEO). */
+  heroHeading?: string;
   subtitle: string;
   heroBadge: string;
   heroDescription: string;
@@ -157,7 +161,7 @@ export const aboutData: Record<string, AboutPageData> = {
     ],
     stats: [
       { value: "25,000+", label: "Students trained" },
-      { value: "10 Years", label: "Of training experience" },
+      { value: "10+ Years", label: "Of training experience" },
       { value: "500+", label: "Hiring partners" },
       { value: "4.9★", label: "Google rating" },
     ],
@@ -316,7 +320,7 @@ export const aboutData: Record<string, AboutPageData> = {
           stats: [
             { value: "25,000+", label: "Students Trained" },
             { value: "500+", label: "Hiring Partners" },
-            { value: "10", label: "Years of Excellence" },
+            { value: "10+", label: "Years of Excellence" },
           ],
           primaryCta: { label: "Read Google Reviews", href: site.mapUrl },
           secondaryCta: { label: "View Google Profile", href: site.mapUrl },
@@ -345,11 +349,14 @@ export const aboutData: Record<string, AboutPageData> = {
     navImage: "/about-menu/our-team.jpg",
     inMenu: true,
     title: "Our Team",
-    subtitle: "Learn from working accountants, designers, CAD engineers and marketers — practitioners first, instructors second.",
-    heroBadge: "People",
+    heroHeading: "The people who teach here, and keep the students moving.",
+    subtitle:
+      `Trainers, mentors and counsellors at ${site.name} ${site.city} — the team behind every batch, every project ` +
+      "review and every placement drive.",
+    heroBadge: "Our Team",
     heroDescription:
-      "Every trainer at techcadd still works in the field they teach, so what you learn in the lab is what " +
-      "they're doing in their own jobs this week.",
+      `Trainers, mentors and counsellors at ${site.name} ${site.city} — the team behind every batch, every project ` +
+      "review and every placement drive.",
     heroImage: "/about-menu/our-team.jpg",
     // The generic sections/stats/gallery/closing CtaBanner that used to fill out the rest of this
     // page were removed (in three separate requests) once components/TeamIntro.tsx + a mid-page
@@ -360,7 +367,7 @@ export const aboutData: Record<string, AboutPageData> = {
     gallery: [],
     seo: {
       title: "Our Team",
-      description: "Meet techcadd's trainers — working accountants, CAD engineers, designers and marketers.",
+      description: "Meet the trainers, mentors and counsellors behind every techcadd batch, project review and placement drive.",
     },
   },
 
@@ -371,29 +378,20 @@ export const aboutData: Record<string, AboutPageData> = {
     navBadge: "Founder",
     navMeta: "Gourav Gupta",
     navImage: "/about-menu/founder.jpg",
-    inMenu: false, // has its own Footer link; kept out of the mega menu's 4-card row
+    inMenu: true,
     title: "Gourav Gupta",
-    subtitle: `Founder of ${site.fullName} — entrepreneur, mentor and career coach.`,
-    heroBadge: "Founder",
+    heroHeading: "Inspiring Careers, Building Skills, Creating Futures.",
+    subtitle:
+      "Empowering students with practical skills, industry exposure, and the confidence to build successful " +
+      "careers in technology.",
+    heroBadge: `Gourav Gupta · Founder, ${site.name}`,
     heroDescription:
       "Every successful journey begins with a dream, but only a few are built through relentless hard work, " +
       "courage and the determination to never give up.",
     heroImage: "/about-menu/founder.jpg",
-    sections: [
-      {
-        eyebrow: "About the founder",
-        heading: "From an auto rickshaw to an academy",
-        body: [
-          "Gourav Gupta is an entrepreneur, mentor and career coach whose life journey is a powerful example " +
-            "of resilience, self-belief and the transformative power of education. From facing financial " +
-            "challenges and driving an auto to complete his engineering education, to building an organization " +
-            "from the ground up, his story reflects a simple yet powerful belief: your circumstances may shape " +
-            "your beginning, but your determination shapes your future.",
-          "Today, he is recognized for his entrepreneurial vision, commitment to skill-based education and " +
-            "passion for helping students and aspiring professionals discover their potential.",
-        ],
-      },
-    ],
+    // The page itself is components/FounderPage.tsx (copy in lib/founderData.ts); this entry only
+    // feeds the About menu card and the page metadata.
+    sections: [],
     stats: [],
     gallery: [],
     seo: {

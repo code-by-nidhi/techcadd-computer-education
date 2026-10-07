@@ -1,7 +1,11 @@
+import type { CSSProperties } from "react";
+import { Hammer, Network, TrendingUp, Unlock, Users } from "lucide-react";
 import { CtaStrip, LeadCta } from "./Sections";
-import { MotionCounter, Reveal, RevealHeading, ScaleIn } from "./motion/Reveal";
-import MissionFramework from "./MissionFramework";
+import HeroPattern from "./HeroPattern";
 import {
+  missionFootnote,
+  missionPillars,
+  missionPillarsHeader,
   missionVisionHero,
   ourFuture,
   visionFootnote,
@@ -10,27 +14,19 @@ import {
   visionPoints,
 } from "@/lib/missionVisionData";
 
-// The redesigned /about/mission-vision page (app/about/mission-vision/page.tsx): Hero, Mission
-// Pillars, Vision, Our Future, LeadCta + CtaStrip — same light/dark alternation system as the main
-// /about page (components/StoryPage.tsx) — see lib/missionVisionData.ts for where the copy comes
-// from and why. LeadCta + CtaStrip serve as the page's closing CTA, so the earlier custom
-// "Start Building Your Career Today" card was removed rather than stacking two CTAs back to back.
-//
-// Alternation: Hero(L), Mission Pillars(D), Vision(L — recoloured from its earlier dark
-// "space-tech" look), Our Future(D — recoloured from light), then LeadCta + CtaStrip, both kept in
-// their normal sitewide light styling (CtaStrip's dark page-scoped override was tried and then
-// asked to be reverted back to white) — so this closing pair is the one accepted light-light
-// repeat, same as the main /about page (StoryPage.tsx), which ends with this same LeadCta/CtaStrip
-// pair on a light section too.
+// /about/mission-vision (app/about/mission-vision/page.tsx), laid out after
+// techcaddjalandhar.com/about/mission-vision: dark hero, the mission as a five-stop line with stops
+// alternating above and below it, the vision as five circles ringed around a centre goal, then
+// "Our Future" and the shared closing CTA. Shares the ".rf-" styles in globals.css with
+// components/StoryPage.tsx; copy lives in lib/missionVisionData.ts.
 export default function MissionVisionPage() {
   return (
     <>
       <MissionVisionHero />
-      <div className="mv-hero-divider" aria-hidden="true" />
-      <MissionFramework />
-      <VisionRadial />
+      <Mission />
+      <Vision />
       <OurFuture />
-      <LeadCta />
+      <LeadCta dark />
       <CtaStrip />
     </>
   );
@@ -38,102 +34,116 @@ export default function MissionVisionPage() {
 
 function MissionVisionHero() {
   return (
-    <section className="mv-hero theme-light">
-      <div className="mv-hero-grid-bg" aria-hidden="true" />
-      <span className="mv-hero-glow mv-hero-glow-1" aria-hidden="true" />
-      <span className="mv-hero-glow mv-hero-glow-2" aria-hidden="true" />
-      <div className="container mv-hero-inner">
-        <div className="mv-hero-copy">
-          <ScaleIn className="eyebrow">{missionVisionHero.label}</ScaleIn>
-          <h1>
-            <RevealHeading text={missionVisionHero.heading} delay={0.1} />
+    <section className="rf-hero">
+      <HeroPattern variant="rings" />
+      <div className="container rf-hero-inner rf-hero-split">
+        <div>
+          <span className="rf-pill">{missionVisionHero.label}</span>
+          <h1 className="rf-hero-title">
+            {missionVisionHero.headingParts.map((part) =>
+              part.strong ? <span key={part.text}>{part.text}</span> : part.text
+            )}
           </h1>
-          <Reveal delay={0.3}>
-            <p>{missionVisionHero.description}</p>
-          </Reveal>
+          <p className="rf-hero-text">{missionVisionHero.description}</p>
         </div>
-        <Reveal delay={0.2} y={30} className="mv-hero-visual">
-          <span className="mv-hero-orbit" aria-hidden="true" />
-          <div className="mv-hero-card mv-hero-card-1">
-            <span className="mv-hero-card-icon">
-              <MvIcon icon="vision" />
-            </span>
-            <strong>Vision</strong>
-            <span>Punjab's most trusted skilling partner</span>
-          </div>
-          <div className="mv-hero-card mv-hero-card-2">
-            <span className="mv-hero-card-icon">
-              <MvIcon icon="mission" />
-            </span>
-            <strong>Mission</strong>
-            <span>Job-ready from day one</span>
-          </div>
-          <div className="mv-hero-card mv-hero-card-3">
-            <strong>
-              <MotionCounter value="25,000+" />
-            </strong>
-            <span>Students trained</span>
-          </div>
-        </Reveal>
+        <span className="hero-art" role="img" aria-label="Illustration of a path of milestones leading to a flag" style={{ backgroundImage: "url(/illustrations/roadmap.svg)" }} />
       </div>
     </section>
   );
 }
 
-// "Our Mission" — redesigned in its own file, components/MissionFramework.tsx, as a statement panel
-// + staggered pillar cards (needs client-side hover state for the per-card spotlight).
+const PILLAR_ICONS: Record<string, typeof Unlock> = {
+  access: Unlock,
+  practical: Hammer,
+  talent: Users,
+  upskill: TrendingUp,
+  ecosystem: Network,
+};
 
-function VisionRadial() {
+function Mission() {
   return (
-    <section className="section theme-light mv-vision">
-      <div className="mv-vision-grid-bg" aria-hidden="true" />
-      <span className="mv-vision-particle" style={{ top: "16%", left: "10%" }} aria-hidden="true" />
-      <span className="mv-vision-particle" style={{ top: "72%", left: "18%", animationDelay: "1.6s" }} aria-hidden="true" />
-      <span className="mv-vision-particle" style={{ top: "24%", left: "88%", animationDelay: "3s" }} aria-hidden="true" />
-      <span className="mv-vision-particle" style={{ top: "78%", left: "82%", animationDelay: "0.8s" }} aria-hidden="true" />
+    <section className="rf-sec rf-subtle">
       <div className="container">
-        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">{visionHeader.badge}</span>
-          <h2>{visionHeader.heading}</h2>
-          <p className="mv-vision-subheading">{visionHeader.text}</p>
+        <div className="rf-head rf-head-center" suppressHydrationWarning data-aos="fade-up">
+          <p className="rf-eyebrow">{missionPillarsHeader.badge}</p>
+          <h2 className="rf-title">{missionPillarsHeader.heading}</h2>
+          <p className="rf-lead">{missionPillarsHeader.text}</p>
         </div>
 
-        {/* Two-layer orbit: .mv-vision-spin rotates continuously; each node's own inner element
-            carries an equal, opposite-direction animation (components/../globals.css mv-orbit-spin,
-            same technique the homepage's .dash-orbit/.dash-app-inner already use) so the ring sweeps
-            around while every card's text stays upright and readable. */}
-        <div className="mv-vision-orbit" suppressHydrationWarning data-aos="zoom-in">
-          <span className="mv-vision-glow" aria-hidden="true" />
-          <span className="mv-vision-ring mv-vision-ring-outer" aria-hidden="true" />
-          <span className="mv-vision-ring mv-vision-ring-inner" aria-hidden="true" />
-          <div className="mv-vision-hub">
-            <span className="eyebrow">{visionGoal.badge}</span>
-            <strong>{visionGoal.label}</strong>
-          </div>
-          <div className="mv-vision-spin">
-            {visionPoints.map((point) => (
-              <div key={point} className="mv-vision-node-wrap">
-                <div className="mv-vision-node-spin">
-                  <div className="mv-vision-node">
-                    <span>{point}</span>
-                  </div>
+        <ol className="rf-mission">
+          {missionPillars.map((pillar, i) => {
+            const Icon = PILLAR_ICONS[pillar.icon] ?? Unlock;
+            return (
+              <li
+                key={pillar.title}
+                className={i % 2 === 1 ? "is-below" : ""}
+                suppressHydrationWarning
+                data-aos="fade-up"
+                data-aos-delay={i * 110}
+              >
+                <div className="rf-mission-body">
+                  <span className="rf-mission-icon">
+                    <Icon aria-hidden="true" />
+                  </span>
+                  <h3>{pillar.title}</h3>
+                  <p>{pillar.text}</p>
                 </div>
-              </div>
-            ))}
-          </div>
-          {/* Static, non-rotating duplicate for stacked mobile/no-motion layouts — see the ≤720px
-              and prefers-reduced-motion overrides in globals.css, which hide .mv-vision-spin and
-              show this list instead. */}
-          <ul className="mv-vision-list">
-            {visionPoints.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
+                <span className="rf-mission-dot" aria-hidden="true" />
+              </li>
+            );
+          })}
+        </ol>
+
+        <p className="rf-note rf-note-xs">{missionFootnote}</p>
+      </div>
+    </section>
+  );
+}
+
+// Five points of a regular pentagon around the centre (percent of the square stage).
+const RING = [
+  { x: 50, y: 13 },
+  { x: 85, y: 38.6 },
+  { x: 71.8, y: 79.9 },
+  { x: 28.2, y: 79.9 },
+  { x: 15, y: 38.6 },
+];
+
+function Vision() {
+  return (
+    <section className="rf-sec rf-panel rf-panel-dots">
+      <div className="container">
+        <div className="rf-head rf-head-center" suppressHydrationWarning data-aos="fade-up">
+          <p className="rf-eyebrow">{visionHeader.badge}</p>
+          <h2 className="rf-title">{visionHeader.heading}</h2>
+          <p className="rf-lead">{visionHeader.text}</p>
         </div>
 
-        <p className="mv-vision-footnote" suppressHydrationWarning data-aos="fade-up">
-          {visionFootnote}
-        </p>
+        <ul className="rf-ring" suppressHydrationWarning data-aos="zoom-in">
+          <li className="rf-ring-lines" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="37" stroke="currentColor" strokeWidth="0.25" strokeDasharray="1 1.4" />
+              {RING.map((p) => (
+                <line key={`${p.x}-${p.y}`} x1="50" y1="50" x2={p.x} y2={p.y} stroke="currentColor" strokeWidth="0.25" />
+              ))}
+            </svg>
+          </li>
+          <li className="rf-ring-hub">
+            <span>{visionGoal.badge}</span>
+            <strong>{visionGoal.label}</strong>
+          </li>
+          {visionPoints.map((point, i) => (
+            <li
+              key={point}
+              className={`rf-ring-node ${i % 2 === 1 ? "is-alt" : ""}`}
+              style={{ "--x": `${RING[i].x}%`, "--y": `${RING[i].y}%` } as CSSProperties}
+            >
+              <p>{point}</p>
+            </li>
+          ))}
+        </ul>
+
+        <p className="rf-note rf-note-xs">{visionFootnote}</p>
       </div>
     </section>
   );
@@ -141,33 +151,14 @@ function VisionRadial() {
 
 function OurFuture() {
   return (
-    <section className="section theme-dark mv-future">
-      <span className="mv-future-ring" aria-hidden="true" />
-      <span className="mv-future-glow" aria-hidden="true" />
+    <section className="rf-sec rf-subtle">
       <div className="container">
-        <div className="section-heading" suppressHydrationWarning data-aos="fade-up">
-          <span className="eyebrow">{ourFuture.badge}</span>
-          <h2>{ourFuture.heading}</h2>
-          <p className="mv-future-text">{ourFuture.text}</p>
+        <div className="rf-head rf-head-center" suppressHydrationWarning data-aos="fade-up">
+          <p className="rf-eyebrow">{ourFuture.badge}</p>
+          <h2 className="rf-title">{ourFuture.heading}</h2>
+          <p className="rf-lead">{ourFuture.text}</p>
         </div>
       </div>
     </section>
-  );
-}
-
-function MvIcon({ icon }: { icon: string }) {
-  const paths: Record<string, string> = {
-    vision: "M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
-    mission: "M12 3 5 6v5c0 5 3 8.5 7 10 4-1.5 7-5 7-10V6l-7-3Z M9 12l2 2 4-4",
-    access: "M12 15a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm-6-3V8a6 6 0 0 1 12 0v4M5 12h14v8H5z",
-    practical: "M14.7 6.3a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4L9.4 17.6l-3.7.7.7-3.7Z M3 21h18",
-    talent: "M12 2 15 8l6.5.9-4.7 4.6 1.1 6.5L12 17l-5.9 3 1.1-6.5L2.5 8.9 9 8Z",
-    upskill: "M3 17 9 11l4 4 8-8M15 6h6v6",
-    ecosystem: "M6 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM6 22a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM7.5 5 10 12M14 12l2.5-7M7.5 19 10 12M14 12l2.5 7",
-  };
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d={paths[icon] ?? paths.mission} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }

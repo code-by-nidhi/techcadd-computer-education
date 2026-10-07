@@ -13,7 +13,7 @@ export const site = {
   address: "Opp. All India Radio Station, Near Bus Stand, New Jawahar Nagar, Jawahar Nagar, Jalandhar, Punjab 144001",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=techcadd+New+Jawahar+Nagar+Jalandhar",
   social: {
-    instagram: "https://www.instagram.com/",
+    instagram: "https://www.instagram.com/techcadd__jalandhar",
     youtube: "https://www.youtube.com/",
     linkedin: "https://www.linkedin.com/",
   },
@@ -28,6 +28,8 @@ export const navLinks = [
   // not the text-column layout) — see components/CertificateProgramsMenu.tsx.
   { label: "Certificate Programs", href: "/certificate-programs", cardMenu: true },
   { label: "After 12th", href: "/after-12th" },
+  // Mega menu with the tool posters — see the resourcesMenu branch in components/Header.tsx.
+  { label: "Resources", href: "/resources", resourcesMenu: true },
   { label: "FAQs", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];

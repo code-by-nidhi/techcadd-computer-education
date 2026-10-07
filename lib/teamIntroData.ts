@@ -1,42 +1,22 @@
-import { site } from "@/lib/site";
-
-// "Meet the Team" intro section, added just after the Hero on /about/our-team (see
-// components/TeamIntro.tsx). The request's reference page (techcaddjalandhar.com/about/team) was
-// checked: its real team-intro copy is "Trainers, mentors and counsellors... the team behind every
-// batch, every project review and every placement drive" — "Industry Experts" is grounded the same
-// way this page's own real hero description already frames trainers: "Every trainer at techcadd
-// still works in the field they teach." All 4 stats below are this repo's real, already-established
-// numbers (25,000+/500+/7/10, not "10+" — 2016 founding to today is exactly 10 years).
-//
-// The reference page (and the screenshots that came with these requests) shows a grid of 12 named
-// team members with real photos — confirmed there are genuinely no photo files anywhere in this
-// repo (public/about-menu doesn't exist; only course thumbnails and software logos do). Asked how to
-// proceed given that hard blocker; the answer was to build the exact card design now with generic
-// placeholder art, labelled by real role — not specific invented names — and swap in real photos
-// later. "Placement Expert" and "Career Coach" are both real, already-established terms this repo
-// uses elsewhere (the "Support"/placement-cell section, and the founder's own "mentor and career
-// coach" byline) — not invented for this card set.
+// "Meet the Team" rail on /about/our-team (see components/TeamIntro.tsx). Heading copy is from
+// techcaddjalandhar.com/about/team; the rail design, each member's role/area and the background-free
+// cutout photos (public/team/cutouts) are from the same rail on techcaddludhiana.com/about.
 export const teamIntro = {
-  badge: "Our People",
-  heading: "Meet the experts behind techcadd",
-  text: "The trainers, mentors, counsellors and industry professionals who guide students from learning to employment.",
-  // Was an in-page anchor (#trainers) to the "Certified trainers" section, which was removed from
-  // this page — repointed to the real courses listing (what these trainers actually teach) instead
-  // of leaving a dead link.
-  primaryCta: { label: "Meet Our Trainers", href: "/courses" },
-  secondaryCta: { label: "Talk to a Counsellor", href: site.phoneHref },
-  stats: [
-    { value: "25,000+", label: "Students Trained" },
-    { value: "500+", label: "Hiring Partners" },
-    { value: "7", label: "Branches" },
-    { value: "10", label: "Years Experience" },
-  ],
-  previewCards: [
-    { role: "Trainer" },
-    { role: "Mentor" },
-    { role: "Counsellor" },
-    { role: "Industry Expert" },
-    { role: "Placement Expert" },
-    { role: "Career Coach" },
+  badge: "Meet the team",
+  heading: "Meet the people who teach here",
+  text: "Trainers, mentors and counsellors who keep the classrooms running and the students moving.",
+  cta: { label: "Talk to a counsellor", href: "/contact" },
+  members: [
+    { name: "Shilpa Gupta", role: "Co-founder techcadd", area: "Operations & Governance", image: "/team/cutouts/shilpa-mam.webp" },
+    { name: "Asmita Sehgal", role: "Sr. Manager", area: "Academic Operations", image: "/team/cutouts/asmita-mam.webp" },
+    { name: "Sandeep", role: "Co-founder IAM", area: "Cloud Systems & IAM", image: "/team/cutouts/sandeep-sir.webp" },
+    { name: "Amit Sharma", role: "IT Technical Head", area: "Information Technology", image: "/team/cutouts/amit-sir.webp" },
+    { name: "Harrachneet Kaur", role: "Sr. Relationship Manager", area: "Institutional Partnerships", image: "/team/cutouts/richi-mam.webp" },
+    { name: "Alam", role: "techcadd Amritsar Franchise Owner", area: "techcadd Amritsar", image: "/team/cutouts/alam-sir.webp" },
+    { name: "Tanisha", role: "Finance & Accounts Head", area: "Finance & Operations", image: "/team/cutouts/tanisha-mam.webp" },
+    { name: "Daljeet", role: "techcadd Ludhiana Franchise Owner", area: "techcadd Ludhiana", image: "/team/cutouts/daljeet-sir.webp" },
+    { name: "Anita", role: "Branch Head Jalandhar IAM", area: "techcadd Jalandhar", image: "/team/cutouts/anita-mam.webp" },
+    { name: "Shiv", role: "Sr. AI Engineer", area: "Artificial Intelligence", image: "/team/cutouts/shiv-sir.webp" },
+    { name: "Aman", role: "Data Scientist", area: "Data Science & Analytics", image: "/team/cutouts/aman-sir.webp" },
   ],
 };

@@ -18,6 +18,7 @@ export default function After12thPage() {
   return (
     <>
       <ListingHero
+        pattern="triangles"
         badge="After 12th"
         title="Job-Oriented Computer Courses"
         highlight={`After 12th in ${site.city}`}

@@ -58,7 +58,7 @@ export function AboutHero({
             {data.heroBadge}
           </ScaleIn>
           <h1>
-            <RevealHeading text={data.title} delay={0.2} />
+            <RevealHeading text={data.heroHeading ?? data.title} delay={0.2} />
           </h1>
           <Reveal delay={0.35}>
             <p>{data.subtitle}</p>
@@ -137,6 +137,15 @@ export function AboutSections({ sections, startIndex = 0 }: { sections: AboutSec
                         <li key={point}>{point}</li>
                       ))}
                     </ul>
+                  </StaggerItem>
+                )}
+                {s.links && (
+                  <StaggerItem className="about-links">
+                    {s.links.map((link) => (
+                      <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                        {link.label}
+                      </a>
+                    ))}
                   </StaggerItem>
                 )}
               </Stagger>

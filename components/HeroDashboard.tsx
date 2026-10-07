@@ -83,7 +83,7 @@ export default function HeroDashboard() {
       {/* Punjabi typing card beside the main card */}
       <div className="dash-card dash-punjabi">
         <small>Punjabi typing</small>
-        <span className={`dash-punjabi-word ${gurmukhi.className}`} lang="pa">ਪੰਜਾਬੀ</span>
+        <span className={`dash-punjabi-word ${gurmukhi.className}`} lang="pa">ਪੰ</span>
       </div>
 
       {/* Social media marketing: platform icons + engagement bars */}

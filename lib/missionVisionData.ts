@@ -18,8 +18,14 @@ export const missionVisionSeo = {
 };
 
 export const missionVisionHero = {
-  label: "Purpose",
-  heading: "Mission & Vision",
+  label: "Mission & Vision",
+  heading: "Where we are going, and what we are building towards.",
+  headingParts: [
+    { text: "Where we are ", strong: false },
+    { text: "going,", strong: true },
+    { text: " and ", strong: false },
+    { text: "what we are building towards.", strong: true },
+  ],
   description:
     "Our mission is simple: teach the exact software and workflows local employers hire for, so every " +
     "graduate walks into their first day of work already knowing the job.",
@@ -35,6 +41,11 @@ export const missionPillarsHeader = {
     "technology, practical exposure, and industry-relevant skills that prepare them for real-world " +
     "opportunities.",
 };
+
+export const missionFootnote =
+  "This direction is consistent with techcadd's publicly stated mission of developing a national and " +
+  "international network through franchise centres and providing qualitative advanced technology with " +
+  "practical exposure to improve employability.";
 
 export const missionPillars = [
   {
